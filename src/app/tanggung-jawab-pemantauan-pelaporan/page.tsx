@@ -20,7 +20,6 @@ export default function TanggungJawabPemantauanPelaporanPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <PageHeader
-        showBackLink
         title="2. Tanggung Jawab, Pemantauan, dan Pelaporan"
         description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
       />

@@ -5,7 +5,6 @@ export default function EvaluasiPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <PageHeader
-        showBackLink
         title="3. Evaluasi"
         description="Tahapan evaluasi menyeluruh terhadap kinerja dan kepatuhan PJP, sebagai dasar tindak lanjut pengelolaan berikutnya."
       />

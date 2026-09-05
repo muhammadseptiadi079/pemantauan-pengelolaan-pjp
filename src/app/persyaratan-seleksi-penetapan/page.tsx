@@ -155,7 +155,6 @@ export default function PersyaratanSeleksiPenetapanPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <PageHeader
-        showBackLink
         title="1. Persyaratan, Seleksi, dan Penetapan"
         description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
       />
