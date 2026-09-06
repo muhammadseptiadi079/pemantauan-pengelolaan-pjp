@@ -1,20 +1,22 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PjpController;
+use App\Http\Controllers\TahapanController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 
-Route::get('/persyaratan-seleksi-penetapan', function () {
-    return Inertia::render('PersyaratanSeleksiPenetapan');
-})->name('persyaratan-seleksi-penetapan');
+Route::get(
+    '/persyaratan-seleksi-penetapan',
+    [TahapanController::class, 'persyaratanSeleksiPenetapan']
+)->name('persyaratan-seleksi-penetapan');
 
-Route::get('/tanggung-jawab-pemantauan-pelaporan', function () {
-    return Inertia::render('TanggungJawabPemantauanPelaporan');
-})->name('tanggung-jawab-pemantauan-pelaporan');
+Route::get(
+    '/tanggung-jawab-pemantauan-pelaporan',
+    [TahapanController::class, 'tanggungJawabPemantauanPelaporan']
+)->name('tanggung-jawab-pemantauan-pelaporan');
 
-Route::get('/evaluasi', function () {
-    return Inertia::render('Evaluasi');
-})->name('evaluasi');
+Route::get('/evaluasi', [TahapanController::class, 'evaluasi'])->name('evaluasi');
+
+Route::resource('pjp', PjpController::class)->except(['show']);

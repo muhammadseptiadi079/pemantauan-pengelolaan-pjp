@@ -1,8 +1,11 @@
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
+import TahapanPjpSection from '@/Components/TahapanPjpSection';
 
-export default function Evaluasi() {
+type MiniPjp = { id: number; nama_perusahaan: string; status: string };
+
+export default function Evaluasi({ pjps }: { pjps: MiniPjp[] }) {
     return (
         <AppLayout>
             <div className="mx-auto max-w-5xl px-6 py-16">
@@ -17,6 +20,8 @@ export default function Evaluasi() {
                         description="Belum ada data evaluasi. Bagian ini akan dikembangkan lebih lanjut untuk mencakup hasil evaluasi dan rekomendasi tindak lanjut."
                     />
                 </section>
+
+                <TahapanPjpSection tahapan="evaluasi" pjps={pjps} />
             </div>
         </AppLayout>
     );

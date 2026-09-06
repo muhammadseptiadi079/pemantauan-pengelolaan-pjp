@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 const navItems = [
     { href: '/', label: 'Beranda' },
+    { href: '/pjp', label: 'Data PJP' },
     {
         href: '/persyaratan-seleksi-penetapan',
         label: '1. Persyaratan, Seleksi, Penetapan',
@@ -24,7 +25,10 @@ function NavLinks({
     return (
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
             {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive =
+                    item.href === '/'
+                        ? pathname === '/'
+                        : pathname.startsWith(item.href);
                 return (
                     <Link
                         key={item.href}
