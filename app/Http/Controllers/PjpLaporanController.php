@@ -34,6 +34,19 @@ class PjpLaporanController extends Controller
         return back()->with('success', 'Dokumen berhasil diunggah.');
     }
 
+    public function update(Request $request, Pjp $pjp, PjpLaporan $laporan): RedirectResponse
+    {
+        abort_unless($laporan->pjp_id === $pjp->id, 404);
+
+        $data = $request->validate([
+            'kesesuaian_isi' => ['nullable', 'string', 'in:'.implode(',', array_keys(PjpLaporan::KESESUAIAN))],
+        ]);
+
+        $laporan->update($data);
+
+        return back()->with('success', 'Evaluasi dokumen berhasil disimpan.');
+    }
+
     public function destroy(Pjp $pjp, PjpLaporan $laporan): RedirectResponse
     {
         abort_unless($laporan->pjp_id === $pjp->id, 404);

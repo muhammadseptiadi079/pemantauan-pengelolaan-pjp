@@ -32,6 +32,8 @@ export interface PjpLaporan {
     file_name: string;
     file_size: number;
     catatan: string | null;
+    kesesuaian_isi: string | null;
+    tepat_waktu: boolean | null;
     created_at: string;
     updated_at: string;
 }
@@ -41,4 +43,9 @@ export const JENIS_LAPORAN_OPTIONS: Record<string, string> = {
     tsp: 'Target Sasaran Program (TSP)',
     laporan_bulanan: 'Laporan Bulanan',
     laporan_triwulan: 'Laporan Triwulan',
+};
+
+export const KESESUAIAN_OPTIONS: Record<string, string> = {
+    sesuai: 'Sesuai',
+    tidak_sesuai: 'Tidak Sesuai',
 };

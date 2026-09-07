@@ -23,4 +23,5 @@ Route::get('/evaluasi', [TahapanController::class, 'evaluasi'])->name('evaluasi'
 Route::resource('pjp', PjpController::class);
 
 Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');
+Route::patch('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'update'])->name('pjp.laporan.update');
 Route::delete('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'destroy'])->name('pjp.laporan.destroy');

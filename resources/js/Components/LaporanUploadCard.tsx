@@ -1,6 +1,6 @@
 import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
-import { PjpLaporan } from '@/types';
+import { KESESUAIAN_OPTIONS, PjpLaporan } from '@/types';
 
 function formatFileSize(bytes: number): string {
     if (bytes < 1024) return `${bytes} B`;
@@ -47,6 +47,14 @@ export default function LaporanUploadCard({
         }
     };
 
+    const handleKesesuaianChange = (laporanId: number, value: string) => {
+        router.patch(
+            `/pjp/${pjpId}/laporan/${laporanId}`,
+            { kesesuaian_isi: value },
+            { preserveScroll: true },
+        );
+    };
+
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
             <h3 className="font-semibold text-slate-900">{label}</h3>
@@ -58,31 +66,62 @@ export default function LaporanUploadCard({
             ) : (
                 <ul className="mt-3 divide-y divide-slate-100">
                     {laporans.map((laporan) => (
-                        <li
-                            key={laporan.id}
-                            className="flex items-center justify-between gap-3 py-2 text-sm"
-                        >
-                            <div className="min-w-0">
+                        <li key={laporan.id} className="space-y-1.5 py-3 text-sm">
+                            <div className="flex items-center justify-between gap-3">
                                 <a
                                     href={`/storage/${laporan.file_path}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block truncate font-medium text-blue-600 hover:text-blue-800"
+                                    className="truncate font-medium text-blue-600 hover:text-blue-800"
                                 >
                                     {laporan.file_name}
                                 </a>
-                                <p className="text-xs text-slate-500">
-                                    {laporan.periode ? `${laporan.periode} · ` : ''}
-                                    {formatFileSize(laporan.file_size)}
-                                </p>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(laporan.id)}
+                                    className="shrink-0 text-xs font-medium text-red-600 hover:text-red-800"
+                                >
+                                    Hapus
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                onClick={() => handleDelete(laporan.id)}
-                                className="shrink-0 text-xs font-medium text-red-600 hover:text-red-800"
-                            >
-                                Hapus
-                            </button>
+                            <p className="text-xs text-slate-500">
+                                {laporan.periode ? `${laporan.periode} · ` : ''}
+                                {formatFileSize(laporan.file_size)}
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2">
+                                {laporan.tepat_waktu !== null && (
+                                    <span
+                                        className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                                            laporan.tepat_waktu
+                                                ? 'bg-green-50 text-green-700'
+                                                : 'bg-red-50 text-red-700'
+                                        }`}
+                                    >
+                                        {laporan.tepat_waktu
+                                            ? 'Tepat Waktu'
+                                            : 'Terlambat'}
+                                    </span>
+                                )}
+                                <select
+                                    value={laporan.kesesuaian_isi ?? ''}
+                                    onChange={(e) =>
+                                        handleKesesuaianChange(
+                                            laporan.id,
+                                            e.target.value,
+                                        )
+                                    }
+                                    className="rounded-md border border-slate-300 px-2 py-1 text-[11px] text-slate-600 focus:border-blue-500 focus:outline-none"
+                                >
+                                    <option value="">Belum dievaluasi</option>
+                                    {Object.entries(KESESUAIAN_OPTIONS).map(
+                                        ([value, optionLabel]) => (
+                                            <option key={value} value={value}>
+                                                {optionLabel}
+                                            </option>
+                                        ),
+                                    )}
+                                </select>
+                            </div>
                         </li>
                     ))}
                 </ul>
