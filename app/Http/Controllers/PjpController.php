@@ -10,10 +10,26 @@ use Inertia\Response;
 
 class PjpController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $search = $request->query('search');
+        $tahapan = $request->query('tahapan');
+        $status = $request->query('status');
+
+        $pjps = Pjp::query()
+            ->when($search, fn ($query, $search) => $query->where('nama_perusahaan', 'like', "%{$search}%"))
+            ->when($tahapan, fn ($query, $tahapan) => $query->where('tahapan', $tahapan))
+            ->when($status, fn ($query, $status) => $query->where('status', $status))
+            ->latest()
+            ->get();
+
         return Inertia::render('Pjp/Index', [
-            'pjps' => Pjp::latest()->get(),
+            'pjps' => $pjps,
+            'filters' => [
+                'search' => $search ?? '',
+                'tahapan' => $tahapan ?? '',
+                'status' => $status ?? '',
+            ],
         ]);
     }
 

@@ -22,8 +22,10 @@ const subTahapan = [
 
 export default function TanggungJawabPemantauanPelaporan({
     pjps,
+    filters,
 }: {
     pjps: MiniPjp[];
+    filters: { search: string; status: string };
 }) {
     return (
         <AppLayout>
@@ -45,7 +47,9 @@ export default function TanggungJawabPemantauanPelaporan({
 
                 <TahapanPjpSection
                     tahapan="tanggung-jawab-pemantauan-pelaporan"
+                    action="/tanggung-jawab-pemantauan-pelaporan"
                     pjps={pjps}
+                    filters={filters}
                 />
             </div>
         </AppLayout>

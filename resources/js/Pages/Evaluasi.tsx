@@ -5,7 +5,13 @@ import TahapanPjpSection from '@/Components/TahapanPjpSection';
 
 type MiniPjp = { id: number; nama_perusahaan: string; status: string };
 
-export default function Evaluasi({ pjps }: { pjps: MiniPjp[] }) {
+export default function Evaluasi({
+    pjps,
+    filters,
+}: {
+    pjps: MiniPjp[];
+    filters: { search: string; status: string };
+}) {
     return (
         <AppLayout>
             <div className="mx-auto max-w-5xl px-6 py-16">
@@ -21,7 +27,12 @@ export default function Evaluasi({ pjps }: { pjps: MiniPjp[] }) {
                     />
                 </section>
 
-                <TahapanPjpSection tahapan="evaluasi" pjps={pjps} />
+                <TahapanPjpSection
+                    tahapan="evaluasi"
+                    action="/evaluasi"
+                    pjps={pjps}
+                    filters={filters}
+                />
             </div>
         </AppLayout>
     );

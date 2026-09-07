@@ -2,9 +2,18 @@ import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
+import PjpFilters from '@/Components/PjpFilters';
 import { Pjp, TAHAPAN_OPTIONS } from '@/types';
 
-export default function Index({ pjps }: { pjps: Pjp[] }) {
+type Filters = { search: string; tahapan: string; status: string };
+
+export default function Index({
+    pjps,
+    filters,
+}: {
+    pjps: Pjp[];
+    filters: Filters;
+}) {
     const handleDelete = (pjp: Pjp) => {
         if (confirm(`Hapus data PJP "${pjp.nama_perusahaan}"?`)) {
             router.delete(`/pjp/${pjp.id}`);
@@ -27,10 +36,13 @@ export default function Index({ pjps }: { pjps: Pjp[] }) {
                     </Link>
                 </div>
 
+                <PjpFilters action="/pjp" initial={filters} showTahapanFilter />
+
                 {pjps.length === 0 ? (
                     <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
-                        Belum ada data PJP. Tambahkan data untuk mulai memantau dan
-                        mengelola PJP.
+                        {filters.search || filters.tahapan || filters.status
+                            ? 'Tidak ada data PJP yang cocok dengan filter.'
+                            : 'Belum ada data PJP. Tambahkan data untuk mulai memantau dan mengelola PJP.'}
                     </div>
                 ) : (
                     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">

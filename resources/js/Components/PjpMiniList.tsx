@@ -3,11 +3,17 @@ import StatusBadge from '@/Components/StatusBadge';
 
 type MiniPjp = { id: number; nama_perusahaan: string; status: string };
 
-export default function PjpMiniList({ pjps }: { pjps: MiniPjp[] }) {
+export default function PjpMiniList({
+    pjps,
+    emptyMessage = 'Belum ada data PJP pada tahap ini.',
+}: {
+    pjps: MiniPjp[];
+    emptyMessage?: string;
+}) {
     if (pjps.length === 0) {
         return (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
-                Belum ada data PJP pada tahap ini.
+                {emptyMessage}
             </div>
         );
     }

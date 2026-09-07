@@ -163,8 +163,10 @@ const totalBobot = checklist.reduce((sum, item) => sum + item.bobot, 0);
 
 export default function PersyaratanSeleksiPenetapan({
     pjps,
+    filters,
 }: {
     pjps: MiniPjp[];
+    filters: { search: string; status: string };
 }) {
     return (
         <AppLayout>
@@ -242,7 +244,9 @@ export default function PersyaratanSeleksiPenetapan({
 
                 <TahapanPjpSection
                     tahapan="persyaratan-seleksi-penetapan"
+                    action="/persyaratan-seleksi-penetapan"
                     pjps={pjps}
+                    filters={filters}
                 />
             </div>
         </AppLayout>
