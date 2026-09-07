@@ -10,13 +10,15 @@ class HomeController extends Controller
 {
     public function __invoke(): Response
     {
+        $statusCounts = Pjp::statusCountsFor();
+
         return Inertia::render('Home', [
             'stats' => [
-                'total' => Pjp::count(),
-                'aktifDipantau' => Pjp::where('status', 'aktif')->count(),
-                'perluTindakLanjut' => Pjp::where('status', 'perlu_tindak_lanjut')->count(),
+                'total' => array_sum($statusCounts),
+                'aktifDipantau' => $statusCounts['aktif'],
+                'perluTindakLanjut' => $statusCounts['perlu_tindak_lanjut'],
             ],
-            'statusCounts' => Pjp::statusCountsFor(),
+            'statusCounts' => $statusCounts,
         ]);
     }
 }

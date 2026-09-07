@@ -1,19 +1,25 @@
-import { usePage } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
 export default function FlashMessage() {
-    const { flash } = usePage().props as unknown as {
-        flash?: { success?: string | null };
-    };
     const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        if (flash?.success) {
-            setMessage(flash.success);
-            const timer = setTimeout(() => setMessage(null), 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [flash?.success]);
+        return router.on('success', (event) => {
+            const flash = (event.detail.page.props as { flash?: { success?: string | null } })
+                .flash;
+
+            if (flash?.success) {
+                setMessage(flash.success);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        if (!message) return;
+        const timer = setTimeout(() => setMessage(null), 4000);
+        return () => clearTimeout(timer);
+    }, [message]);
 
     if (!message) return null;
 

@@ -35,6 +35,18 @@ class Pjp extends Model
         return $this->hasMany(PjpLaporan::class)->latest();
     }
 
+    public function scopeFilter(
+        Builder $query,
+        ?string $search,
+        ?string $status,
+        ?string $tahapan = null,
+    ): Builder {
+        return $query
+            ->when($search, fn ($q, $search) => $q->where('nama_perusahaan', 'like', "%{$search}%"))
+            ->when($status, fn ($q, $status) => $q->where('status', $status))
+            ->when($tahapan, fn ($q, $tahapan) => $q->where('tahapan', $tahapan));
+    }
+
     /**
      * Count of records per status, always including every status key (0 if none).
      */

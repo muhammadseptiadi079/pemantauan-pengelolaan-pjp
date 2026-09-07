@@ -36,12 +36,8 @@ class TahapanController extends Controller
 
     private function pjpsForTahapan(string $tahapan, Request $request): Collection
     {
-        $search = $request->query('search');
-        $status = $request->query('status');
-
         return Pjp::where('tahapan', $tahapan)
-            ->when($search, fn ($query, $search) => $query->where('nama_perusahaan', 'like', "%{$search}%"))
-            ->when($status, fn ($query, $status) => $query->where('status', $status))
+            ->filter($request->query('search'), $request->query('status'))
             ->latest()
             ->get(['id', 'nama_perusahaan', 'status']);
     }

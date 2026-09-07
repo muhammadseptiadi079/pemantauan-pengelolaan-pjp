@@ -6,6 +6,7 @@ use App\Models\Pjp;
 use App\Models\PjpLaporan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,9 +19,7 @@ class PjpController extends Controller
         $status = $request->query('status');
 
         $pjps = Pjp::query()
-            ->when($search, fn ($query, $search) => $query->where('nama_perusahaan', 'like', "%{$search}%"))
-            ->when($tahapan, fn ($query, $tahapan) => $query->where('tahapan', $tahapan))
-            ->when($status, fn ($query, $status) => $query->where('status', $status))
+            ->filter($search, $status, $tahapan)
             ->latest()
             ->get();
 
@@ -53,11 +52,9 @@ class PjpController extends Controller
 
     public function show(Pjp $pjp): Response
     {
-        $pjp->load('laporans');
-
         return Inertia::render('Pjp/Show', [
             'pjp' => $pjp,
-            'laporans' => $pjp->laporans,
+            'laporans' => $pjp->laporans()->get(),
             'triwulanTerbuka' => PjpLaporan::triwulanSedangDibuka(),
             'bulanTriwulanDibuka' => implode(', ', PjpLaporan::BULAN_TRIWULAN_DIBUKA),
         ]);
@@ -81,6 +78,7 @@ class PjpController extends Controller
 
     public function destroy(Pjp $pjp): RedirectResponse
     {
+        Storage::disk('public')->deleteDirectory("pjp-laporan/{$pjp->id}");
         $pjp->delete();
 
         return to_route('pjp.index')->with('success', 'Data PJP berhasil dihapus.');
