@@ -30,6 +30,7 @@ class PjpController extends Controller
                 'tahapan' => $tahapan ?? '',
                 'status' => $status ?? '',
             ],
+            'statusCounts' => Pjp::statusCountsFor(),
         ]);
     }
 

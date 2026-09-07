@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Pjp extends Model
@@ -27,4 +28,20 @@ class Pjp extends Model
         'status',
         'catatan',
     ];
+
+    /**
+     * Count of records per status, always including every status key (0 if none).
+     */
+    public static function statusCountsFor(?Builder $query = null): array
+    {
+        $query ??= static::query();
+
+        $counts = $query->selectRaw('status, count(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
+        return collect(array_keys(self::STATUS))
+            ->mapWithKeys(fn (string $status) => [$status => (int) ($counts[$status] ?? 0)])
+            ->toArray();
+    }
 }

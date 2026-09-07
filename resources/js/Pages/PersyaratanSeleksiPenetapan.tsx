@@ -2,6 +2,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
+import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 
 type MiniPjp = { id: number; nama_perusahaan: string; status: string };
 
@@ -164,9 +165,11 @@ const totalBobot = checklist.reduce((sum, item) => sum + item.bobot, 0);
 export default function PersyaratanSeleksiPenetapan({
     pjps,
     filters,
+    statusCounts,
 }: {
     pjps: MiniPjp[];
     filters: { search: string; status: string };
+    statusCounts: StatusCounts;
 }) {
     return (
         <AppLayout>
@@ -175,6 +178,13 @@ export default function PersyaratanSeleksiPenetapan({
                     title="1. Persyaratan, Seleksi, dan Penetapan"
                     description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
                 />
+
+                <div className="mb-10">
+                    <StatusStackedBar
+                        title="Capaian Status pada Tahap Ini"
+                        counts={statusCounts}
+                    />
+                </div>
 
                 <section className="mb-14 grid gap-4 sm:grid-cols-3">
                     {subTahapan.map((sub) => (

@@ -16,6 +16,7 @@ class HomeController extends Controller
                 'aktifDipantau' => Pjp::where('status', 'aktif')->count(),
                 'perluTindakLanjut' => Pjp::where('status', 'perlu_tindak_lanjut')->count(),
             ],
+            'statusCounts' => Pjp::statusCountsFor(),
         ]);
     }
 }

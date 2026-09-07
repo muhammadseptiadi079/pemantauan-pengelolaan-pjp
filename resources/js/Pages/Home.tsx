@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 
 const tahapan = [
     {
@@ -31,9 +32,10 @@ type HomeProps = {
         aktifDipantau: number;
         perluTindakLanjut: number;
     };
+    statusCounts: StatusCounts;
 };
 
-export default function Home({ stats }: HomeProps) {
+export default function Home({ stats, statusCounts }: HomeProps) {
     return (
         <AppLayout>
             <div className="mx-auto max-w-5xl px-6 py-16">
@@ -68,10 +70,17 @@ export default function Home({ stats }: HomeProps) {
                     </div>
                 </section>
 
-                {stats.total === 0 && (
+                {stats.total === 0 ? (
                     <div className="mb-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
                         Belum ada data PJP. Tambahkan data untuk mulai memantau dan
                         mengelola PJP.
+                    </div>
+                ) : (
+                    <div className="mb-12">
+                        <StatusStackedBar
+                            title="Capaian Status Seluruh PJP"
+                            counts={statusCounts}
+                        />
                     </div>
                 )}
 

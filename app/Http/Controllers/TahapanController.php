@@ -12,25 +12,25 @@ class TahapanController extends Controller
 {
     public function persyaratanSeleksiPenetapan(Request $request): Response
     {
-        return Inertia::render('PersyaratanSeleksiPenetapan', [
-            'pjps' => $this->pjpsForTahapan('persyaratan-seleksi-penetapan', $request),
-            'filters' => $this->filtersFromRequest($request),
-        ]);
+        return $this->renderTahapan('PersyaratanSeleksiPenetapan', 'persyaratan-seleksi-penetapan', $request);
     }
 
     public function tanggungJawabPemantauanPelaporan(Request $request): Response
     {
-        return Inertia::render('TanggungJawabPemantauanPelaporan', [
-            'pjps' => $this->pjpsForTahapan('tanggung-jawab-pemantauan-pelaporan', $request),
-            'filters' => $this->filtersFromRequest($request),
-        ]);
+        return $this->renderTahapan('TanggungJawabPemantauanPelaporan', 'tanggung-jawab-pemantauan-pelaporan', $request);
     }
 
     public function evaluasi(Request $request): Response
     {
-        return Inertia::render('Evaluasi', [
-            'pjps' => $this->pjpsForTahapan('evaluasi', $request),
+        return $this->renderTahapan('Evaluasi', 'evaluasi', $request);
+    }
+
+    private function renderTahapan(string $component, string $tahapan, Request $request): Response
+    {
+        return Inertia::render($component, [
+            'pjps' => $this->pjpsForTahapan($tahapan, $request),
             'filters' => $this->filtersFromRequest($request),
+            'statusCounts' => Pjp::statusCountsFor(Pjp::where('tahapan', $tahapan)),
         ]);
     }
 

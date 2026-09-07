@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
 import PjpFilters from '@/Components/PjpFilters';
+import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import { Pjp, TAHAPAN_OPTIONS } from '@/types';
 
 type Filters = { search: string; tahapan: string; status: string };
@@ -10,9 +11,11 @@ type Filters = { search: string; tahapan: string; status: string };
 export default function Index({
     pjps,
     filters,
+    statusCounts,
 }: {
     pjps: Pjp[];
     filters: Filters;
+    statusCounts: StatusCounts;
 }) {
     const handleDelete = (pjp: Pjp) => {
         if (confirm(`Hapus data PJP "${pjp.nama_perusahaan}"?`)) {
@@ -34,6 +37,13 @@ export default function Index({
                     >
                         + Tambah PJP
                     </Link>
+                </div>
+
+                <div className="mb-6">
+                    <StatusStackedBar
+                        title="Capaian Status Seluruh PJP"
+                        counts={statusCounts}
+                    />
                 </div>
 
                 <PjpFilters action="/pjp" initial={filters} showTahapanFilter />
