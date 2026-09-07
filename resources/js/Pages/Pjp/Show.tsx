@@ -30,7 +30,7 @@ export default function Show({
                             href={`/pjp/${pjp.id}/checklist-smkp`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                         >
-                            Checklist SMKP
+                            Persyaratan PJP
                         </Link>
                         <a
                             href={`/pjp/${pjp.id}/export-pdf`}

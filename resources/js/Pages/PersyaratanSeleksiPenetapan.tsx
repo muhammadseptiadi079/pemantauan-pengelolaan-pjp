@@ -64,12 +64,12 @@ export default function PersyaratanSeleksiPenetapan({
                 </section>
 
                 <div className="mb-14 rounded-xl border border-blue-200 bg-blue-50 p-5 text-sm text-blue-900">
-                    <p className="font-semibold">Checklist Prakualifikasi SMKP</p>
+                    <p className="font-semibold">Persyaratan PJP</p>
                     <p className="mt-1">
                         Setiap PJP wajib mengisi checklist prakualifikasi SMKP (17 kategori,
                         126 pertanyaan berbobot) untuk menunjukkan tingkat kepatuhannya.
                         Klik salah satu PJP pada daftar di bawah, lalu buka tombol{' '}
-                        <strong>&quot;Checklist SMKP&quot;</strong> di halaman detailnya untuk
+                        <strong>&quot;Persyaratan PJP&quot;</strong> di halaman detailnya untuk
                         mengisi atau melihat skornya. Persentase skor tiap PJP juga
                         ditampilkan langsung pada daftar di bawah ini.
                     </p>

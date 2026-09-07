@@ -36,7 +36,7 @@ export default function PjpMiniList({
                     <div className="flex items-center gap-3">
                         {pjp.smkpScore && (
                             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
-                                Checklist SMKP: {pjp.smkpScore.persentase}%
+                                Persyaratan PJP: {pjp.smkpScore.persentase}%
                             </span>
                         )}
                         <StatusBadge status={pjp.status} />

@@ -70,11 +70,11 @@ export default function ChecklistSmkp({
 
     return (
         <AppLayout>
-            <Head title={`Checklist SMKP - ${pjp.nama_perusahaan}`} />
+            <Head title={`Persyaratan PJP - ${pjp.nama_perusahaan}`} />
             <div className="mx-auto max-w-4xl px-6 py-16">
                 <div className="mb-8 flex items-start justify-between gap-4">
                     <PageHeader
-                        title="Checklist Prakualifikasi SMKP"
+                        title="Persyaratan PJP"
                         description={pjp.nama_perusahaan}
                     />
                     <Link
