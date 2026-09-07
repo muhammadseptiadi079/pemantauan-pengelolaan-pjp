@@ -17,6 +17,7 @@ cp .env.example .env
 php artisan key:generate
 touch database/database.sqlite
 php artisan migrate
+php artisan storage:link
 ```
 
 Jalankan server backend dan build asset frontend secara bersamaan:
