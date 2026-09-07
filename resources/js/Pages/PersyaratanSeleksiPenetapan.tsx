@@ -199,7 +199,7 @@ export default function PersyaratanSeleksiPenetapan({
                 <section>
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold text-slate-900">
-                            Referensi Checklist Prakualifikasi SMK3PLM
+                            Referensi Checklist Prakualifikasi SMKP
                         </h2>
                         <p className="mt-2 max-w-3xl text-sm text-slate-600">
                             Struktur kategori dan bobot penilaian berikut merupakan referensi
