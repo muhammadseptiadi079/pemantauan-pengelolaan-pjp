@@ -7,6 +7,7 @@
         <title inertia>Pemantauan &amp; Pengelolaan PJP</title>
         <meta name="description" content="Aplikasi pemantauan dan pengelolaan Perusahaan Jasa Pertambangan (PJP)" />
 
+        @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])
         @inertiaHead
     </head>
