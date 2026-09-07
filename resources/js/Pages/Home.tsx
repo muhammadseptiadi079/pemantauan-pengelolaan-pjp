@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 
@@ -26,6 +26,8 @@ const tahapan = [
     },
 ];
 
+type MiniPjp = { id: number; nama_perusahaan: string };
+
 type HomeProps = {
     stats: {
         total: number;
@@ -33,11 +35,17 @@ type HomeProps = {
         perluTindakLanjut: number;
     };
     statusCounts: StatusCounts;
+    pjpBelumLaporanBulanan: MiniPjp[];
 };
 
-export default function Home({ stats, statusCounts }: HomeProps) {
+export default function Home({
+    stats,
+    statusCounts,
+    pjpBelumLaporanBulanan,
+}: HomeProps) {
     return (
         <AppLayout>
+            <Head title="Beranda" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <header className="mb-12 text-center">
                     <h1 className="text-4xl font-bold tracking-tight text-slate-900">
@@ -48,6 +56,27 @@ export default function Home({ stats, statusCounts }: HomeProps) {
                         (PJP) di seluruh tahapan pengelolaannya.
                     </p>
                 </header>
+
+                {pjpBelumLaporanBulanan.length > 0 && (
+                    <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
+                        <p className="text-sm font-semibold text-amber-900">
+                            {pjpBelumLaporanBulanan.length} PJP belum/terlambat
+                            mengirim Laporan Bulanan bulan ini
+                        </p>
+                        <ul className="mt-2 flex flex-wrap gap-2">
+                            {pjpBelumLaporanBulanan.map((pjp) => (
+                                <li key={pjp.id}>
+                                    <Link
+                                        href={`/pjp/${pjp.id}`}
+                                        className="rounded-full bg-white px-3 py-1 text-sm font-medium text-amber-800 hover:bg-amber-100"
+                                    >
+                                        {pjp.nama_perusahaan}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
                 <section className="mb-12 grid gap-4 sm:grid-cols-3">
                     <div className="rounded-2xl border border-slate-200 bg-white p-6">

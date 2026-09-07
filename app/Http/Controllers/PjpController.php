@@ -26,7 +26,8 @@ class PjpController extends Controller
         $pjps = Pjp::query()
             ->filter($search, $status, $tahapan)
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Pjp/Index', [
             'pjps' => $pjps,

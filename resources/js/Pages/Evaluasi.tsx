@@ -1,3 +1,4 @@
+import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
@@ -17,6 +18,7 @@ export default function Evaluasi({
 }) {
     return (
         <AppLayout>
+            <Head title="Evaluasi" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <PageHeader
                     title="3. Evaluasi"

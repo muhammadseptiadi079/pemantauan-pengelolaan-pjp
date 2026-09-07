@@ -19,6 +19,7 @@ class HomeController extends Controller
                 'perluTindakLanjut' => $statusCounts['perlu_tindak_lanjut'],
             ],
             'statusCounts' => $statusCounts,
+            'pjpBelumLaporanBulanan' => Pjp::belumLaporanBulananBulanIni(),
         ]);
     }
 }

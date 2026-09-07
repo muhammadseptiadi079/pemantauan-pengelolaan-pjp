@@ -1,4 +1,4 @@
-import { Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
@@ -23,6 +23,7 @@ export default function Edit({ pjp }: { pjp: Pjp }) {
 
     return (
         <AppLayout>
+            <Head title={`Ubah ${pjp.nama_perusahaan}`} />
             <div className="mx-auto max-w-2xl px-6 py-16">
                 <PageHeader
                     title="Ubah Data PJP"

@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
@@ -18,6 +18,7 @@ export default function Show({
 }) {
     return (
         <AppLayout>
+            <Head title={pjp.nama_perusahaan} />
             <div className="mx-auto max-w-3xl px-6 py-16">
                 <div className="mb-8 flex items-start justify-between gap-4">
                     <PageHeader

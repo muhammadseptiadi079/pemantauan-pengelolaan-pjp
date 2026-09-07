@@ -49,3 +49,12 @@ export const KESESUAIAN_OPTIONS: Record<string, string> = {
     sesuai: 'Sesuai',
     tidak_sesuai: 'Tidak Sesuai',
 };
+
+export interface Paginated<T> {
+    data: T[];
+    links: { url: string | null; label: string; active: boolean }[];
+    current_page: number;
+    last_page: number;
+    total: number;
+    per_page: number;
+}

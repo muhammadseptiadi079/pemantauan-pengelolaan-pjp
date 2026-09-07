@@ -1,5 +1,6 @@
 import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
+import ConfirmDialog from '@/Components/ConfirmDialog';
 import { KESESUAIAN_OPTIONS, PjpLaporan } from '@/types';
 
 function formatFileSize(bytes: number): string {
@@ -22,6 +23,9 @@ export default function LaporanUploadCard({
     uploadDisabledMessage?: string;
 }) {
     const [fileInputKey, setFileInputKey] = useState(0);
+    const [laporanToDelete, setLaporanToDelete] = useState<PjpLaporan | null>(
+        null,
+    );
     const { data, setData, post, processing, errors, reset } = useForm<{
         jenis: string;
         periode: string;
@@ -43,9 +47,10 @@ export default function LaporanUploadCard({
         });
     };
 
-    const handleDelete = (laporanId: number) => {
-        if (confirm('Hapus dokumen ini?')) {
-            router.delete(`/pjp/${pjpId}/laporan/${laporanId}`);
+    const confirmDelete = () => {
+        if (laporanToDelete) {
+            router.delete(`/pjp/${pjpId}/laporan/${laporanToDelete.id}`);
+            setLaporanToDelete(null);
         }
     };
 
@@ -80,7 +85,7 @@ export default function LaporanUploadCard({
                                 </a>
                                 <button
                                     type="button"
-                                    onClick={() => handleDelete(laporan.id)}
+                                    onClick={() => setLaporanToDelete(laporan)}
                                     className="shrink-0 text-xs font-medium text-red-600 hover:text-red-800"
                                 >
                                     Hapus
@@ -165,6 +170,14 @@ export default function LaporanUploadCard({
                     </button>
                 </form>
             )}
+
+            <ConfirmDialog
+                open={laporanToDelete !== null}
+                title="Hapus Dokumen"
+                message={`Hapus dokumen "${laporanToDelete?.file_name}"? Tindakan ini tidak bisa dibatalkan.`}
+                onConfirm={confirmDelete}
+                onCancel={() => setLaporanToDelete(null)}
+            />
         </div>
     );
 }

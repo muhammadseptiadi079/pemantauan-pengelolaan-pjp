@@ -48,6 +48,37 @@ class Pjp extends Model
     }
 
     /**
+     * PJP (yang masih dipantau, bukan tidak_aktif) yang belum mengirim Laporan
+     * Bulanan bulan ini, atau mengirimnya lewat dari tanggal batas. Kosong
+     * sebelum tanggal batas terlewati (belum dianggap terlambat).
+     */
+    public static function belumLaporanBulananBulanIni(): \Illuminate\Support\Collection
+    {
+        if (now()->day <= PjpLaporan::BATAS_TANGGAL_LAPORAN) {
+            return collect();
+        }
+
+        $batasBulanIni = now()->startOfMonth()->addDays(PjpLaporan::BATAS_TANGGAL_LAPORAN);
+
+        return static::query()
+            ->where('status', '!=', 'tidak_aktif')
+            ->where(function (Builder $outer) use ($batasBulanIni) {
+                $outer->whereDoesntHave('laporans', function (Builder $query) {
+                    $query->where('jenis', 'laporan_bulanan')
+                        ->whereYear('created_at', now()->year)
+                        ->whereMonth('created_at', now()->month);
+                })->orWhereHas('laporans', function (Builder $query) use ($batasBulanIni) {
+                    $query->where('jenis', 'laporan_bulanan')
+                        ->whereYear('created_at', now()->year)
+                        ->whereMonth('created_at', now()->month)
+                        ->where('created_at', '>', $batasBulanIni);
+                });
+            })
+            ->orderBy('nama_perusahaan')
+            ->get(['id', 'nama_perusahaan']);
+    }
+
+    /**
      * Count of records per status, always including every status key (0 if none).
      */
     public static function statusCountsFor(?Builder $query = null): array

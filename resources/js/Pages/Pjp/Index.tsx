@@ -1,10 +1,13 @@
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
 import PjpFilters from '@/Components/PjpFilters';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
-import { Pjp, TAHAPAN_OPTIONS } from '@/types';
+import ConfirmDialog from '@/Components/ConfirmDialog';
+import Pagination from '@/Components/Pagination';
+import { Paginated, Pjp, TAHAPAN_OPTIONS } from '@/types';
 
 type Filters = { search: string; tahapan: string; status: string };
 
@@ -13,13 +16,16 @@ export default function Index({
     filters,
     statusCounts,
 }: {
-    pjps: Pjp[];
+    pjps: Paginated<Pjp>;
     filters: Filters;
     statusCounts: StatusCounts;
 }) {
-    const handleDelete = (pjp: Pjp) => {
-        if (confirm(`Hapus data PJP "${pjp.nama_perusahaan}"?`)) {
-            router.delete(`/pjp/${pjp.id}`);
+    const [pjpToDelete, setPjpToDelete] = useState<Pjp | null>(null);
+
+    const confirmDelete = () => {
+        if (pjpToDelete) {
+            router.delete(`/pjp/${pjpToDelete.id}`);
+            setPjpToDelete(null);
         }
     };
 
@@ -29,6 +35,7 @@ export default function Index({
 
     return (
         <AppLayout>
+            <Head title="Data PJP" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <div className="mb-10 flex items-start justify-between gap-4">
                     <PageHeader
@@ -60,65 +67,119 @@ export default function Index({
 
                 <PjpFilters action="/pjp" initial={filters} showTahapanFilter />
 
-                {pjps.length === 0 ? (
+                {pjps.data.length === 0 ? (
                     <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
                         {filters.search || filters.tahapan || filters.status
                             ? 'Tidak ada data PJP yang cocok dengan filter.'
                             : 'Belum ada data PJP. Tambahkan data untuk mulai memantau dan mengelola PJP.'}
                     </div>
                 ) : (
-                    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-                        <table className="w-full min-w-[640px] text-left text-sm">
-                            <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
-                                <tr>
-                                    <th className="px-4 py-3">Nama Perusahaan</th>
-                                    <th className="px-4 py-3">Tahapan</th>
-                                    <th className="px-4 py-3">Status</th>
-                                    <th className="px-4 py-3 text-right">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-200">
-                                {pjps.map((pjp) => (
-                                    <tr key={pjp.id}>
-                                        <td className="px-4 py-3 font-medium text-slate-800">
-                                            {pjp.nama_perusahaan}
-                                        </td>
-                                        <td className="px-4 py-3 text-slate-600">
-                                            {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <StatusBadge status={pjp.status} />
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <div className="flex justify-end gap-3">
-                                                <Link
-                                                    href={`/pjp/${pjp.id}`}
-                                                    className="font-medium text-blue-600 hover:text-blue-800"
-                                                >
-                                                    Detail
-                                                </Link>
-                                                <Link
-                                                    href={`/pjp/${pjp.id}/edit`}
-                                                    className="font-medium text-blue-600 hover:text-blue-800"
-                                                >
-                                                    Ubah
-                                                </Link>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleDelete(pjp)}
-                                                    className="font-medium text-red-600 hover:text-red-800"
-                                                >
-                                                    Hapus
-                                                </button>
-                                            </div>
-                                        </td>
+                    <>
+                        {/* Desktop / tablet: table */}
+                        <div className="hidden overflow-x-auto rounded-xl border border-slate-200 bg-white md:block">
+                            <table className="w-full min-w-[640px] text-left text-sm">
+                                <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
+                                    <tr>
+                                        <th className="px-4 py-3">Nama Perusahaan</th>
+                                        <th className="px-4 py-3">Tahapan</th>
+                                        <th className="px-4 py-3">Status</th>
+                                        <th className="px-4 py-3 text-right">Aksi</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody className="divide-y divide-slate-200">
+                                    {pjps.data.map((pjp) => (
+                                        <tr key={pjp.id}>
+                                            <td className="px-4 py-3 font-medium text-slate-800">
+                                                {pjp.nama_perusahaan}
+                                            </td>
+                                            <td className="px-4 py-3 text-slate-600">
+                                                {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <StatusBadge status={pjp.status} />
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <div className="flex justify-end gap-3">
+                                                    <Link
+                                                        href={`/pjp/${pjp.id}`}
+                                                        className="font-medium text-blue-600 hover:text-blue-800"
+                                                    >
+                                                        Detail
+                                                    </Link>
+                                                    <Link
+                                                        href={`/pjp/${pjp.id}/edit`}
+                                                        className="font-medium text-blue-600 hover:text-blue-800"
+                                                    >
+                                                        Ubah
+                                                    </Link>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setPjpToDelete(pjp)}
+                                                        className="font-medium text-red-600 hover:text-red-800"
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Mobile: stacked cards */}
+                        <div className="space-y-3 md:hidden">
+                            {pjps.data.map((pjp) => (
+                                <div
+                                    key={pjp.id}
+                                    className="rounded-xl border border-slate-200 bg-white p-4"
+                                >
+                                    <div className="flex items-start justify-between gap-3">
+                                        <p className="font-medium text-slate-800">
+                                            {pjp.nama_perusahaan}
+                                        </p>
+                                        <StatusBadge status={pjp.status} />
+                                    </div>
+                                    <p className="mt-1 text-sm text-slate-500">
+                                        {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
+                                    </p>
+                                    <div className="mt-3 flex gap-4 text-sm">
+                                        <Link
+                                            href={`/pjp/${pjp.id}`}
+                                            className="font-medium text-blue-600 hover:text-blue-800"
+                                        >
+                                            Detail
+                                        </Link>
+                                        <Link
+                                            href={`/pjp/${pjp.id}/edit`}
+                                            className="font-medium text-blue-600 hover:text-blue-800"
+                                        >
+                                            Ubah
+                                        </Link>
+                                        <button
+                                            type="button"
+                                            onClick={() => setPjpToDelete(pjp)}
+                                            className="font-medium text-red-600 hover:text-red-800"
+                                        >
+                                            Hapus
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <Pagination links={pjps.links} />
+                    </>
                 )}
             </div>
+
+            <ConfirmDialog
+                open={pjpToDelete !== null}
+                title="Hapus Data PJP"
+                message={`Hapus data PJP "${pjpToDelete?.nama_perusahaan}"? Tindakan ini tidak bisa dibatalkan.`}
+                onConfirm={confirmDelete}
+                onCancel={() => setPjpToDelete(null)}
+            />
         </AppLayout>
     );
 }
