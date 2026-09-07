@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PjpController;
+use App\Http\Controllers\PjpLaporanController;
 use App\Http\Controllers\TahapanController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,7 @@ Route::get(
 
 Route::get('/evaluasi', [TahapanController::class, 'evaluasi'])->name('evaluasi');
 
-Route::resource('pjp', PjpController::class)->except(['show']);
+Route::resource('pjp', PjpController::class);
+
+Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');
+Route::delete('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'destroy'])->name('pjp.laporan.destroy');

@@ -23,7 +23,7 @@ export default function PjpMiniList({
             {pjps.map((pjp) => (
                 <Link
                     key={pjp.id}
-                    href={`/pjp/${pjp.id}/edit`}
+                    href={`/pjp/${pjp.id}`}
                     className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-slate-50"
                 >
                     <span className="font-medium text-slate-800">{pjp.nama_perusahaan}</span>

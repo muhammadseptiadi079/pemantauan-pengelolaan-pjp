@@ -50,6 +50,16 @@ class PjpController extends Controller
         return to_route('pjp.index')->with('success', 'Data PJP berhasil ditambahkan.');
     }
 
+    public function show(Pjp $pjp): Response
+    {
+        $pjp->load('laporans');
+
+        return Inertia::render('Pjp/Show', [
+            'pjp' => $pjp,
+            'laporans' => $pjp->laporans,
+        ]);
+    }
+
     public function edit(Pjp $pjp): Response
     {
         return Inertia::render('Pjp/Edit', [

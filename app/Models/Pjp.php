@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pjp extends Model
 {
@@ -28,6 +29,11 @@ class Pjp extends Model
         'status',
         'catatan',
     ];
+
+    public function laporans(): HasMany
+    {
+        return $this->hasMany(PjpLaporan::class)->latest();
+    }
 
     /**
      * Count of records per status, always including every status key (0 if none).

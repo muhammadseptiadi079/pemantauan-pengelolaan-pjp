@@ -22,3 +22,23 @@ export const STATUS_OPTIONS: Record<string, string> = {
     perlu_tindak_lanjut: 'Perlu Tindak Lanjut',
     tidak_aktif: 'Tidak Aktif',
 };
+
+export interface PjpLaporan {
+    id: number;
+    pjp_id: number;
+    jenis: string;
+    periode: string | null;
+    file_path: string;
+    file_name: string;
+    file_size: number;
+    catatan: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export const JENIS_LAPORAN_OPTIONS: Record<string, string> = {
+    spip: 'Data SPIP (Sarana, Prasarana, Instalasi & Peralatan)',
+    tsp: 'Target Sasaran Program (TSP)',
+    laporan_bulanan: 'Laporan Bulanan',
+    laporan_triwulan: 'Laporan Triwulan',
+};

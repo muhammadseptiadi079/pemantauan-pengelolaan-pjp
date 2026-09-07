@@ -80,6 +80,12 @@ export default function Index({
                                         <td className="px-4 py-3">
                                             <div className="flex justify-end gap-3">
                                                 <Link
+                                                    href={`/pjp/${pjp.id}`}
+                                                    className="font-medium text-blue-600 hover:text-blue-800"
+                                                >
+                                                    Detail
+                                                </Link>
+                                                <Link
                                                     href={`/pjp/${pjp.id}/edit`}
                                                     className="font-medium text-blue-600 hover:text-blue-800"
                                                 >
