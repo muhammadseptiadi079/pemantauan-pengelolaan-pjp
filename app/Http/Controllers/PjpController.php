@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pjp;
+use App\Models\PjpLaporan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -57,6 +58,8 @@ class PjpController extends Controller
         return Inertia::render('Pjp/Show', [
             'pjp' => $pjp,
             'laporans' => $pjp->laporans,
+            'triwulanTerbuka' => PjpLaporan::triwulanSedangDibuka(),
+            'bulanTriwulanDibuka' => implode(', ', PjpLaporan::BULAN_TRIWULAN_DIBUKA),
         ]);
     }
 

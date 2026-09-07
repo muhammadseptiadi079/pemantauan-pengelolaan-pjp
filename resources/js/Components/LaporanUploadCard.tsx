@@ -13,11 +13,13 @@ export default function LaporanUploadCard({
     jenis,
     label,
     laporans,
+    uploadDisabledMessage,
 }: {
     pjpId: number;
     jenis: string;
     label: string;
     laporans: PjpLaporan[];
+    uploadDisabledMessage?: string;
 }) {
     const [fileInputKey, setFileInputKey] = useState(0);
     const { data, setData, post, processing, errors, reset } = useForm<{
@@ -89,19 +91,17 @@ export default function LaporanUploadCard({
                                 {formatFileSize(laporan.file_size)}
                             </p>
                             <div className="flex flex-wrap items-center gap-2">
-                                {laporan.tepat_waktu !== null && (
-                                    <span
-                                        className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
-                                            laporan.tepat_waktu
-                                                ? 'bg-green-50 text-green-700'
-                                                : 'bg-red-50 text-red-700'
-                                        }`}
-                                    >
-                                        {laporan.tepat_waktu
-                                            ? 'Tepat Waktu'
-                                            : 'Terlambat'}
-                                    </span>
-                                )}
+                                <span
+                                    className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                                        laporan.tepat_waktu
+                                            ? 'bg-green-50 text-green-700'
+                                            : 'bg-red-50 text-red-700'
+                                    }`}
+                                >
+                                    {laporan.tepat_waktu
+                                        ? 'Tepat Waktu'
+                                        : 'Terlambat'}
+                                </span>
                                 <select
                                     value={laporan.kesesuaian_isi ?? ''}
                                     onChange={(e) =>
@@ -127,38 +127,44 @@ export default function LaporanUploadCard({
                 </ul>
             )}
 
-            <form
-                onSubmit={submit}
-                className="mt-4 space-y-2 border-t border-slate-100 pt-4"
-            >
-                <div className="grid gap-2 sm:grid-cols-2">
-                    <input
-                        type="text"
-                        placeholder="Periode (mis. September 2026)"
-                        value={data.periode}
-                        onChange={(e) => setData('periode', e.target.value)}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                    <input
-                        key={fileInputKey}
-                        type="file"
-                        onChange={(e) =>
-                            setData('file', e.target.files?.[0] ?? null)
-                        }
-                        className="text-sm text-slate-600 file:mr-2 file:rounded-md file:border-0 file:bg-slate-100 file:px-2 file:py-1.5 file:text-xs file:font-medium file:text-slate-700"
-                    />
-                </div>
-                {errors.file && (
-                    <p className="text-sm text-red-600">{errors.file}</p>
-                )}
-                <button
-                    type="submit"
-                    disabled={processing || !data.file}
-                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            {uploadDisabledMessage ? (
+                <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                    {uploadDisabledMessage}
+                </p>
+            ) : (
+                <form
+                    onSubmit={submit}
+                    className="mt-4 space-y-2 border-t border-slate-100 pt-4"
                 >
-                    Unggah
-                </button>
-            </form>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                        <input
+                            type="text"
+                            placeholder="Periode (mis. September 2026)"
+                            value={data.periode}
+                            onChange={(e) => setData('periode', e.target.value)}
+                            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        />
+                        <input
+                            key={fileInputKey}
+                            type="file"
+                            onChange={(e) =>
+                                setData('file', e.target.files?.[0] ?? null)
+                            }
+                            className="text-sm text-slate-600 file:mr-2 file:rounded-md file:border-0 file:bg-slate-100 file:px-2 file:py-1.5 file:text-xs file:font-medium file:text-slate-700"
+                        />
+                    </div>
+                    {errors.file && (
+                        <p className="text-sm text-red-600">{errors.file}</p>
+                    )}
+                    <button
+                        type="submit"
+                        disabled={processing || !data.file}
+                        className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    >
+                        Unggah
+                    </button>
+                </form>
+            )}
         </div>
     );
 }

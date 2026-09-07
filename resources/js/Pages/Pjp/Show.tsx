@@ -8,9 +8,13 @@ import { Pjp, PjpLaporan, TAHAPAN_OPTIONS, JENIS_LAPORAN_OPTIONS } from '@/types
 export default function Show({
     pjp,
     laporans,
+    triwulanTerbuka,
+    bulanTriwulanDibuka,
 }: {
     pjp: Pjp;
     laporans: PjpLaporan[];
+    triwulanTerbuka: boolean;
+    bulanTriwulanDibuka: string;
 }) {
     return (
         <AppLayout>
@@ -51,6 +55,11 @@ export default function Show({
                             jenis={jenis}
                             label={label}
                             laporans={laporans.filter((l) => l.jenis === jenis)}
+                            uploadDisabledMessage={
+                                jenis === 'laporan_triwulan' && !triwulanTerbuka
+                                    ? `Laporan Triwulan hanya bisa diunggah pada bulan ${bulanTriwulanDibuka}.`
+                                    : undefined
+                            }
                         />
                     ))}
                 </div>

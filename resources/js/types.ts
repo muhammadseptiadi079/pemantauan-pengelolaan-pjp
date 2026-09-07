@@ -33,7 +33,7 @@ export interface PjpLaporan {
     file_size: number;
     catatan: string | null;
     kesesuaian_isi: string | null;
-    tepat_waktu: boolean | null;
+    tepat_waktu: boolean;
     created_at: string;
     updated_at: string;
 }

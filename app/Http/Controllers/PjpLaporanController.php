@@ -19,6 +19,14 @@ class PjpLaporanController extends Controller
             'file' => ['required', 'file', 'mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png', 'max:10240'],
         ]);
 
+        if ($data['jenis'] === 'laporan_triwulan' && ! PjpLaporan::triwulanSedangDibuka()) {
+            $bulanDibuka = implode(', ', PjpLaporan::BULAN_TRIWULAN_DIBUKA);
+
+            return back()->withErrors([
+                'file' => "Laporan Triwulan hanya bisa diunggah pada bulan {$bulanDibuka}.",
+            ]);
+        }
+
         $file = $request->file('file');
         $path = $file->store("pjp-laporan/{$pjp->id}", 'public');
 

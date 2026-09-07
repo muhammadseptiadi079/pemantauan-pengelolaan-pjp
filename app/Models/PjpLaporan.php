@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,9 +22,20 @@ class PjpLaporan extends Model
     ];
 
     /**
-     * Batas tanggal pengiriman Laporan Bulanan setiap bulannya.
+     * Batas tanggal pengiriman dokumen setiap bulannya (semua jenis dokumen).
      */
-    public const BATAS_TANGGAL_LAPORAN_BULANAN = 3;
+    public const BATAS_TANGGAL_LAPORAN = 3;
+
+    /**
+     * Bulan-bulan dibukanya pengiriman Laporan Triwulan: TW1=April, TW2=Juli,
+     * TW3=Oktober, TW4=Januari.
+     */
+    public const BULAN_TRIWULAN_DIBUKA = [
+        4 => 'TW1 (April)',
+        7 => 'TW2 (Juli)',
+        10 => 'TW3 (Oktober)',
+        1 => 'TW4 (Januari)',
+    ];
 
     protected $fillable = [
         'pjp_id',
@@ -43,15 +55,22 @@ class PjpLaporan extends Model
         return $this->belongsTo(Pjp::class);
     }
 
-    /**
-     * Hanya relevan untuk Laporan Bulanan: null berarti tidak berlaku.
-     */
     protected function tepatWaktu(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->jenis === 'laporan_bulanan'
-                ? $this->created_at->day <= self::BATAS_TANGGAL_LAPORAN_BULANAN
-                : null,
+            get: fn () => $this->created_at->day <= self::BATAS_TANGGAL_LAPORAN,
         );
+    }
+
+    public static function triwulanSedangDibuka(?Carbon $tanggal = null): bool
+    {
+        $tanggal ??= now();
+
+        return array_key_exists($tanggal->month, self::BULAN_TRIWULAN_DIBUKA);
+    }
+
+    public static function triwulanLabelUntukBulan(int $bulan): ?string
+    {
+        return self::BULAN_TRIWULAN_DIBUKA[$bulan] ?? null;
     }
 }
