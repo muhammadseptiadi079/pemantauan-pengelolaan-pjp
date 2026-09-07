@@ -35,6 +35,65 @@ class Pjp extends Model
         return $this->hasMany(PjpLaporan::class)->latest();
     }
 
+    public function smkpChecklistAnswers(): HasMany
+    {
+        return $this->hasMany(SmkpChecklistAnswer::class);
+    }
+
+    /**
+     * Skor kepatuhan checklist prakualifikasi SMKP, dihitung dari kategori
+     * berbobot A-P (kategori Dokumen Legalitas tidak ikut dihitung karena
+     * berupa syarat wajib terpisah, bukan bagian dari sistem bobot 180).
+     * Item dengan nilai N/A dikeluarkan dari total bobot maupun skor; item
+     * yang belum diisi tetap menyumbang bobot ke penyebut (skor 0).
+     */
+    public function smkpScore(): array
+    {
+        $answers = $this->smkpChecklistAnswers()
+            ->with('item.category')
+            ->get()
+            ->keyBy('smkp_checklist_item_id');
+
+        $items = SmkpChecklistItem::query()
+            ->with('category')
+            ->whereHas('category', fn (Builder $q) => $q->where('kode', '!=', 'LEGALITAS'))
+            ->get();
+
+        $totalBobot = 0;
+        $totalSkor = 0.0;
+
+        foreach ($items as $item) {
+            $nilai = $answers->get($item->id)?->nilai;
+
+            if ($nilai === 'na') {
+                continue;
+            }
+
+            $totalBobot += $item->bobot;
+            $totalSkor += $item->bobot * ((int) ($nilai ?? 0) / 3);
+        }
+
+        $persentase = $totalBobot > 0 ? round($totalSkor / $totalBobot * 100, 1) : 0.0;
+
+        return [
+            'total_bobot' => $totalBobot,
+            'total_skor' => round($totalSkor, 1),
+            'persentase' => $persentase,
+            'kategori_risiko' => self::kategoriRisikoFor($persentase),
+        ];
+    }
+
+    private static function kategoriRisikoFor(float $persentase): string
+    {
+        return match (true) {
+            $persentase > 75 => 'Kritis',
+            $persentase >= 55 => 'Tinggi',
+            $persentase >= 36 => 'Sedang',
+            $persentase >= 20 => 'Rendah',
+            default => 'Sangat Rendah',
+        };
+    }
+
     public function scopeFilter(
         Builder $query,
         ?string $search,

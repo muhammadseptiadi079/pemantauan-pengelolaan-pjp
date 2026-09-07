@@ -26,6 +26,12 @@ export default function Show({
                         description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
                     />
                     <div className="flex shrink-0 gap-2">
+                        <Link
+                            href={`/pjp/${pjp.id}/checklist-smkp`}
+                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                            Checklist SMKP
+                        </Link>
                         <a
                             href={`/pjp/${pjp.id}/export-pdf`}
                             target="_blank"

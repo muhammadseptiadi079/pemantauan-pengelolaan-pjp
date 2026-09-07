@@ -50,6 +50,57 @@ export const KESESUAIAN_OPTIONS: Record<string, string> = {
     tidak_sesuai: 'Tidak Sesuai',
 };
 
+export interface SmkpChecklistItem {
+    id: number;
+    smkp_checklist_category_id: number;
+    grup_kode: string | null;
+    grup_nama: string | null;
+    nomor: number;
+    pertanyaan: string;
+    petunjuk: string | null;
+    bobot: number;
+    urutan: number;
+}
+
+export interface SmkpChecklistCategory {
+    id: number;
+    kode: string;
+    nama: string;
+    bobot: number;
+    urutan: number;
+    items: SmkpChecklistItem[];
+}
+
+export interface SmkpChecklistAnswer {
+    id: number;
+    pjp_id: number;
+    smkp_checklist_item_id: number;
+    jawaban: string | null;
+    nilai: string | null;
+    penjelasan: string | null;
+}
+
+export const SMKP_JAWABAN_OPTIONS: Record<string, string> = {
+    ya: 'Y',
+    tidak: 'T',
+    na: 'N/A',
+};
+
+export const SMKP_NILAI_OPTIONS: Record<string, string> = {
+    '0': '0 - Tidak ada / tidak tersedia / tidak dijelaskan',
+    '1': '1 - Belum terpenuhi',
+    '2': '2 - Cukup memadai, perlu perbaikan',
+    '3': '3 - Sudah memadai',
+    na: 'N/A - Tidak berlaku',
+};
+
+export interface SmkpScore {
+    total_bobot: number;
+    total_skor: number;
+    persentase: number;
+    kategori_risiko: string;
+}
+
 export interface Paginated<T> {
     data: T[];
     links: { url: string | null; label: string; active: boolean }[];

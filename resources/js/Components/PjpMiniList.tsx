@@ -1,7 +1,13 @@
 import { Link } from '@inertiajs/react';
 import StatusBadge from '@/Components/StatusBadge';
+import { SmkpScore } from '@/types';
 
-type MiniPjp = { id: number; nama_perusahaan: string; status: string };
+type MiniPjp = {
+    id: number;
+    nama_perusahaan: string;
+    status: string;
+    smkpScore?: SmkpScore;
+};
 
 export default function PjpMiniList({
     pjps,
@@ -27,7 +33,14 @@ export default function PjpMiniList({
                     className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-slate-50"
                 >
                     <span className="font-medium text-slate-800">{pjp.nama_perusahaan}</span>
-                    <StatusBadge status={pjp.status} />
+                    <div className="flex items-center gap-3">
+                        {pjp.smkpScore && (
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                Checklist SMKP: {pjp.smkpScore.persentase}%
+                            </span>
+                        )}
+                        <StatusBadge status={pjp.status} />
+                    </div>
                 </Link>
             ))}
         </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PjpController;
 use App\Http\Controllers\PjpLaporanController;
+use App\Http\Controllers\SmkpChecklistController;
 use App\Http\Controllers\TahapanController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,6 @@ Route::resource('pjp', PjpController::class);
 Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');
 Route::patch('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'update'])->name('pjp.laporan.update');
 Route::delete('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'destroy'])->name('pjp.laporan.destroy');
+
+Route::get('/pjp/{pjp}/checklist-smkp', [SmkpChecklistController::class, 'show'])->name('pjp.checklist-smkp.show');
+Route::post('/pjp/{pjp}/checklist-smkp', [SmkpChecklistController::class, 'update'])->name('pjp.checklist-smkp.update');

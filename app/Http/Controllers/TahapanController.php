@@ -27,8 +27,14 @@ class TahapanController extends Controller
 
     private function renderTahapan(string $component, string $tahapan, Request $request): Response
     {
+        $pjps = $this->pjpsForTahapan($tahapan, $request);
+
+        if ($tahapan === 'persyaratan-seleksi-penetapan') {
+            $pjps->each(fn (Pjp $pjp) => $pjp->smkpScore = $pjp->smkpScore());
+        }
+
         return Inertia::render($component, [
-            'pjps' => $this->pjpsForTahapan($tahapan, $request),
+            'pjps' => $pjps,
             'filters' => $this->filtersFromRequest($request),
             'statusCounts' => Pjp::statusCountsFor(Pjp::where('tahapan', $tahapan)),
         ]);
