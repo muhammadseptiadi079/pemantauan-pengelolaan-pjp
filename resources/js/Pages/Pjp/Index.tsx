@@ -23,6 +23,10 @@ export default function Index({
         }
     };
 
+    const exportQuery = new URLSearchParams(
+        Object.entries(filters).filter(([, value]) => value !== ''),
+    ).toString();
+
     return (
         <AppLayout>
             <div className="mx-auto max-w-5xl px-6 py-16">
@@ -31,12 +35,20 @@ export default function Index({
                         title="Data PJP"
                         description="Daftar seluruh Perusahaan Jasa Pertambangan (PJP) yang terdaftar dalam sistem."
                     />
-                    <Link
-                        href="/pjp/create"
-                        className="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                    >
-                        + Tambah PJP
-                    </Link>
+                    <div className="flex shrink-0 gap-2">
+                        <a
+                            href={`/pjp/export${exportQuery ? `?${exportQuery}` : ''}`}
+                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                            Export Excel
+                        </a>
+                        <Link
+                            href="/pjp/create"
+                            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                            + Tambah PJP
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="mb-6">

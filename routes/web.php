@@ -20,6 +20,9 @@ Route::get(
 
 Route::get('/evaluasi', [TahapanController::class, 'evaluasi'])->name('evaluasi');
 
+Route::get('/pjp/export', [PjpController::class, 'export'])->name('pjp.export');
+Route::get('/pjp/{pjp}/export-pdf', [PjpController::class, 'exportPdf'])->name('pjp.export-pdf');
+
 Route::resource('pjp', PjpController::class);
 
 Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');

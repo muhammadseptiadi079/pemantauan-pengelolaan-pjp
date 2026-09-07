@@ -24,12 +24,22 @@ export default function Show({
                         title={pjp.nama_perusahaan}
                         description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
                     />
-                    <Link
-                        href={`/pjp/${pjp.id}/edit`}
-                        className="shrink-0 rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-                    >
-                        Ubah Data
-                    </Link>
+                    <div className="flex shrink-0 gap-2">
+                        <a
+                            href={`/pjp/${pjp.id}/export-pdf`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                            Export PDF
+                        </a>
+                        <Link
+                            href={`/pjp/${pjp.id}/edit`}
+                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                            Ubah Data
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-slate-200 bg-white p-5 text-sm">

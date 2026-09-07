@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PjpExport;
 use App\Models\Pjp;
 use App\Models\PjpLaporan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PjpController extends Controller
 {
@@ -32,6 +37,34 @@ class PjpController extends Controller
             ],
             'statusCounts' => Pjp::statusCountsFor(),
         ]);
+    }
+
+    public function export(Request $request): BinaryFileResponse
+    {
+        $export = new PjpExport(
+            $request->query('search'),
+            $request->query('status'),
+            $request->query('tahapan'),
+        );
+
+        return Excel::download($export, 'data-pjp.xlsx');
+    }
+
+    public function exportPdf(Pjp $pjp): HttpResponse
+    {
+        $laporans = $pjp->laporans()->get();
+
+        $pdf = Pdf::loadView('pdf.pjp-report', [
+            'pjp' => $pjp,
+            'laporans' => $laporans,
+            'tahapanLabel' => Pjp::TAHAPAN[$pjp->tahapan] ?? $pjp->tahapan,
+            'statusLabel' => Pjp::STATUS[$pjp->status] ?? $pjp->status,
+            'jenisOptions' => PjpLaporan::JENIS,
+        ]);
+
+        $fileName = 'laporan-'.str($pjp->nama_perusahaan)->slug().'.pdf';
+
+        return $pdf->stream($fileName);
     }
 
     public function create(Request $request): Response
