@@ -3,6 +3,7 @@ export default function ConfirmDialog({
     title,
     message,
     confirmLabel = 'Hapus',
+    variant = 'danger',
     onConfirm,
     onCancel,
 }: {
@@ -10,10 +11,16 @@ export default function ConfirmDialog({
     title: string;
     message: string;
     confirmLabel?: string;
+    variant?: 'danger' | 'primary';
     onConfirm: () => void;
     onCancel: () => void;
 }) {
     if (!open) return null;
+
+    const confirmClass =
+        variant === 'primary'
+            ? 'rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
+            : 'rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700';
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -28,11 +35,7 @@ export default function ConfirmDialog({
                     >
                         Batal
                     </button>
-                    <button
-                        type="button"
-                        onClick={onConfirm}
-                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                    >
+                    <button type="button" onClick={onConfirm} className={confirmClass}>
                         {confirmLabel}
                     </button>
                 </div>

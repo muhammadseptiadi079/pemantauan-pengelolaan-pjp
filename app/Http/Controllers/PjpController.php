@@ -89,9 +89,23 @@ class PjpController extends Controller
         return Inertia::render('Pjp/Show', [
             'pjp' => $pjp,
             'laporans' => $pjp->laporans()->get(),
+            'evaluasis' => $pjp->evaluasis()->get(),
+            'smkpScore' => $pjp->smkpScore(),
+            'nextTahapan' => Pjp::NEXT_TAHAPAN[$pjp->tahapan] ?? null,
             'triwulanTerbuka' => PjpLaporan::triwulanSedangDibuka(),
             'bulanTriwulanDibuka' => implode(', ', PjpLaporan::BULAN_TRIWULAN_DIBUKA),
         ]);
+    }
+
+    public function advanceTahapan(Pjp $pjp): RedirectResponse
+    {
+        $next = Pjp::NEXT_TAHAPAN[$pjp->tahapan] ?? null;
+
+        abort_if($next === null, 400, 'PJP sudah berada di tahap terakhir.');
+
+        $pjp->update(['tahapan' => $next]);
+
+        return back()->with('success', 'PJP dilanjutkan ke tahap "'.Pjp::TAHAPAN[$next].'".');
     }
 
     public function edit(Pjp $pjp): Response

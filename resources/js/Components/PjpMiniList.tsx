@@ -1,12 +1,13 @@
 import { Link } from '@inertiajs/react';
 import StatusBadge from '@/Components/StatusBadge';
-import { SmkpScore } from '@/types';
+import { PjpEvaluasi, SEMESTER_OPTIONS, SmkpScore } from '@/types';
 
 type MiniPjp = {
     id: number;
     nama_perusahaan: string;
     status: string;
     smkpScore?: SmkpScore;
+    latestEvaluasi?: PjpEvaluasi | null;
 };
 
 export default function PjpMiniList({
@@ -37,6 +38,17 @@ export default function PjpMiniList({
                         {pjp.smkpScore && (
                             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
                                 Persyaratan PJP: {pjp.smkpScore.persentase}%
+                            </span>
+                        )}
+                        {pjp.latestEvaluasi && (
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                Evaluasi {SEMESTER_OPTIONS[pjp.latestEvaluasi.semester]}{' '}
+                                {pjp.latestEvaluasi.tahun}: {pjp.latestEvaluasi.skor_rata_rata}
+                            </span>
+                        )}
+                        {pjp.latestEvaluasi === null && (
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-400">
+                                Belum dievaluasi
                             </span>
                         )}
                         <StatusBadge status={pjp.status} />

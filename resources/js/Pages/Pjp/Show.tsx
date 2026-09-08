@@ -1,21 +1,44 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
 import LaporanUploadCard from '@/Components/LaporanUploadCard';
-import { Pjp, PjpLaporan, TAHAPAN_OPTIONS, JENIS_LAPORAN_OPTIONS } from '@/types';
+import EvaluasiCard from '@/Components/EvaluasiCard';
+import ConfirmDialog from '@/Components/ConfirmDialog';
+import {
+    Pjp,
+    PjpEvaluasi,
+    PjpLaporan,
+    SmkpScore,
+    TAHAPAN_OPTIONS,
+    JENIS_LAPORAN_OPTIONS,
+} from '@/types';
 
 export default function Show({
     pjp,
     laporans,
+    evaluasis,
+    smkpScore,
+    nextTahapan,
     triwulanTerbuka,
     bulanTriwulanDibuka,
 }: {
     pjp: Pjp;
     laporans: PjpLaporan[];
+    evaluasis: PjpEvaluasi[];
+    smkpScore: SmkpScore;
+    nextTahapan: string | null;
     triwulanTerbuka: boolean;
     bulanTriwulanDibuka: string;
 }) {
+    const [confirmAdvance, setConfirmAdvance] = useState(false);
+
+    const advance = () => {
+        router.post(`/pjp/${pjp.id}/advance-tahapan`, {}, { preserveScroll: true });
+        setConfirmAdvance(false);
+    };
+
     return (
         <AppLayout>
             <Head title={pjp.nama_perusahaan} />
@@ -51,6 +74,9 @@ export default function Show({
 
                 <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-slate-200 bg-white p-5 text-sm">
                     <StatusBadge status={pjp.status} />
+                    <span className="text-slate-600">
+                        Persyaratan PJP: {smkpScore.persentase}%
+                    </span>
                     {pjp.nib && (
                         <span className="text-slate-600">NIB: {pjp.nib}</span>
                     )}
@@ -58,6 +84,15 @@ export default function Show({
                         <span className="text-slate-600">
                             Penanggung Jawab: {pjp.penanggung_jawab}
                         </span>
+                    )}
+                    {nextTahapan && (
+                        <button
+                            type="button"
+                            onClick={() => setConfirmAdvance(true)}
+                            className="ml-auto rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+                        >
+                            Lanjutkan ke {TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan} &rarr;
+                        </button>
                     )}
                 </div>
 
@@ -80,7 +115,22 @@ export default function Show({
                         />
                     ))}
                 </div>
+
+                <h2 className="mb-4 mt-10 text-lg font-semibold text-slate-900">
+                    Evaluasi Kinerja
+                </h2>
+                <EvaluasiCard pjpId={pjp.id} evaluasis={evaluasis} />
             </div>
+
+            <ConfirmDialog
+                open={confirmAdvance}
+                title="Lanjutkan Tahap"
+                message={`Lanjutkan "${pjp.nama_perusahaan}" ke tahap "${nextTahapan ? TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan : ''}"? Perpindahan ini tidak memerlukan skor minimum tertentu — bisa dilanjutkan sesuai keputusan manajemen.`}
+                confirmLabel="Lanjutkan"
+                variant="primary"
+                onConfirm={advance}
+                onCancel={() => setConfirmAdvance(false)}
+            />
         </AppLayout>
     );
 }

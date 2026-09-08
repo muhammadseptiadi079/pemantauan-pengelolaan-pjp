@@ -20,6 +20,17 @@ class Pjp extends Model
         'tidak_aktif' => 'Tidak Aktif',
     ];
 
+    /**
+     * Tahap berikutnya dalam alur pengelolaan PJP. Perpindahan ini murni
+     * keputusan admin (lewat PjpController::advanceTahapan) — tidak ada
+     * skor minimum yang memblokir, karena manajemen bisa saja tetap
+     * memutuskan memakai PJP walau skor Persyaratan PJP-nya belum ideal.
+     */
+    public const NEXT_TAHAPAN = [
+        'persyaratan-seleksi-penetapan' => 'tanggung-jawab-pemantauan-pelaporan',
+        'tanggung-jawab-pemantauan-pelaporan' => 'evaluasi',
+    ];
+
     protected $fillable = [
         'nama_perusahaan',
         'nib',
@@ -38,6 +49,11 @@ class Pjp extends Model
     public function smkpChecklistAnswers(): HasMany
     {
         return $this->hasMany(SmkpChecklistAnswer::class);
+    }
+
+    public function evaluasis(): HasMany
+    {
+        return $this->hasMany(PjpEvaluasi::class)->orderByDesc('tahun')->orderByDesc('semester');
     }
 
     /**

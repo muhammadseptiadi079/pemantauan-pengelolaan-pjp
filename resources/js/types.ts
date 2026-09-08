@@ -101,6 +101,24 @@ export interface SmkpScore {
     kategori_risiko: string;
 }
 
+export interface PjpEvaluasi {
+    id: number;
+    pjp_id: number;
+    tahun: number;
+    semester: number;
+    skor_teknis: number;
+    skor_keselamatan_kesehatan: number;
+    skor_lingkungan: number;
+    skor_rata_rata: number;
+    catatan: string | null;
+    created_at: string;
+}
+
+export const SEMESTER_OPTIONS: Record<number, string> = {
+    1: 'Semester 1 (Januari - Juni)',
+    2: 'Semester 2 (Juli - Desember)',
+};
+
 export interface Paginated<T> {
     data: T[];
     links: { url: string | null; label: string; active: boolean }[];
