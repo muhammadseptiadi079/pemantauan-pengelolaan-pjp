@@ -79,9 +79,9 @@ class PjpController extends Controller
     {
         $data = $this->validateData($request);
 
-        Pjp::create($data);
+        $pjp = Pjp::create($data);
 
-        return to_route('pjp.index')->with('success', 'Data PJP berhasil ditambahkan.');
+        return to_route($pjp->tahapan)->with('success', 'Data PJP berhasil ditambahkan.');
     }
 
     public function show(Pjp $pjp): Response
@@ -121,15 +121,17 @@ class PjpController extends Controller
 
         $pjp->update($data);
 
-        return to_route('pjp.index')->with('success', 'Data PJP berhasil diperbarui.');
+        return to_route('pjp.show', $pjp)->with('success', 'Data PJP berhasil diperbarui.');
     }
 
     public function destroy(Pjp $pjp): RedirectResponse
     {
+        $tahapan = $pjp->tahapan;
+
         Storage::disk('public')->deleteDirectory("pjp-laporan/{$pjp->id}");
         $pjp->delete();
 
-        return to_route('pjp.index')->with('success', 'Data PJP berhasil dihapus.');
+        return to_route($tahapan)->with('success', 'Data PJP berhasil dihapus.');
     }
 
     private function validateData(Request $request): array

@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 const navItems = [
     { href: '/', label: 'Beranda' },
-    { href: '/pjp', label: 'Data PJP' },
     {
         href: '/persyaratan-seleksi-penetapan',
         label: '1. Persyaratan, Seleksi, Penetapan',

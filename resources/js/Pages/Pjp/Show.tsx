@@ -33,10 +33,16 @@ export default function Show({
     bulanTriwulanDibuka: string;
 }) {
     const [confirmAdvance, setConfirmAdvance] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
     const advance = () => {
         router.post(`/pjp/${pjp.id}/advance-tahapan`, {}, { preserveScroll: true });
         setConfirmAdvance(false);
+    };
+
+    const destroy = () => {
+        router.delete(`/pjp/${pjp.id}`);
+        setConfirmDelete(false);
     };
 
     return (
@@ -69,6 +75,13 @@ export default function Show({
                         >
                             Ubah Data
                         </Link>
+                        <button
+                            type="button"
+                            onClick={() => setConfirmDelete(true)}
+                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                        >
+                            Hapus
+                        </button>
                     </div>
                 </div>
 
@@ -130,6 +143,14 @@ export default function Show({
                 variant="primary"
                 onConfirm={advance}
                 onCancel={() => setConfirmAdvance(false)}
+            />
+
+            <ConfirmDialog
+                open={confirmDelete}
+                title="Hapus Data PJP"
+                message={`Hapus data PJP "${pjp.nama_perusahaan}"? Semua dokumen, checklist, dan evaluasi terkait akan ikut terhapus. Tindakan ini tidak bisa dibatalkan.`}
+                onConfirm={destroy}
+                onCancel={() => setConfirmDelete(false)}
             />
         </AppLayout>
     );
