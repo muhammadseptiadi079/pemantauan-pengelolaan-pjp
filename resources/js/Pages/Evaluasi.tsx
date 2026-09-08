@@ -4,6 +4,7 @@ import PageHeader from '@/Components/PageHeader';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
+import EvaluasiTrendComparison from '@/Components/EvaluasiTrendComparison';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { PjpEvaluasi, SmkpScore } from '@/types';
 
@@ -13,6 +14,7 @@ type MiniPjp = {
     status: string;
     smkpScore?: SmkpScore;
     latestEvaluasi?: PjpEvaluasi | null;
+    evaluasiHistory?: PjpEvaluasi[];
     achievement: number | null;
 };
 
@@ -54,6 +56,14 @@ export default function Evaluasi({
                         }))}
                     />
                 </div>
+
+                <EvaluasiTrendComparison
+                    series={pjps.map((pjp) => ({
+                        id: pjp.id,
+                        label: pjp.nama_perusahaan,
+                        points: pjp.evaluasiHistory ?? [],
+                    }))}
+                />
 
                 <div className="mb-14 rounded-xl border border-blue-200 bg-blue-50 p-5 text-sm text-blue-900">
                     <p className="flex items-center gap-2.5 font-semibold">

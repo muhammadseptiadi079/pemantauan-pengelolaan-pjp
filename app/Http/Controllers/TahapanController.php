@@ -34,7 +34,12 @@ class TahapanController extends Controller
         }
 
         if ($tahapan === 'evaluasi') {
-            $pjps->each(fn (Pjp $pjp) => $pjp->latestEvaluasi = $pjp->evaluasis()->first());
+            $pjps->each(function (Pjp $pjp) {
+                $pjp->latestEvaluasi = $pjp->evaluasis()->first();
+                $pjp->evaluasiHistory = $pjp->evaluasis()->get()
+                    ->sortBy([['tahun', 'asc'], ['semester', 'asc']])
+                    ->values();
+            });
         }
 
         $pjps->each(fn (Pjp $pjp) => $pjp->achievement = $pjp->achievement());
