@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pjp extends Model
 {
+    use HasFactory;
+
     public const TAHAPAN = [
         'persyaratan-seleksi-penetapan' => 'Persyaratan, Seleksi, dan Penetapan',
         'tanggung-jawab-pemantauan-pelaporan' => 'Tanggung Jawab, Pemantauan, dan Pelaporan',
