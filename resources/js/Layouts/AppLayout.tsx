@@ -8,7 +8,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <Sidebar />
             <main className="min-w-0 flex-1">
                 <FlashMessage />
-                {children}
+                <div className="page-enter">{children}</div>
             </main>
         </div>
     );

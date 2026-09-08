@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { STATUS_OPTIONS } from '@/types';
 
 const STATUS_ORDER = ['aktif', 'perlu_tindak_lanjut', 'tidak_aktif'];
@@ -30,6 +31,12 @@ export default function StatusStackedBar({
         percent: total === 0 ? 0 : ((counts[key] ?? 0) / total) * 100,
     })).filter((segment) => segment.count > 0);
 
+    const [grown, setGrown] = useState(false);
+    useEffect(() => {
+        const frame = requestAnimationFrame(() => setGrown(true));
+        return () => cancelAnimationFrame(frame);
+    }, []);
+
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="mb-3 flex items-baseline justify-between">
@@ -44,9 +51,9 @@ export default function StatusStackedBar({
                     {segments.map((segment) => (
                         <div
                             key={segment.key}
-                            className="flex h-full items-center justify-center first:rounded-l-full last:rounded-r-full"
+                            className="flex h-full items-center justify-center transition-[flex-grow] duration-700 ease-out first:rounded-l-full last:rounded-r-full"
                             style={{
-                                flexGrow: segment.count,
+                                flexGrow: grown ? segment.count : 0,
                                 flexBasis: 0,
                                 backgroundColor: STATUS_FILL[segment.key],
                             }}

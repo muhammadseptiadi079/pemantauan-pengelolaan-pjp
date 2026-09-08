@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 type AchievementItem = {
     id: number;
@@ -36,6 +37,12 @@ export default function AchievementBarChart({
         .sort((a, b) => a.label.localeCompare(b.label));
     const rows = [...scored, ...unscored];
 
+    const [grown, setGrown] = useState(false);
+    useEffect(() => {
+        const frame = requestAnimationFrame(() => setGrown(true));
+        return () => cancelAnimationFrame(frame);
+    }, []);
+
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="mb-3 flex items-baseline justify-between">
@@ -68,9 +75,9 @@ export default function AchievementBarChart({
                                 <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100">
                                     {item.value !== null && (
                                         <span
-                                            className="block h-full rounded-r-full"
+                                            className="block h-full rounded-r-full transition-[width] duration-700 ease-out"
                                             style={{
-                                                width: `${Math.max(item.value, 2)}%`,
+                                                width: grown ? `${Math.max(item.value, 2)}%` : '0%',
                                                 backgroundColor: band?.fill,
                                             }}
                                         />

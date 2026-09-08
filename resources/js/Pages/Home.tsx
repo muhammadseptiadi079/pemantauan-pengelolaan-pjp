@@ -1,6 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
+import AnimatedNumber from '@/Components/AnimatedNumber';
+import LogoMark from '@/Components/Logo';
 
 const tahapan = [
     {
@@ -48,6 +50,9 @@ export default function Home({
             <Head title="Beranda" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <header className="mb-12 text-center">
+                    <div className="mb-4 flex justify-center">
+                        <LogoMark className="h-14 w-14" />
+                    </div>
                     <h1 className="text-4xl font-bold tracking-tight text-slate-900">
                         Pemantauan &amp; Pengelolaan PJP
                     </h1>
@@ -79,22 +84,22 @@ export default function Home({
                 )}
 
                 <section className="mb-12 grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                         <p className="text-sm text-slate-500">Total PJP Terdaftar</p>
                         <p className="mt-2 text-3xl font-bold text-slate-900">
-                            {stats.total}
+                            <AnimatedNumber value={stats.total} />
                         </p>
                     </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                         <p className="text-sm text-slate-500">Aktif Dipantau</p>
                         <p className="mt-2 text-3xl font-bold text-green-600">
-                            {stats.aktifDipantau}
+                            <AnimatedNumber value={stats.aktifDipantau} />
                         </p>
                     </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                         <p className="text-sm text-slate-500">Perlu Tindak Lanjut</p>
                         <p className="mt-2 text-3xl font-bold text-amber-600">
-                            {stats.perluTindakLanjut}
+                            <AnimatedNumber value={stats.perluTindakLanjut} />
                         </p>
                     </div>
                 </section>
