@@ -29,11 +29,20 @@ export default function AchievementBarChart({
     emptyMessage,
     noDataLabel,
     items,
+    onItemClick,
 }: {
     title: string;
     emptyMessage: string;
     noDataLabel: string;
     items: AchievementItem[];
+    /**
+     * Kalau diisi, baris dengan `value` terisi memicu ini alih-alih langsung
+     * pindah ke `/pjp/{id}` — dipakai halaman Persyaratan untuk membuka
+     * popup donut ketimbang lompat ke detail. Baris tanpa skor (`value`
+     * null) tetap jadi link biasa karena tidak ada apa-apa untuk ditampilkan
+     * di donut.
+     */
+    onItemClick?: (item: AchievementItem) => void;
 }) {
     const scored = items
         .filter((item) => item.value !== null)
@@ -77,18 +86,14 @@ export default function AchievementBarChart({
                             ) : (
                                 noDataLabel
                             );
-                        return (
-                            <Link
-                                key={item.id}
-                                href={`/pjp/${item.id}`}
-                                className="row-in flex flex-col gap-1.5 rounded-lg px-2 py-2 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5"
-                                style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
-                                title={
-                                    item.value !== null
-                                        ? `${item.label}: ${item.value}%`
-                                        : `${item.label}: ${noDataLabel}`
-                                }
-                            >
+                        const rowClassName =
+                            'row-in flex w-full flex-col gap-1.5 rounded-lg px-2 py-2 text-left transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5';
+                        const rowTitle =
+                            item.value !== null
+                                ? `${item.label}: ${item.value}%`
+                                : `${item.label}: ${noDataLabel}`;
+                        const rowContent = (
+                            <>
                                 <div className="flex items-center justify-between gap-2 sm:w-64 sm:shrink-0 sm:justify-start">
                                     <span className="text-sm text-slate-700">
                                         {item.label}
@@ -112,6 +117,33 @@ export default function AchievementBarChart({
                                 <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-28">
                                     {valueDisplay}
                                 </span>
+                            </>
+                        );
+
+                        if (onItemClick && item.value !== null) {
+                            return (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => onItemClick(item)}
+                                    className={rowClassName}
+                                    style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
+                                    title={rowTitle}
+                                >
+                                    {rowContent}
+                                </button>
+                            );
+                        }
+
+                        return (
+                            <Link
+                                key={item.id}
+                                href={`/pjp/${item.id}`}
+                                className={rowClassName}
+                                style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
+                                title={rowTitle}
+                            >
+                                {rowContent}
                             </Link>
                         );
                     })}

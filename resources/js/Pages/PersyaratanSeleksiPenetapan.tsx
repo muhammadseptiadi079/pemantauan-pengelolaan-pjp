@@ -1,10 +1,12 @@
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
+import AchievementDonutModal, { DonutTarget } from '@/Components/AchievementDonutModal';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { SmkpScore } from '@/types';
 
@@ -43,6 +45,8 @@ export default function PersyaratanSeleksiPenetapan({
     filters: { search: string; status: string };
     statusCounts: StatusCounts;
 }) {
+    const [selected, setSelected] = useState<DonutTarget | null>(null);
+
     return (
         <AppLayout>
             <Head title="Persyaratan, Seleksi, dan Penetapan" />
@@ -70,6 +74,10 @@ export default function PersyaratanSeleksiPenetapan({
                             label: pjp.nama_perusahaan,
                             value: pjp.achievement,
                         }))}
+                        onItemClick={(item) =>
+                            item.value !== null &&
+                            setSelected({ id: item.id, label: item.label, value: item.value })
+                        }
                     />
                 </div>
 
@@ -94,7 +102,9 @@ export default function PersyaratanSeleksiPenetapan({
                     <p className="mt-1">
                         Setiap PJP wajib mengisi checklist prakualifikasi SMKP (17 kategori,
                         126 pertanyaan berbobot) untuk menunjukkan tingkat kepatuhannya.
-                        Klik salah satu PJP pada daftar di bawah, lalu buka tombol{' '}
+                        Klik salah satu baris pada grafik &quot;Capaian Persyaratan PJP&quot;
+                        di atas untuk melihat rincian tercapai/kekurangannya, atau klik salah
+                        satu PJP pada daftar di bawah, lalu buka tombol{' '}
                         <strong>&quot;Persyaratan PJP&quot;</strong> di halaman detailnya untuk
                         mengisi atau melihat skornya. Persentase skor tiap PJP juga
                         ditampilkan langsung pada daftar di bawah ini.
@@ -107,6 +117,8 @@ export default function PersyaratanSeleksiPenetapan({
                     filters={filters}
                 />
             </div>
+
+            <AchievementDonutModal pjp={selected} onClose={() => setSelected(null)} />
         </AppLayout>
     );
 }

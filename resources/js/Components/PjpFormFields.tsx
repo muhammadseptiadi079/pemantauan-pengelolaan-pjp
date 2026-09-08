@@ -1,4 +1,14 @@
+import { TahapIcon } from '@/Components/TahapIcons';
 import { STATUS_OPTIONS } from '@/types';
+
+function FieldLabel({ icon, children }: { icon: string; children: string }) {
+    return (
+        <label className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+            <TahapIcon name={icon} className="h-4 w-4 text-slate-400" />
+            {children}
+        </label>
+    );
+}
 
 export type PjpFormData = {
     nama_perusahaan: string;
@@ -21,9 +31,7 @@ export default function PjpFormFields({
     return (
         <>
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    Nama Perusahaan
-                </label>
+                <FieldLabel icon="building">Nama Perusahaan</FieldLabel>
                 <input
                     type="text"
                     value={data.nama_perusahaan}
@@ -38,9 +46,7 @@ export default function PjpFormFields({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    NIB
-                </label>
+                <FieldLabel icon="document">NIB</FieldLabel>
                 <input
                     type="text"
                     value={data.nib}
@@ -53,9 +59,7 @@ export default function PjpFormFields({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    Penanggung Jawab
-                </label>
+                <FieldLabel icon="user">Penanggung Jawab</FieldLabel>
                 <input
                     type="text"
                     value={data.penanggung_jawab}
@@ -70,9 +74,7 @@ export default function PjpFormFields({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    Alamat
-                </label>
+                <FieldLabel icon="location">Alamat</FieldLabel>
                 <textarea
                     value={data.alamat}
                     onChange={(e) => setData('alamat', e.target.value)}
@@ -85,9 +87,7 @@ export default function PjpFormFields({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    Status
-                </label>
+                <FieldLabel icon="check">Status</FieldLabel>
                 <select
                     value={data.status}
                     onChange={(e) => setData('status', e.target.value)}
@@ -105,9 +105,7 @@ export default function PjpFormFields({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700">
-                    Catatan
-                </label>
+                <FieldLabel icon="note">Catatan</FieldLabel>
                 <textarea
                     value={data.catatan}
                     onChange={(e) => setData('catatan', e.target.value)}

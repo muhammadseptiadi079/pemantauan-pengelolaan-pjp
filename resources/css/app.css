@@ -110,8 +110,18 @@ button {
     }
 }
 
+/*
+ * Sengaja TANPA fill-mode "both"/"forwards": kalau dipertahankan, computed
+ * `transform` elemen ini tetap "translateY(0) scale(1)" (bukan "none")
+ * selamanya setelah animasi selesai — secara visual identik, tapi transform
+ * apa pun selain "none" membuat elemen ini jadi containing block baru untuk
+ * descendant `position: fixed` (modal seperti ConfirmDialog/AchievementDonut
+ * Modal jadi ke-posisi relatif ke div ini, bukan ke viewport, dan salah
+ * tempat di halaman yang lebih tinggi dari layar). Tanpa fill-mode, begitu
+ * animasi selesai transform kembali ke "none" dari stylesheet aslinya.
+ */
 .page-enter {
-    animation: page-in 0.4s ease-out both;
+    animation: page-in 0.4s ease-out;
 }
 
 .row-in {
