@@ -51,7 +51,7 @@ class TahapanController extends Controller
         return Pjp::where('tahapan', $tahapan)
             ->filter($request->query('search'), $request->query('status'))
             ->latest()
-            ->get(['id', 'nama_perusahaan', 'status']);
+            ->get(['id', 'nama_perusahaan', 'status', 'tahapan']);
     }
 
     private function filtersFromRequest(Request $request): array

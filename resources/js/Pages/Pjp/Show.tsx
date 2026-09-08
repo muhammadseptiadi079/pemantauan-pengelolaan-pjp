@@ -16,6 +16,13 @@ import {
     JENIS_LAPORAN_OPTIONS,
 } from '@/types';
 
+function scoreColor(value: number): string {
+    if (value >= 80) return 'text-green-700';
+    if (value >= 60) return 'text-blue-700';
+    if (value >= 40) return 'text-amber-700';
+    return 'text-red-700';
+}
+
 export default function Show({
     pjp,
     laporans,
@@ -50,16 +57,18 @@ export default function Show({
         setConfirmDelete(false);
     };
 
+    const latestEvaluasi = evaluasis[0] ?? null;
+
     return (
         <AppLayout>
             <Head title={pjp.nama_perusahaan} />
             <div className="mx-auto max-w-3xl px-6 py-16">
-                <div className="mb-8 flex items-start justify-between gap-4">
+                <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                     <PageHeader
                         title={pjp.nama_perusahaan}
                         description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
                     />
-                    <div className="flex shrink-0 gap-2">
+                    <div className="flex shrink-0 flex-wrap justify-end gap-2">
                         <Link
                             href={`/pjp/${pjp.id}/checklist-smkp`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
@@ -90,42 +99,69 @@ export default function Show({
                     </div>
                 </div>
 
-                <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-slate-200 bg-white p-5 text-sm">
-                    <StatusBadge status={pjp.status} />
-                    <span className="text-slate-600">
-                        Persyaratan PJP: {smkpScore.persentase}%
-                    </span>
-                    <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                            legalitasStatus.lengkap === legalitasStatus.total
-                                ? 'bg-green-50 text-green-700'
-                                : 'bg-amber-50 text-amber-700'
-                        }`}
-                    >
-                        Dokumen Legalitas: {legalitasStatus.lengkap}/{legalitasStatus.total}
-                    </span>
-                    <span className="text-slate-600">
-                        Kepatuhan Pelaporan:{' '}
-                        {pelaporanScore !== null ? `${pelaporanScore}%` : 'Belum ada laporan'}
-                    </span>
-                    {pjp.nib && (
-                        <span className="text-slate-600">NIB: {pjp.nib}</span>
-                    )}
-                    {pjp.penanggung_jawab && (
-                        <span className="text-slate-600">
-                            Penanggung Jawab: {pjp.penanggung_jawab}
-                        </span>
-                    )}
-                    {nextTahapan && (
-                        <button
-                            type="button"
-                            onClick={() => setConfirmAdvance(true)}
-                            className="ml-auto rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
-                        >
-                            Lanjutkan ke {TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan} &rarr;
-                        </button>
-                    )}
+                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                        <StatusBadge status={pjp.status} />
+                        {pjp.nib && <span className="text-slate-600">NIB: {pjp.nib}</span>}
+                        {pjp.penanggung_jawab && (
+                            <span className="text-slate-600">
+                                Penanggung Jawab: {pjp.penanggung_jawab}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-2 gap-4 border-t border-slate-100 pt-5 sm:grid-cols-4">
+                        <div>
+                            <p className="text-xs text-slate-500">Persyaratan PJP</p>
+                            <p className={`mt-1 text-xl font-bold ${scoreColor(smkpScore.persentase)}`}>
+                                {smkpScore.persentase}%
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-xs text-slate-500">Dokumen Legalitas</p>
+                            <p
+                                className={`mt-1 text-xl font-bold ${
+                                    legalitasStatus.lengkap === legalitasStatus.total
+                                        ? 'text-green-700'
+                                        : 'text-amber-700'
+                                }`}
+                            >
+                                {legalitasStatus.lengkap}/{legalitasStatus.total}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-xs text-slate-500">Kepatuhan Pelaporan</p>
+                            <p
+                                className={`mt-1 text-xl font-bold ${
+                                    pelaporanScore !== null ? scoreColor(pelaporanScore) : 'text-slate-300'
+                                }`}
+                            >
+                                {pelaporanScore !== null ? `${pelaporanScore}%` : '—'}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-xs text-slate-500">Evaluasi Terakhir</p>
+                            <p
+                                className={`mt-1 text-xl font-bold ${
+                                    latestEvaluasi ? scoreColor(latestEvaluasi.skor_rata_rata) : 'text-slate-300'
+                                }`}
+                            >
+                                {latestEvaluasi ? latestEvaluasi.skor_rata_rata : '—'}
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
+                {nextTahapan && (
+                    <button
+                        type="button"
+                        onClick={() => setConfirmAdvance(true)}
+                        className="mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-shadow hover:shadow-md"
+                    >
+                        Lanjutkan ke {TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan}
+                        <span aria-hidden="true">&rarr;</span>
+                    </button>
+                )}
 
                 {pjp.catatan && (
                     <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-5">

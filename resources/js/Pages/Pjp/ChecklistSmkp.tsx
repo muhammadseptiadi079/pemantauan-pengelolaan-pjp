@@ -151,14 +151,24 @@ export default function ChecklistSmkp({
                     </h3>
                     <div className="space-y-2">
                         {categoryBreakdown.map((category) => (
-                            <div key={category.kode} className="flex items-center gap-3">
-                                <span className="w-8 shrink-0 text-xs font-semibold text-slate-500">
-                                    {category.kode}
-                                </span>
-                                <span className="w-64 shrink-0 truncate text-sm text-slate-700">
-                                    {category.nama}
-                                </span>
-                                <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                            <div
+                                key={category.kode}
+                                className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3"
+                            >
+                                <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:justify-start">
+                                    <span className="flex min-w-0 items-center gap-2">
+                                        <span className="shrink-0 text-xs font-semibold text-slate-500">
+                                            {category.kode}
+                                        </span>
+                                        <span className="truncate text-sm text-slate-700">
+                                            {category.nama}
+                                        </span>
+                                    </span>
+                                    <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
+                                        {category.persentase}%
+                                    </span>
+                                </div>
+                                <span className="h-2 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
                                     <span
                                         className="block h-full rounded-r-full"
                                         style={{
@@ -167,7 +177,7 @@ export default function ChecklistSmkp({
                                         }}
                                     />
                                 </span>
-                                <span className="w-16 shrink-0 text-right text-xs font-medium text-slate-600">
+                                <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-16">
                                     {category.persentase}%
                                 </span>
                             </div>

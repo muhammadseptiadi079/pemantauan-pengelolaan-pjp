@@ -62,17 +62,22 @@ export default function AchievementBarChart({
                             <Link
                                 key={item.id}
                                 href={`/pjp/${item.id}`}
-                                className="flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-slate-50"
+                                className="flex flex-col gap-1.5 rounded-lg px-2 py-2 hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5"
                                 title={
                                     item.value !== null
                                         ? `${item.label}: ${item.value}%`
                                         : `${item.label}: ${noDataLabel}`
                                 }
                             >
-                                <span className="w-48 shrink-0 truncate text-sm text-slate-700">
-                                    {item.label}
-                                </span>
-                                <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100">
+                                <div className="flex items-center justify-between gap-2 sm:w-48 sm:shrink-0 sm:justify-start">
+                                    <span className="truncate text-sm text-slate-700">
+                                        {item.label}
+                                    </span>
+                                    <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
+                                        {item.value !== null ? `${item.value}%` : noDataLabel}
+                                    </span>
+                                </div>
+                                <span className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
                                     {item.value !== null && (
                                         <span
                                             className="block h-full rounded-r-full transition-[width] duration-700 ease-out"
@@ -83,7 +88,7 @@ export default function AchievementBarChart({
                                         />
                                     )}
                                 </span>
-                                <span className="w-28 shrink-0 text-right text-xs font-medium text-slate-600">
+                                <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-28">
                                     {item.value !== null ? `${item.value}%` : noDataLabel}
                                 </span>
                             </Link>
