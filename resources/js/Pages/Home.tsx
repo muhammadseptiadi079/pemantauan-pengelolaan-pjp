@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
-import AnimatedNumber from '@/Components/AnimatedNumber';
+import GradientStatCard from '@/Components/GradientStatCard';
 import LogoMark from '@/Components/Logo';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { TAHAPAN_OPTIONS } from '@/types';
@@ -133,24 +133,27 @@ export default function Home({
                 )}
 
                 <section className="mb-12 grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                        <p className="text-sm text-slate-500">Total PJP Terdaftar</p>
-                        <p className="mt-2 text-3xl font-bold text-slate-900">
-                            <AnimatedNumber value={stats.total} />
-                        </p>
-                    </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                        <p className="text-sm text-slate-500">Aktif Dipantau</p>
-                        <p className="mt-2 text-3xl font-bold text-green-600">
-                            <AnimatedNumber value={stats.aktifDipantau} />
-                        </p>
-                    </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                        <p className="text-sm text-slate-500">Perlu Tindak Lanjut</p>
-                        <p className="mt-2 text-3xl font-bold text-amber-600">
-                            <AnimatedNumber value={stats.perluTindakLanjut} />
-                        </p>
-                    </div>
+                    <GradientStatCard
+                        value={stats.total}
+                        label="Total PJP Terdaftar"
+                        icon="building"
+                        color="blue"
+                        href="/pjp"
+                    />
+                    <GradientStatCard
+                        value={stats.aktifDipantau}
+                        label="Aktif Dipantau"
+                        icon="check"
+                        color="green"
+                        href="/pjp?status=aktif"
+                    />
+                    <GradientStatCard
+                        value={stats.perluTindakLanjut}
+                        label="Perlu Tindak Lanjut"
+                        icon="alert"
+                        color="amber"
+                        href="/pjp?status=perlu_tindak_lanjut"
+                    />
                 </section>
 
                 {stats.total === 0 ? (
