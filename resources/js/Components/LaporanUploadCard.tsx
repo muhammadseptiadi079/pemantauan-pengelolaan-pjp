@@ -72,7 +72,7 @@ export default function LaporanUploadCard({
     };
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
+        <div className="glass-card p-5">
             <div className="flex items-center gap-2.5">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                     <TahapIcon name={JENIS_ICON[jenis] ?? 'document'} className="h-4 w-4" />

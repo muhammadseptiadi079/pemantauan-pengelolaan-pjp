@@ -69,7 +69,7 @@ export default function Index({
                 <PjpFilters action="/pjp" initial={filters} showTahapanFilter />
 
                 {pjps.data.length === 0 ? (
-                    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
+                    <div className="glass-empty p-8 text-center text-sm text-slate-500">
                         {filters.search || filters.tahapan || filters.status
                             ? 'Tidak ada data PJP yang cocok dengan filter.'
                             : 'Belum ada data PJP. Tambahkan data untuk mulai memantau dan mengelola PJP.'}
@@ -77,7 +77,7 @@ export default function Index({
                 ) : (
                     <>
                         {/* Desktop / tablet: table */}
-                        <div className="hidden overflow-x-auto rounded-xl border border-slate-200 bg-white md:block">
+                        <div className="glass-card hidden overflow-x-auto md:block">
                             <table className="w-full min-w-[640px] text-left text-sm">
                                 <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
                                     <tr>
@@ -137,7 +137,7 @@ export default function Index({
                             {pjps.data.map((pjp, index) => (
                                 <div
                                     key={pjp.id}
-                                    className="row-in rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50"
+                                    className="glass-card row-in p-4 transition-colors hover:bg-white/85"
                                     style={{ animationDelay: `${Math.min(index, 12) * 30}ms` }}
                                 >
                                     <div className="flex items-start justify-between gap-3">

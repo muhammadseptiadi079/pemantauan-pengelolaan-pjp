@@ -62,7 +62,7 @@ export default function GradientStatCard({
     color: 'blue' | 'green' | 'amber';
     href?: string;
 }) {
-    const className = `group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-6 text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${GRADIENTS[color]}`;
+    const className = `group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-6 text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl ${GRADIENTS[color]}`;
 
     if (href) {
         return (

@@ -80,7 +80,7 @@ export default function Home({
                 </header>
 
                 {pjpBelumLaporanBulanan.length > 0 && (
-                    <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
+                    <div className="mb-8 rounded-2xl border border-amber-200/70 bg-amber-50/60 p-5 shadow-lg shadow-amber-100/40 backdrop-blur-xl">
                         <p className="flex items-center gap-2.5 text-sm font-semibold text-amber-900">
                             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-amber-100 text-amber-700">
                                 <TahapIcon name="alert" className="h-4 w-4" />
@@ -104,7 +104,7 @@ export default function Home({
                 )}
 
                 {perluPerhatian.length > 0 && (
-                    <div className="mb-8 rounded-xl border border-slate-200 bg-white p-5">
+                    <div className="glass-card mb-8 p-5">
                         <p className="mb-3 flex items-center gap-2.5 text-sm font-semibold text-slate-900">
                             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                                 <TahapIcon name="alert" className="h-4 w-4" />
@@ -163,7 +163,7 @@ export default function Home({
                 </section>
 
                 {stats.total === 0 ? (
-                    <div className="mb-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
+                    <div className="glass-empty mb-12 p-6 text-center text-sm text-slate-500">
                         Belum ada data PJP. Tambahkan data untuk mulai memantau dan
                         mengelola PJP.
                     </div>
@@ -181,7 +181,7 @@ export default function Home({
                         <Link
                             key={tahap.href}
                             href={tahap.href}
-                            className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                            className="glass-card group flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-2xl"
                         >
                             <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-sm">
                                 <TahapIcon name={tahap.icon} className="h-5 w-5" />

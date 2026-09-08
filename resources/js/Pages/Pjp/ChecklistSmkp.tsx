@@ -112,7 +112,7 @@ export default function ChecklistSmkp({
                     </Link>
                 </div>
 
-                <div className="mb-8 grid gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:grid-cols-3">
+                <div className="glass-card mb-8 grid gap-4 p-5 sm:grid-cols-3">
                     <div>
                         <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                             <TahapIcon name="persyaratan" className="h-4 w-4" />
@@ -156,7 +156,7 @@ export default function ChecklistSmkp({
                     </div>
                 </div>
 
-                <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4">
+                <div className="glass-card mb-6 flex flex-wrap items-center justify-between gap-3 p-4">
                     <div className="flex items-center gap-2.5">
                         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                             <TahapIcon name="legalitas" className="h-4 w-4" />
@@ -181,7 +181,7 @@ export default function ChecklistSmkp({
                     </span>
                 </div>
 
-                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
+                <div className="glass-card mb-6 p-5">
                     <div className="mb-3 flex items-center gap-2.5">
                         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                             <TahapIcon name="persyaratan" className="h-4 w-4" />
@@ -250,7 +250,7 @@ export default function ChecklistSmkp({
                     {categories.map((category) => (
                         <details
                             key={category.id}
-                            className="group rounded-xl border border-slate-200 bg-white"
+                            className="glass-card group"
                             open={category.kode === 'LEGALITAS'}
                         >
                             <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 text-sm font-semibold text-slate-900">

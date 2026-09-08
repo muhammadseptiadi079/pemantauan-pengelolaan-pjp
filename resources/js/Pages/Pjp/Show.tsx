@@ -139,7 +139,7 @@ export default function Show({
                     </div>
                 </div>
 
-                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
+                <div className="glass-card mb-6 p-5">
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                         <StatusBadge status={pjp.status} />
                         {pjp.nib && <span className="text-slate-600">NIB: {pjp.nib}</span>}
@@ -199,7 +199,7 @@ export default function Show({
                 )}
 
                 {pjp.catatan && (
-                    <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-5">
+                    <div className="mb-10 rounded-2xl border border-amber-200/70 bg-amber-50/60 p-5 shadow-lg shadow-amber-100/40 backdrop-blur-xl">
                         <h2 className="text-sm font-semibold text-amber-900">Catatan</h2>
                         <p className="mt-1 whitespace-pre-line text-sm text-amber-800">
                             {pjp.catatan}

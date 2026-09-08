@@ -9,7 +9,53 @@
 }
 
 body {
-    background-color: #f8f9fb;
+    background-color: #f3f5fa;
+}
+
+/*
+ * Kartu "kaca" (glassmorphism) — pengganti kartu putih solid + garis tepi
+ * tipis yang dipakai di hampir semua tempat sebelumnya. Efek blur di
+ * `backdrop-filter` hanya kelihatan kalau ada sesuatu berwarna di
+ * belakangnya, makanya `.bg-blob` di AppLayout wajib ada di belakang
+ * setiap halaman — tanpa itu kartu ini cuma jadi putih transparan biasa.
+ */
+.glass-card {
+    background-color: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1.25rem;
+    box-shadow:
+        0 20px 40px -20px rgba(30, 41, 59, 0.18),
+        0 2px 8px -2px rgba(30, 41, 59, 0.06);
+}
+
+.glass-empty {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px dashed rgba(148, 163, 184, 0.55);
+    border-radius: 1.25rem;
+}
+
+.glass-nav {
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+@keyframes float-blob {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(3%, -4%) scale(1.05);
+    }
+}
+
+.bg-blob {
+    animation: float-blob 18s ease-in-out infinite;
 }
 
 a,

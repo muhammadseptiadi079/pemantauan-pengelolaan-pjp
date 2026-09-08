@@ -24,7 +24,7 @@ function SidebarSummary({ stats }: { stats?: SidebarStats }) {
     if (!stats) return null;
 
     return (
-        <div className="mx-3 mb-3 rounded-lg border border-slate-100 bg-slate-50 p-3">
+        <div className="mx-3 mb-3 rounded-xl border border-white/60 bg-white/50 p-3">
             <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-1.5 text-slate-500">
                     <TahapIcon name="building" className="h-3.5 w-3.5" />
@@ -97,7 +97,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
+            <header className="glass-nav sticky top-0 z-30 flex items-center justify-between border-b border-white/50 px-4 py-3 md:hidden">
                 <div className="flex items-center gap-2.5">
                     <LogoMark className="h-8 w-8" />
                     <p className="text-sm font-semibold text-slate-900">
@@ -127,13 +127,13 @@ export default function Sidebar() {
                 </button>
             </header>
 
-            <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-white md:flex">
-                <div className="border-b border-slate-200 px-6 py-5">
+            <aside className="glass-nav sticky top-0 hidden h-screen w-72 shrink-0 flex-col overflow-y-auto border-r border-white/50 md:flex">
+                <div className="border-b border-white/50 px-6 py-5">
                     <LogoWithText />
                 </div>
                 <NavLinks pathname={pathname} />
                 <SidebarSummary stats={sidebarStats} />
-                <div className="border-t border-slate-100 px-3 py-3">
+                <div className="border-t border-white/50 px-3 py-3">
                     <Link
                         href="/bantuan"
                         className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
@@ -146,7 +146,7 @@ export default function Sidebar() {
                         Bantuan
                     </Link>
                 </div>
-                <div className="border-t border-slate-100 px-6 py-4">
+                <div className="border-t border-white/50 px-6 py-4">
                     <p className="text-[11px] leading-relaxed text-slate-400">
                         &copy; {new Date().getFullYear()} Pemantauan &amp; Pengelolaan PJP
                     </p>
@@ -160,8 +160,8 @@ export default function Sidebar() {
                         onClick={() => setOpen(false)}
                         aria-hidden="true"
                     />
-                    <div className="absolute inset-y-0 left-0 flex w-72 max-w-[80%] flex-col bg-white shadow-xl animate-[slide-in-left_0.2s_ease-out]">
-                        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+                    <div className="glass-nav absolute inset-y-0 left-0 flex w-72 max-w-[80%] flex-col shadow-2xl animate-[slide-in-left_0.2s_ease-out]">
+                        <div className="flex items-center justify-between border-b border-white/50 px-6 py-5">
                             <LogoWithText />
                             <button
                                 type="button"

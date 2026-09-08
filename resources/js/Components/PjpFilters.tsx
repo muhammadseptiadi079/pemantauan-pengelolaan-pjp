@@ -48,7 +48,7 @@ export default function PjpFilters({
     return (
         <form
             onSubmit={submit}
-            className="mb-4 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4"
+            className="glass-card mb-4 flex flex-wrap items-end gap-3 p-4"
         >
             <div className="min-w-[180px] flex-1">
                 <label className="block text-xs font-medium text-slate-500">

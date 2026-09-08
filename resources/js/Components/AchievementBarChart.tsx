@@ -50,7 +50,7 @@ export default function AchievementBarChart({
     }, []);
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
+        <div className="glass-card p-5">
             <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
                 <h3 className="flex items-center gap-2.5 text-sm font-semibold text-slate-900">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">

@@ -19,14 +19,14 @@ export default function PjpMiniList({
 }) {
     if (pjps.length === 0) {
         return (
-            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
+            <div className="glass-empty p-6 text-center text-sm text-slate-500">
                 {emptyMessage}
             </div>
         );
     }
 
     return (
-        <div className="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div className="glass-card divide-y divide-slate-200/70 overflow-hidden">
             {pjps.map((pjp) => (
                 <Link
                     key={pjp.id}

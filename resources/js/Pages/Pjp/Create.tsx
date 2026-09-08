@@ -40,7 +40,7 @@ export default function Create({
                 />
 
                 <form onSubmit={submit} className="space-y-6">
-                    <div className="space-y-5 rounded-xl border border-slate-200 bg-white p-6">
+                    <div className="glass-card space-y-5 p-6">
                         <PjpFormFields data={data} setData={setData} errors={errors} />
                     </div>
 

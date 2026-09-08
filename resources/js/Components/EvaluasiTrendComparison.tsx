@@ -62,7 +62,7 @@ export default function EvaluasiTrendComparison({ series }: { series: Series[] }
     const overflow = withData.length - shown.length;
 
     return (
-        <div className="mb-14 rounded-xl border border-slate-200 bg-white p-5">
+        <div className="glass-card mb-14 p-5">
             <div className="mb-3 flex items-center gap-2.5">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                     <TahapIcon name="evaluasi" className="h-4 w-4" />
