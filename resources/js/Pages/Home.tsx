@@ -4,8 +4,6 @@ import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import GradientStatCard from '@/Components/GradientStatCard';
 import LogoMark from '@/Components/Logo';
 import { TahapIcon } from '@/Components/TahapIcons';
-import { TAHAPAN_OPTIONS } from '@/types';
-
 const tahapan = [
     {
         href: '/persyaratan-seleksi-penetapan',
@@ -35,7 +33,6 @@ type MiniPjp = { id: number; nama_perusahaan: string };
 type PerluPerhatian = {
     id: number;
     nama_perusahaan: string;
-    tahapan: string;
     achievement: number;
 };
 
@@ -123,13 +120,8 @@ export default function Home({
                                         href={`/pjp/${pjp.id}`}
                                         className="flex items-center justify-between gap-3 py-2.5 text-sm hover:bg-slate-50"
                                     >
-                                        <span>
-                                            <span className="font-medium text-slate-800">
-                                                {pjp.nama_perusahaan}
-                                            </span>
-                                            <span className="ml-2 text-xs text-slate-400">
-                                                {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
-                                            </span>
+                                        <span className="font-medium text-slate-800">
+                                            {pjp.nama_perusahaan}
                                         </span>
                                         <span
                                             className={`rounded-full px-2 py-0.5 text-xs font-semibold ${achievementColor(pjp.achievement)}`}

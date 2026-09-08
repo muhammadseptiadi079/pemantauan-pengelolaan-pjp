@@ -13,11 +13,10 @@ class HomeController extends Controller
         $statusCounts = Pjp::statusCountsFor();
 
         $perluPerhatian = Pjp::query()
-            ->get(['id', 'nama_perusahaan', 'tahapan'])
+            ->get(['id', 'nama_perusahaan'])
             ->map(fn (Pjp $pjp) => [
                 'id' => $pjp->id,
                 'nama_perusahaan' => $pjp->nama_perusahaan,
-                'tahapan' => $pjp->tahapan,
                 'achievement' => $pjp->achievement(),
             ])
             ->filter(fn (array $row) => $row['achievement'] !== null && $row['achievement'] < 80)

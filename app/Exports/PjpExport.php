@@ -13,13 +13,12 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
     public function __construct(
         private readonly ?string $search = null,
         private readonly ?string $status = null,
-        private readonly ?string $tahapan = null,
     ) {}
 
     public function collection(): Collection
     {
         return Pjp::query()
-            ->filter($this->search, $this->status, $this->tahapan)
+            ->filter($this->search, $this->status)
             ->latest()
             ->get();
     }
@@ -31,7 +30,6 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
             'NIB',
             'Penanggung Jawab',
             'Alamat',
-            'Tahapan',
             'Status',
             'Skor Persyaratan PJP (%)',
             'Skor Kepatuhan Pelaporan (%)',
@@ -51,7 +49,6 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
             $row->nib,
             $row->penanggung_jawab,
             $row->alamat,
-            Pjp::TAHAPAN[$row->tahapan] ?? $row->tahapan,
             Pjp::STATUS[$row->status] ?? $row->status,
             // String, bukan angka mentah — PhpSpreadsheet menulis float 0
             // sebagai sel numerik kosong, jadi 0% bisa salah terbaca "belum ada data".

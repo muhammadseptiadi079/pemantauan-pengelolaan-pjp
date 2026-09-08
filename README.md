@@ -2,7 +2,7 @@
 
 Aplikasi web untuk memantau dan mengelola Perusahaan Jasa Pertambangan (PJP), dibangun dengan Laravel + Inertia.js + React.
 
-Terdiri dari 3 tahapan utama:
+Setiap PJP dipantau lewat 3 aspek yang berjalan bersamaan (bukan tahap berurutan):
 1. Persyaratan, Seleksi, dan Penetapan
 2. Tanggung Jawab, Pemantauan, dan Pelaporan
 3. Evaluasi

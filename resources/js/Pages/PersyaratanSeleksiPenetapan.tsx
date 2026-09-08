@@ -55,7 +55,7 @@ export default function PersyaratanSeleksiPenetapan({
 
                 <div className="mb-6">
                     <StatusStackedBar
-                        title="Capaian Status pada Tahap Ini"
+                        title="Capaian Status Seluruh PJP"
                         counts={statusCounts}
                     />
                 </div>
@@ -63,7 +63,7 @@ export default function PersyaratanSeleksiPenetapan({
                 <div className="mb-14">
                     <AchievementBarChart
                         title="Capaian Persyaratan PJP per Perusahaan"
-                        emptyMessage="Belum ada PJP pada tahap ini."
+                        emptyMessage="Belum ada data PJP."
                         noDataLabel="Belum diisi"
                         items={pjps.map((pjp) => ({
                             id: pjp.id,
@@ -102,7 +102,6 @@ export default function PersyaratanSeleksiPenetapan({
                 </div>
 
                 <TahapanPjpSection
-                    tahapan="persyaratan-seleksi-penetapan"
                     action="/persyaratan-seleksi-penetapan"
                     pjps={pjps}
                     filters={filters}

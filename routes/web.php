@@ -30,8 +30,6 @@ Route::get('/pjp/{pjp}/export-pdf', [PjpController::class, 'exportPdf'])->name('
 
 Route::resource('pjp', PjpController::class);
 
-Route::post('/pjp/{pjp}/advance-tahapan', [PjpController::class, 'advanceTahapan'])->name('pjp.advance-tahapan');
-
 Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');
 Route::patch('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'update'])->name('pjp.laporan.update');
 Route::delete('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'destroy'])->name('pjp.laporan.destroy');

@@ -6,12 +6,10 @@ type MiniPjp = { id: number; nama_perusahaan: string; status: string };
 type Filters = { search: string; status: string };
 
 export default function TahapanPjpSection({
-    tahapan,
     action,
     pjps,
     filters,
 }: {
-    tahapan: string;
     action: string;
     pjps: MiniPjp[];
     filters: Filters;
@@ -20,10 +18,10 @@ export default function TahapanPjpSection({
         <section className="mt-14">
             <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-xl font-semibold text-slate-900">
-                    Daftar PJP pada Tahap Ini
+                    Daftar Seluruh PJP
                 </h2>
                 <Link
-                    href={`/pjp/create?tahapan=${tahapan}`}
+                    href="/pjp/create"
                     className="text-sm font-medium text-blue-600 hover:text-blue-800"
                 >
                     + Tambah PJP
@@ -32,7 +30,7 @@ export default function TahapanPjpSection({
 
             <PjpFilters
                 action={action}
-                initial={{ search: filters.search, tahapan: '', status: filters.status }}
+                initial={{ search: filters.search, status: filters.status }}
             />
 
             <PjpMiniList
@@ -40,7 +38,7 @@ export default function TahapanPjpSection({
                 emptyMessage={
                     filters.search || filters.status
                         ? 'Tidak ada data PJP yang cocok dengan filter.'
-                        : 'Belum ada data PJP pada tahap ini.'
+                        : 'Belum ada data PJP.'
                 }
             />
         </section>

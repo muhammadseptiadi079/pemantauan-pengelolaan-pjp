@@ -19,7 +19,6 @@ class PjpFactory extends Factory
             'nib' => $this->faker->numerify('#############'),
             'penanggung_jawab' => $this->faker->name(),
             'alamat' => $this->faker->address(),
-            'tahapan' => 'persyaratan-seleksi-penetapan',
             'status' => 'aktif',
             'catatan' => null,
         ];

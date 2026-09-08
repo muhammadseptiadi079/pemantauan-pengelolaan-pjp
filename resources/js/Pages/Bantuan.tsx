@@ -6,7 +6,7 @@ const faq: { pertanyaan: string; jawaban: string }[] = [
     {
         pertanyaan: 'Apa itu aplikasi Pemantauan & Pengelolaan PJP?',
         jawaban:
-            'Aplikasi untuk memantau dan mengelola Perusahaan Jasa Pertambangan (PJP) melalui tiga tahap tetap: Persyaratan, Seleksi, dan Penetapan; Tanggung Jawab, Pemantauan, dan Pelaporan; serta Evaluasi.',
+            'Aplikasi untuk memantau dan mengelola Perusahaan Jasa Pertambangan (PJP) lewat tiga aspek yang berjalan bersamaan untuk setiap PJP: Persyaratan, Seleksi, dan Penetapan; Tanggung Jawab, Pemantauan, dan Pelaporan; serta Evaluasi. Semua PJP terdaftar tampil di ketiga halaman ini sekaligus, masing-masing dengan skornya sendiri.',
     },
     {
         pertanyaan: 'Apa itu checklist "Persyaratan PJP"?',
@@ -24,12 +24,12 @@ const faq: { pertanyaan: string; jawaban: string }[] = [
             'Empat syarat administratif wajib (Akta Pendirian, NIB, IUJP, NPWP) yang harus lengkap semua. Ini gerbang wajib yang berdiri sendiri, bukan bagian dari skor 178 poin checklist SMKP.',
     },
     {
-        pertanyaan: 'Bagaimana cara memindahkan PJP ke tahap berikutnya?',
+        pertanyaan: 'Kenapa satu PJP bisa muncul di ketiga halaman tahap sekaligus?',
         jawaban:
-            'Klik tombol "Lanjutkan ke Tahap..." di halaman Detail PJP. Perpindahan ini tidak mensyaratkan skor minimum tertentu — keputusan tetap di tangan manajemen, skor hanya ditampilkan sebagai bahan pertimbangan.',
+            'Karena checklist Persyaratan, laporan Tanggung Jawab, dan Evaluasi Kinerja adalah tiga hal independen yang bisa diisi kapan saja untuk PJP yang sama — bukan tahap berurutan yang harus dilewati satu per satu. Jadi setiap PJP terdaftar otomatis tampil di ketiga halaman, masing-masing dengan skornya sendiri.',
     },
     {
-        pertanyaan: 'Dokumen apa saja yang wajib diunggah pada Tahap 2?',
+        pertanyaan: 'Dokumen apa saja yang wajib diunggah pada halaman Tanggung Jawab, Pemantauan, dan Pelaporan?',
         jawaban:
             'Empat jenis dokumen: Data SPIP (Sarana, Prasarana, Instalasi & Peralatan), Target Sasaran Program (TSP), Laporan Bulanan, dan Laporan Triwulan — semuanya diunggah dari halaman Detail PJP.',
     },

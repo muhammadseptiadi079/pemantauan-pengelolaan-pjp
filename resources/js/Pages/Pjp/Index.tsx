@@ -7,9 +7,9 @@ import PjpFilters from '@/Components/PjpFilters';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import Pagination from '@/Components/Pagination';
-import { Paginated, Pjp, TAHAPAN_OPTIONS } from '@/types';
+import { Paginated, Pjp } from '@/types';
 
-type Filters = { search: string; tahapan: string; status: string };
+type Filters = { search: string; status: string };
 
 export default function Index({
     pjps,
@@ -66,11 +66,11 @@ export default function Index({
                     />
                 </div>
 
-                <PjpFilters action="/pjp" initial={filters} showTahapanFilter />
+                <PjpFilters action="/pjp" initial={filters} />
 
                 {pjps.data.length === 0 ? (
                     <div className="glass-empty p-8 text-center text-sm text-slate-500">
-                        {filters.search || filters.tahapan || filters.status
+                        {filters.search || filters.status
                             ? 'Tidak ada data PJP yang cocok dengan filter.'
                             : 'Belum ada data PJP. Tambahkan data untuk mulai memantau dan mengelola PJP.'}
                     </div>
@@ -82,7 +82,6 @@ export default function Index({
                                 <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
                                     <tr>
                                         <th className="px-4 py-3">Nama Perusahaan</th>
-                                        <th className="px-4 py-3">Tahapan</th>
                                         <th className="px-4 py-3">Status</th>
                                         <th className="px-4 py-3 text-right">Aksi</th>
                                     </tr>
@@ -96,9 +95,6 @@ export default function Index({
                                         >
                                             <td className="px-4 py-3 font-medium text-slate-800">
                                                 {pjp.nama_perusahaan}
-                                            </td>
-                                            <td className="px-4 py-3 text-slate-600">
-                                                {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <StatusBadge status={pjp.status} />
@@ -146,9 +142,6 @@ export default function Index({
                                         </p>
                                         <StatusBadge status={pjp.status} />
                                     </div>
-                                    <p className="mt-1 text-sm text-slate-500">
-                                        {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
-                                    </p>
                                     <div className="mt-3 flex gap-4 text-sm">
                                         <Link
                                             href={`/pjp/${pjp.id}`}

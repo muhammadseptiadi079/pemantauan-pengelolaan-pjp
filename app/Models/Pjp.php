@@ -11,27 +11,10 @@ class Pjp extends Model
 {
     use HasFactory;
 
-    public const TAHAPAN = [
-        'persyaratan-seleksi-penetapan' => 'Persyaratan, Seleksi, dan Penetapan',
-        'tanggung-jawab-pemantauan-pelaporan' => 'Tanggung Jawab, Pemantauan, dan Pelaporan',
-        'evaluasi' => 'Evaluasi',
-    ];
-
     public const STATUS = [
         'aktif' => 'Aktif Dipantau',
         'perlu_tindak_lanjut' => 'Perlu Tindak Lanjut',
         'tidak_aktif' => 'Tidak Aktif',
-    ];
-
-    /**
-     * Tahap berikutnya dalam alur pengelolaan PJP. Perpindahan ini murni
-     * keputusan admin (lewat PjpController::advanceTahapan) — tidak ada
-     * skor minimum yang memblokir, karena manajemen bisa saja tetap
-     * memutuskan memakai PJP walau skor Persyaratan PJP-nya belum ideal.
-     */
-    public const NEXT_TAHAPAN = [
-        'persyaratan-seleksi-penetapan' => 'tanggung-jawab-pemantauan-pelaporan',
-        'tanggung-jawab-pemantauan-pelaporan' => 'evaluasi',
     ];
 
     protected $fillable = [
@@ -39,7 +22,6 @@ class Pjp extends Model
         'nib',
         'penanggung_jawab',
         'alamat',
-        'tahapan',
         'status',
         'catatan',
     ];
@@ -167,18 +149,25 @@ class Pjp extends Model
     }
 
     /**
-     * Skor achievement PJP sesuai tahap tempatnya berada sekarang — dipakai
-     * seragam oleh grafik achievement per tahap maupun ringkasan lintas-tahap
-     * di Beranda, supaya logikanya cuma didefinisikan sekali.
+     * Skor achievement keseluruhan PJP — setiap PJP berjalan di ketiga tahap
+     * (Persyaratan, Pelaporan, Evaluasi) secara bersamaan, bukan bergantian,
+     * jadi achievement dipakai untuk ringkasan lintas-tahap (widget "Paling
+     * Perlu Perhatian" di Beranda, badge sidebar) dan diambil dari skor
+     * TERENDAH di antara ketiganya yang tersedia — bukan rata-rata — supaya
+     * satu area yang buruk tidak "tertutup" oleh dua area lain yang baik.
+     * Skor SMKP selalu ada (checklist kosong = 0%, bukan null), sedangkan
+     * pelaporan/evaluasi bisa null kalau memang belum ada datanya sama
+     * sekali — null itu diabaikan, bukan dihitung sebagai 0.
      */
     public function achievement(): ?float
     {
-        return match ($this->tahapan) {
-            'persyaratan-seleksi-penetapan' => $this->smkpScore()['persentase'],
-            'tanggung-jawab-pemantauan-pelaporan' => $this->pelaporanScore(),
-            'evaluasi' => $this->evaluasis()->first()?->skor_rata_rata,
-            default => null,
-        };
+        $skor = array_filter([
+            $this->smkpScore()['persentase'],
+            $this->pelaporanScore(),
+            $this->evaluasis()->first()?->skor_rata_rata,
+        ], fn (?float $v) => $v !== null);
+
+        return $skor === [] ? null : min($skor);
     }
 
     /**
@@ -188,7 +177,7 @@ class Pjp extends Model
      */
     public static function perluPerhatianCount(): int
     {
-        return static::all(['id', 'tahapan'])
+        return static::all(['id'])
             ->filter(fn (Pjp $pjp) => ($achievement = $pjp->achievement()) !== null && $achievement < 80)
             ->count();
     }
@@ -208,12 +197,10 @@ class Pjp extends Model
         Builder $query,
         ?string $search,
         ?string $status,
-        ?string $tahapan = null,
     ): Builder {
         return $query
             ->when($search, fn ($q, $search) => $q->where('nama_perusahaan', 'like', "%{$search}%"))
-            ->when($status, fn ($q, $status) => $q->where('status', $status))
-            ->when($tahapan, fn ($q, $tahapan) => $q->where('tahapan', $tahapan));
+            ->when($status, fn ($q, $status) => $q->where('status', $status));
     }
 
     /**

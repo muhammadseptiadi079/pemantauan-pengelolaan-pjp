@@ -4,22 +4,14 @@ import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PjpFormFields from '@/Components/PjpFormFields';
 import Spinner from '@/Components/Spinner';
-import { TAHAPAN_OPTIONS, STATUS_OPTIONS } from '@/types';
+import { STATUS_OPTIONS } from '@/types';
 
-export default function Create({
-    defaultTahapan,
-}: {
-    defaultTahapan: string | null;
-}) {
+export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
         nama_perusahaan: '',
         nib: '',
         penanggung_jawab: '',
         alamat: '',
-        tahapan:
-            defaultTahapan && defaultTahapan in TAHAPAN_OPTIONS
-                ? defaultTahapan
-                : Object.keys(TAHAPAN_OPTIONS)[0],
         status: Object.keys(STATUS_OPTIONS)[0],
         catatan: '',
     });
@@ -54,7 +46,7 @@ export default function Create({
                             Simpan
                         </button>
                         <Link
-                            href={defaultTahapan ? `/${defaultTahapan}` : '/'}
+                            href="/pjp"
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                         >
                             Batal

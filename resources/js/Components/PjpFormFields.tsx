@@ -1,11 +1,10 @@
-import { TAHAPAN_OPTIONS, STATUS_OPTIONS } from '@/types';
+import { STATUS_OPTIONS } from '@/types';
 
 export type PjpFormData = {
     nama_perusahaan: string;
     nib: string;
     penanggung_jawab: string;
     alamat: string;
-    tahapan: string;
     status: string;
     catatan: string;
 };
@@ -85,46 +84,24 @@ export default function PjpFormFields({
                 )}
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                    <label className="block text-sm font-medium text-slate-700">
-                        Tahapan
-                    </label>
-                    <select
-                        value={data.tahapan}
-                        onChange={(e) => setData('tahapan', e.target.value)}
-                        className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    >
-                        {Object.entries(TAHAPAN_OPTIONS).map(([value, label]) => (
-                            <option key={value} value={value}>
-                                {label}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.tahapan && (
-                        <p className="mt-1 text-sm text-red-600">{errors.tahapan}</p>
-                    )}
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-slate-700">
-                        Status
-                    </label>
-                    <select
-                        value={data.status}
-                        onChange={(e) => setData('status', e.target.value)}
-                        className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    >
-                        {Object.entries(STATUS_OPTIONS).map(([value, label]) => (
-                            <option key={value} value={value}>
-                                {label}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.status && (
-                        <p className="mt-1 text-sm text-red-600">{errors.status}</p>
-                    )}
-                </div>
+            <div>
+                <label className="block text-sm font-medium text-slate-700">
+                    Status
+                </label>
+                <select
+                    value={data.status}
+                    onChange={(e) => setData('status', e.target.value)}
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                >
+                    {Object.entries(STATUS_OPTIONS).map(([value, label]) => (
+                        <option key={value} value={value}>
+                            {label}
+                        </option>
+                    ))}
+                </select>
+                {errors.status && (
+                    <p className="mt-1 text-sm text-red-600">{errors.status}</p>
+                )}
             </div>
 
             <div>

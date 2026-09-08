@@ -24,8 +24,8 @@ Don't rediscover a bug that's already documented there.
 
 ## 2. Automated tests
 
-- If the change touches business logic under `app/` (scoring, dates, tahapan
-  transitions, anything in `app/Models` or `app/Http/Controllers`), run
+- If the change touches business logic under `app/` (scoring, dates,
+  anything in `app/Models` or `app/Http/Controllers`), run
   `composer test` (or `php artisan test`) and make sure it's green before moving on.
 - If you added or changed a business rule, add or update a test in `tests/Feature/`
   for it — this app has a documented history of silent regressions (see CLAUDE.md's
@@ -40,8 +40,8 @@ chart) that only showed up on an actual screenshot, never in `tsc` or a test run
 
 1. Start both dev servers in the background: `php artisan serve` and `npm run dev`.
 2. If the pages you touched need data to look realistic (not empty-state), seed a
-   handful of `Pjp` records via `php artisan tinker` covering a spread of tahapan,
-   status, and score bands — don't just eyeball an empty list.
+   handful of `Pjp` records via `php artisan tinker` covering a spread of
+   status and score bands — don't just eyeball an empty list.
 3. Use Playwright (Chromium is pre-installed; see the environment notes for the
    executable path) to screenshot every page you changed at two viewports:
    desktop (~1280×900) and mobile (~390×844). Read the screenshots back and actually

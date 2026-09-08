@@ -30,7 +30,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '1234567890123',
             'penanggung_jawab' => 'Ahmad Wijaya',
             'alamat' => 'Jl. Tambang Raya No. 12, Balikpapan',
-            'tahapan' => 'persyaratan-seleksi-penetapan',
             'status' => 'aktif',
         ]), fn ($i) => $i % 10 === 0 ? 2 : 3);
         $this->jawabLegalitas($p1, 3);
@@ -40,7 +39,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '9988776655443',
             'penanggung_jawab' => 'Siti Rahma',
             'alamat' => 'Jl. Sudirman No. 5, Samarinda',
-            'tahapan' => 'persyaratan-seleksi-penetapan',
             'status' => 'perlu_tindak_lanjut',
             'catatan' => 'Baru mendaftar, dokumen persyaratan masih dilengkapi.',
         ]), fn ($i) => $i % 5 === 0 ? 1 : null);
@@ -51,7 +49,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '1122334455667',
             'penanggung_jawab' => 'Budi Santoso',
             'alamat' => 'Jl. Pelabuhan No. 8, Bontang',
-            'tahapan' => 'tanggung-jawab-pemantauan-pelaporan',
             'status' => 'aktif',
         ]);
         PjpLaporan::factory()->for($p3)->create(['jenis' => 'spip', 'periode' => '2026', 'created_at' => now()->subMonths(2)->startOfMonth()->addDay()]);
@@ -66,7 +63,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '5566778899001',
             'penanggung_jawab' => 'Dewi Lestari',
             'alamat' => 'Jl. Industri No. 3, Tenggarong',
-            'tahapan' => 'tanggung-jawab-pemantauan-pelaporan',
             'status' => 'perlu_tindak_lanjut',
             'catatan' => 'Laporan bulanan sering terlambat, perlu teguran tertulis.',
         ]);
@@ -79,7 +75,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '6677889900112',
             'penanggung_jawab' => 'Eko Prasetyo',
             'alamat' => 'Jl. Energi No. 7, Balikpapan',
-            'tahapan' => 'tanggung-jawab-pemantauan-pelaporan',
             'status' => 'aktif',
         ]);
 
@@ -88,7 +83,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '3344556677889',
             'penanggung_jawab' => 'Rudi Hartono',
             'alamat' => 'Jl. Minyak No. 21, Balikpapan',
-            'tahapan' => 'evaluasi',
             'status' => 'aktif',
         ]);
         PjpEvaluasi::factory()->for($p6)->create(['tahun' => 2025, 'semester' => 2, 'skor_teknis' => 75, 'skor_keselamatan_kesehatan' => 70, 'skor_lingkungan' => 72]);
@@ -99,7 +93,6 @@ class DemoDataSeeder extends Seeder
             'nib' => '7788990011223',
             'penanggung_jawab' => 'Joko Prasetyo',
             'alamat' => 'Jl. Batubara No. 9, Sangatta',
-            'tahapan' => 'evaluasi',
             'status' => 'tidak_aktif',
             'catatan' => 'Kontrak tidak diperpanjang karena kinerja keselamatan buruk.',
         ]);

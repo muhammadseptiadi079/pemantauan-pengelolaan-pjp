@@ -14,7 +14,6 @@ import {
     PjpLaporan,
     SmkpLegalitasStatus,
     SmkpScore,
-    TAHAPAN_OPTIONS,
     JENIS_LAPORAN_OPTIONS,
 } from '@/types';
 
@@ -69,7 +68,6 @@ export default function Show({
     smkpScore,
     legalitasStatus,
     pelaporanScore,
-    nextTahapan,
     triwulanTerbuka,
     bulanTriwulanDibuka,
 }: {
@@ -79,17 +77,10 @@ export default function Show({
     smkpScore: SmkpScore;
     legalitasStatus: SmkpLegalitasStatus;
     pelaporanScore: number | null;
-    nextTahapan: string | null;
     triwulanTerbuka: boolean;
     bulanTriwulanDibuka: string;
 }) {
-    const [confirmAdvance, setConfirmAdvance] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
-
-    const advance = () => {
-        router.post(`/pjp/${pjp.id}/advance-tahapan`, {}, { preserveScroll: true });
-        setConfirmAdvance(false);
-    };
 
     const destroy = () => {
         router.delete(`/pjp/${pjp.id}`);
@@ -105,7 +96,7 @@ export default function Show({
                 <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                     <PageHeader
                         title={pjp.nama_perusahaan}
-                        description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
+                        description="Perusahaan Jasa Pertambangan (PJP) yang dipantau melalui checklist persyaratan, pelaporan, dan evaluasi kinerja."
                         icon="building"
                     />
                     <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
@@ -187,17 +178,6 @@ export default function Show({
                     </div>
                 </div>
 
-                {nextTahapan && (
-                    <button
-                        type="button"
-                        onClick={() => setConfirmAdvance(true)}
-                        className="mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-shadow hover:shadow-md"
-                    >
-                        Lanjutkan ke {TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan}
-                        <span aria-hidden="true">&rarr;</span>
-                    </button>
-                )}
-
                 {pjp.catatan && (
                     <div className="mb-10 rounded-2xl border border-amber-200/70 bg-amber-50/60 p-5 shadow-lg shadow-amber-100/40 backdrop-blur-xl">
                         <h2 className="text-sm font-semibold text-amber-900">Catatan</h2>
@@ -238,16 +218,6 @@ export default function Show({
                 </h2>
                 <EvaluasiCard pjpId={pjp.id} evaluasis={evaluasis} />
             </div>
-
-            <ConfirmDialog
-                open={confirmAdvance}
-                title="Lanjutkan Tahap"
-                message={`Lanjutkan "${pjp.nama_perusahaan}" ke tahap "${nextTahapan ? TAHAPAN_OPTIONS[nextTahapan] ?? nextTahapan : ''}"? Perpindahan ini tidak memerlukan skor minimum tertentu — bisa dilanjutkan sesuai keputusan manajemen.`}
-                confirmLabel="Lanjutkan"
-                variant="primary"
-                onConfirm={advance}
-                onCancel={() => setConfirmAdvance(false)}
-            />
 
             <ConfirmDialog
                 open={confirmDelete}

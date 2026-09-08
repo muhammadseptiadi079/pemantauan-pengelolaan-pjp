@@ -12,7 +12,6 @@ export default function Edit({ pjp }: { pjp: Pjp }) {
         nib: pjp.nib ?? '',
         penanggung_jawab: pjp.penanggung_jawab ?? '',
         alamat: pjp.alamat ?? '',
-        tahapan: pjp.tahapan,
         status: pjp.status,
         catatan: pjp.catatan ?? '',
     });

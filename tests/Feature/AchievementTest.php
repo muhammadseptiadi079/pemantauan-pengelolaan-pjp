@@ -14,54 +14,69 @@ class AchievementTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_achievement_pakai_smkp_score_di_tahap_persyaratan(): void
+    public function test_achievement_nol_bukan_null_saat_checklist_kosong(): void
     {
-        $pjp = Pjp::factory()->create(['tahapan' => 'persyaratan-seleksi-penetapan']);
+        // smkpScore() selalu numerik (checklist kosong = 0%, bukan null),
+        // dan itu satu-satunya metrik yang selalu ada — jadi PJP yang benar-
+        // benar belum tersentuh tetap kelihatan sebagai "0%", bukan hilang
+        // dari perhitungan seolah belum punya data sama sekali.
+        $pjp = Pjp::factory()->create();
 
-        $item = SmkpChecklistItem::whereHas('category', fn ($q) => $q->where('kode', '!=', 'LEGALITAS'))->first();
-        SmkpChecklistAnswer::create([
-            'pjp_id' => $pjp->id,
-            'smkp_checklist_item_id' => $item->id,
-            'jawaban' => 'ya',
-            'nilai' => '3',
+        $this->assertSame(0.0, $pjp->achievement());
+    }
+
+    public function test_achievement_pakai_skor_terendah_di_antara_ketiga_metrik(): void
+    {
+        $pjp = Pjp::factory()->create();
+
+        SmkpChecklistItem::whereHas('category', fn ($q) => $q->where('kode', '!=', 'LEGALITAS'))
+            ->get()
+            ->each(fn (SmkpChecklistItem $item) => SmkpChecklistAnswer::create([
+                'pjp_id' => $pjp->id,
+                'smkp_checklist_item_id' => $item->id,
+                'jawaban' => 'ya',
+                'nilai' => '3',
+            ]));
+        PjpLaporan::factory()->for($pjp)->create(['created_at' => now()->startOfMonth()->addDay()]);
+        PjpEvaluasi::factory()->for($pjp)->create([
+            'tahun' => 2026, 'semester' => 1,
+            'skor_teknis' => 30, 'skor_keselamatan_kesehatan' => 30, 'skor_lingkungan' => 30,
         ]);
 
+        // Skor evaluasi (30) paling rendah di antara skor SMKP dan pelaporan
+        // yang keduanya 100 — achievement harus ikut yang terendah, bukan
+        // rata-rata, supaya satu area buruk tidak tertutup dua area baik.
+        $this->assertSame(30.0, $pjp->achievement());
+    }
+
+    public function test_achievement_mengabaikan_pelaporan_dan_evaluasi_yang_masih_null(): void
+    {
+        $pjp = Pjp::factory()->create();
+
+        SmkpChecklistItem::whereHas('category', fn ($q) => $q->where('kode', '!=', 'LEGALITAS'))
+            ->get()
+            ->each(fn (SmkpChecklistItem $item) => SmkpChecklistAnswer::create([
+                'pjp_id' => $pjp->id,
+                'smkp_checklist_item_id' => $item->id,
+                'jawaban' => 'ya',
+                'nilai' => '3',
+            ]));
+
+        // Belum ada laporan maupun evaluasi sama sekali — keduanya null dan
+        // harus diabaikan, bukan dianggap 0, supaya achievement tetap 100
+        // dari skor SMKP saja.
         $this->assertSame($pjp->smkpScore()['persentase'], $pjp->achievement());
     }
 
-    public function test_achievement_pakai_pelaporan_score_di_tahap_tanggung_jawab(): void
-    {
-        $pjp = Pjp::factory()->create(['tahapan' => 'tanggung-jawab-pemantauan-pelaporan']);
-        PjpLaporan::factory()->for($pjp)->create(['created_at' => now()->startOfMonth()->addDay()]);
-
-        $this->assertSame($pjp->pelaporanScore(), $pjp->achievement());
-    }
-
-    public function test_achievement_pakai_evaluasi_terbaru_di_tahap_evaluasi(): void
-    {
-        $pjp = Pjp::factory()->create(['tahapan' => 'evaluasi']);
-        PjpEvaluasi::factory()->for($pjp)->create([
-            'tahun' => 2025, 'semester' => 2,
-            'skor_teknis' => 80, 'skor_keselamatan_kesehatan' => 80, 'skor_lingkungan' => 80,
-        ]);
-        $terbaru = PjpEvaluasi::factory()->for($pjp)->create([
-            'tahun' => 2026, 'semester' => 1,
-            'skor_teknis' => 90, 'skor_keselamatan_kesehatan' => 90, 'skor_lingkungan' => 90,
-        ]);
-
-        $this->assertSame($terbaru->skor_rata_rata, $pjp->achievement());
-    }
-
     /**
-     * Regresi: TahapanController::pjpsForTahapan pernah men-select kolom
-     * ['id', 'nama_perusahaan', 'status'] tanpa 'tahapan', yang membuat
-     * achievement() jatuh ke default => null untuk semua baris karena
-     * $this->tahapan selalu kosong. Tes ini memukul endpoint sungguhan
-     * supaya regresi itu tidak bisa lolos diam-diam lagi.
+     * Regresi: setiap PJP berjalan di ketiga tahap (Persyaratan, Pelaporan,
+     * Evaluasi) sekaligus — bukan bergantian lewat kolom `tahapan` yang sudah
+     * dihapus — jadi setiap halaman tahap harus menampilkan SEMUA PJP dengan
+     * skor spesifik halaman itu sebagai `achievement`, bukan cuma sebagian.
      */
-    public function test_halaman_tahap_mengembalikan_achievement_bukan_null_saat_ada_skor(): void
+    public function test_halaman_persyaratan_mengembalikan_skor_smkp_sebagai_achievement(): void
     {
-        $pjp = Pjp::factory()->create(['tahapan' => 'persyaratan-seleksi-penetapan']);
+        $pjp = Pjp::factory()->create();
 
         SmkpChecklistItem::whereHas('category', fn ($q) => $q->where('kode', '!=', 'LEGALITAS'))
             ->get()
@@ -78,6 +93,35 @@ class AchievementTest extends TestCase
         // saat di-decode ulang oleh helper assertInertia — bukan berarti tipe aslinya berubah.
         $response->assertInertia(fn ($page) => $page
             ->where('pjps.0.achievement', 100)
+        );
+    }
+
+    public function test_halaman_pelaporan_mengembalikan_skor_pelaporan_sebagai_achievement(): void
+    {
+        $pjp = Pjp::factory()->create();
+        PjpLaporan::factory()->for($pjp)->create(['created_at' => now()->startOfMonth()->addDay()]);
+
+        $response = $this->get('/tanggung-jawab-pemantauan-pelaporan');
+
+        // Sama seperti tes SMKP di atas: 100.0 dibulatkan JS/PHP jadi int 100
+        // saat di-decode ulang oleh helper assertInertia.
+        $response->assertInertia(fn ($page) => $page
+            ->where('pjps.0.achievement', 100)
+        );
+    }
+
+    public function test_halaman_evaluasi_mengembalikan_skor_evaluasi_terbaru_sebagai_achievement(): void
+    {
+        $pjp = Pjp::factory()->create();
+        PjpEvaluasi::factory()->for($pjp)->create([
+            'tahun' => 2026, 'semester' => 1,
+            'skor_teknis' => 90, 'skor_keselamatan_kesehatan' => 90, 'skor_lingkungan' => 90,
+        ]);
+
+        $response = $this->get('/evaluasi');
+
+        $response->assertInertia(fn ($page) => $page
+            ->where('pjps.0.achievement', 90)
         );
     }
 }

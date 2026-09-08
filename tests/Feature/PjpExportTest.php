@@ -23,7 +23,7 @@ class PjpExportTest extends TestCase
 
         $row = (new PjpExport())->map($pjp);
 
-        [, , , , , , $skorPersyaratan, $skorPelaporan, $skorEvaluasi] = $row;
+        [, , , , , $skorPersyaratan, $skorPelaporan, $skorEvaluasi] = $row;
 
         $this->assertSame('0%', $skorPersyaratan);
         $this->assertIsString($skorPersyaratan);

@@ -28,10 +28,6 @@
 
     <table class="info-table">
         <tr>
-            <td class="label">Tahapan</td>
-            <td>{{ $tahapanLabel }}</td>
-        </tr>
-        <tr>
             <td class="label">Status</td>
             <td>{{ $statusLabel }}</td>
         </tr>

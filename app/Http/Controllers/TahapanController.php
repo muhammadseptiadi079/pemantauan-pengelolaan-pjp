@@ -12,12 +12,12 @@ class TahapanController extends Controller
 {
     public function persyaratanSeleksiPenetapan(Request $request): Response
     {
-        return $this->renderTahapan('PersyaratanSeleksiPenetapan', 'persyaratan-seleksi-penetapan', $request);
+        return $this->renderTahapan('PersyaratanSeleksiPenetapan', 'smkp', $request);
     }
 
     public function tanggungJawabPemantauanPelaporan(Request $request): Response
     {
-        return $this->renderTahapan('TanggungJawabPemantauanPelaporan', 'tanggung-jawab-pemantauan-pelaporan', $request);
+        return $this->renderTahapan('TanggungJawabPemantauanPelaporan', 'pelaporan', $request);
     }
 
     public function evaluasi(Request $request): Response
@@ -25,38 +25,51 @@ class TahapanController extends Controller
         return $this->renderTahapan('Evaluasi', 'evaluasi', $request);
     }
 
-    private function renderTahapan(string $component, string $tahapan, Request $request): Response
+    /**
+     * Setiap PJP berjalan di ketiga tahap (Persyaratan, Pelaporan, Evaluasi)
+     * secara bersamaan, jadi ketiga halaman ini menampilkan SEMUA PJP —
+     * bedanya hanya skor mana yang ditonjolkan sebagai `achievement` untuk
+     * AchievementBarChart/PjpMiniList di halaman itu.
+     */
+    private function renderTahapan(string $component, string $metrik, Request $request): Response
     {
-        $pjps = $this->pjpsForTahapan($tahapan, $request);
+        $pjps = $this->allPjps($request);
 
-        if ($tahapan === 'persyaratan-seleksi-penetapan') {
-            $pjps->each(fn (Pjp $pjp) => $pjp->smkpScore = $pjp->smkpScore());
+        if ($metrik === 'smkp') {
+            $pjps->each(function (Pjp $pjp) {
+                $skor = $pjp->smkpScore();
+                $pjp->smkpScore = $skor;
+                $pjp->achievement = $skor['persentase'];
+            });
         }
 
-        if ($tahapan === 'evaluasi') {
+        if ($metrik === 'pelaporan') {
+            $pjps->each(fn (Pjp $pjp) => $pjp->achievement = $pjp->pelaporanScore());
+        }
+
+        if ($metrik === 'evaluasi') {
             $pjps->each(function (Pjp $pjp) {
                 $pjp->latestEvaluasi = $pjp->evaluasis()->first();
                 $pjp->evaluasiHistory = $pjp->evaluasis()->get()
                     ->sortBy([['tahun', 'asc'], ['semester', 'asc']])
                     ->values();
+                $pjp->achievement = $pjp->latestEvaluasi?->skor_rata_rata;
             });
         }
-
-        $pjps->each(fn (Pjp $pjp) => $pjp->achievement = $pjp->achievement());
 
         return Inertia::render($component, [
             'pjps' => $pjps,
             'filters' => $this->filtersFromRequest($request),
-            'statusCounts' => Pjp::statusCountsFor(Pjp::where('tahapan', $tahapan)),
+            'statusCounts' => Pjp::statusCountsFor(),
         ]);
     }
 
-    private function pjpsForTahapan(string $tahapan, Request $request): Collection
+    private function allPjps(Request $request): Collection
     {
-        return Pjp::where('tahapan', $tahapan)
+        return Pjp::query()
             ->filter($request->query('search'), $request->query('status'))
             ->latest()
-            ->get(['id', 'nama_perusahaan', 'status', 'tahapan']);
+            ->get(['id', 'nama_perusahaan', 'status']);
     }
 
     private function filtersFromRequest(Request $request): array

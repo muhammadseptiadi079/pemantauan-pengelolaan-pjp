@@ -39,7 +39,7 @@ export default function Evaluasi({
 
                 <div className="mb-6">
                     <StatusStackedBar
-                        title="Capaian Status pada Tahap Ini"
+                        title="Capaian Status Seluruh PJP"
                         counts={statusCounts}
                     />
                 </div>
@@ -47,7 +47,7 @@ export default function Evaluasi({
                 <div className="mb-10">
                     <AchievementBarChart
                         title="Skor Evaluasi Kinerja per Perusahaan"
-                        emptyMessage="Belum ada PJP pada tahap ini."
+                        emptyMessage="Belum ada data PJP."
                         noDataLabel="Belum dievaluasi"
                         items={pjps.map((pjp) => ({
                             id: pjp.id,
@@ -81,7 +81,6 @@ export default function Evaluasi({
                 </div>
 
                 <TahapanPjpSection
-                    tahapan="evaluasi"
                     action="/evaluasi"
                     pjps={pjps}
                     filters={filters}

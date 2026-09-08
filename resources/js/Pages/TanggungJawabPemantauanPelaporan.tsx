@@ -52,7 +52,7 @@ export default function TanggungJawabPemantauanPelaporan({
 
                 <div className="mb-6">
                     <StatusStackedBar
-                        title="Capaian Status pada Tahap Ini"
+                        title="Capaian Status Seluruh PJP"
                         counts={statusCounts}
                     />
                 </div>
@@ -60,7 +60,7 @@ export default function TanggungJawabPemantauanPelaporan({
                 <div className="mb-10">
                     <AchievementBarChart
                         title="Kepatuhan Pelaporan per Perusahaan"
-                        emptyMessage="Belum ada PJP pada tahap ini."
+                        emptyMessage="Belum ada data PJP."
                         noDataLabel="Belum ada laporan"
                         items={pjps.map((pjp) => ({
                             id: pjp.id,
@@ -82,7 +82,6 @@ export default function TanggungJawabPemantauanPelaporan({
                 </section>
 
                 <TahapanPjpSection
-                    tahapan="tanggung-jawab-pemantauan-pelaporan"
                     action="/tanggung-jawab-pemantauan-pelaporan"
                     pjps={pjps}
                     filters={filters}
