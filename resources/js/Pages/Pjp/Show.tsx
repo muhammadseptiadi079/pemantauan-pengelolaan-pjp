@@ -106,6 +106,7 @@ export default function Show({
                     <PageHeader
                         title={pjp.nama_perusahaan}
                         description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
+                        icon="building"
                     />
                     <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
                         <Link

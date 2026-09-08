@@ -41,6 +41,7 @@ export default function Index({
                     <PageHeader
                         title="Data PJP"
                         description="Daftar seluruh Perusahaan Jasa Pertambangan (PJP) yang terdaftar dalam sistem."
+                        icon="building"
                     />
                     <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0">
                         <a

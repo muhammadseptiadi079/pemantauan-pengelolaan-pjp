@@ -81,7 +81,10 @@ export default function Home({
 
                 {pjpBelumLaporanBulanan.length > 0 && (
                     <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
-                        <p className="text-sm font-semibold text-amber-900">
+                        <p className="flex items-center gap-2.5 text-sm font-semibold text-amber-900">
+                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-amber-100 text-amber-700">
+                                <TahapIcon name="alert" className="h-4 w-4" />
+                            </span>
                             {pjpBelumLaporanBulanan.length} PJP belum/terlambat
                             mengirim Laporan Bulanan bulan ini
                         </p>
@@ -102,7 +105,10 @@ export default function Home({
 
                 {perluPerhatian.length > 0 && (
                     <div className="mb-8 rounded-xl border border-slate-200 bg-white p-5">
-                        <p className="mb-3 text-sm font-semibold text-slate-900">
+                        <p className="mb-3 flex items-center gap-2.5 text-sm font-semibold text-slate-900">
+                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                                <TahapIcon name="alert" className="h-4 w-4" />
+                            </span>
                             PJP Paling Perlu Perhatian
                         </p>
                         <ul className="divide-y divide-slate-100">

@@ -35,6 +35,7 @@ export default function Create({
                 <PageHeader
                     title="Tambah PJP"
                     description="Tambahkan data Perusahaan Jasa Pertambangan baru ke dalam sistem."
+                    icon="building"
                 />
 
                 <form onSubmit={submit} className="space-y-6">

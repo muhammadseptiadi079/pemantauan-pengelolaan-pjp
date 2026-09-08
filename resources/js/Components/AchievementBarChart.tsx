@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import AnimatedNumber from '@/Components/AnimatedNumber';
+import { TahapIcon } from '@/Components/TahapIcons';
 
 function decimalsFor(value: number): number {
     return Number.isInteger(value) ? 0 : 1;
@@ -51,7 +52,12 @@ export default function AchievementBarChart({
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
-                <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+                <h3 className="flex items-center gap-2.5 text-sm font-semibold text-slate-900">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <TahapIcon name="alert" className="h-4 w-4" />
+                    </span>
+                    {title}
+                </h3>
                 <span className="text-xs text-slate-500">
                     Urut dari yang paling perlu ditindaklanjuti
                 </span>

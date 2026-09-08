@@ -17,14 +17,17 @@ const subTahapan = [
     {
         title: 'Tanggung Jawab',
         description: 'Pembagian tanggung jawab PJP dalam menjalankan operasinya.',
+        icon: 'tanggungjawab',
     },
     {
         title: 'Pemantauan',
         description: 'Pemantauan berkala terhadap kinerja dan kepatuhan PJP.',
+        icon: 'check',
     },
     {
         title: 'Pelaporan',
         description: 'Pelaporan hasil pemantauan dan kondisi terkini PJP.',
+        icon: 'document',
     },
 ];
 
@@ -44,6 +47,7 @@ export default function TanggungJawabPemantauanPelaporan({
                 <PageHeader
                     title="Tanggung Jawab, Pemantauan, dan Pelaporan"
                     description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
+                    icon="tanggungjawab"
                 />
 
                 <div className="mb-6">
@@ -72,6 +76,7 @@ export default function TanggungJawabPemantauanPelaporan({
                             key={sub.title}
                             title={sub.title}
                             description={sub.description}
+                            icon={sub.icon}
                         />
                     ))}
                 </section>

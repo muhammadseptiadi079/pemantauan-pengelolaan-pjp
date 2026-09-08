@@ -28,6 +28,7 @@ export default function Edit({ pjp }: { pjp: Pjp }) {
                 <PageHeader
                     title="Ubah Data PJP"
                     description={`Perbarui data untuk ${pjp.nama_perusahaan}.`}
+                    icon="building"
                 />
 
                 <form onSubmit={submit} className="space-y-6">

@@ -72,6 +72,7 @@ export default function Bantuan() {
                 <PageHeader
                     title="Pertanyaan yang Sering Diajukan"
                     description="Seputar penggunaan aplikasi Pemantauan & Pengelolaan PJP — alur tahapan, checklist, pelaporan, dan evaluasi."
+                    icon="help"
                 />
 
                 <div className="space-y-3">

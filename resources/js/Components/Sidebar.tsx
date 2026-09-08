@@ -26,7 +26,10 @@ function SidebarSummary({ stats }: { stats?: SidebarStats }) {
     return (
         <div className="mx-3 mb-3 rounded-lg border border-slate-100 bg-slate-50 p-3">
             <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500">Total PJP</span>
+                <span className="flex items-center gap-1.5 text-slate-500">
+                    <TahapIcon name="building" className="h-3.5 w-3.5" />
+                    Total PJP
+                </span>
                 <span className="font-semibold text-slate-800">{stats.total}</span>
             </div>
             {stats.perluPerhatian > 0 && (
@@ -34,7 +37,10 @@ function SidebarSummary({ stats }: { stats?: SidebarStats }) {
                     href="/"
                     className="mt-2 flex items-center justify-between rounded-md bg-amber-50 px-2 py-1.5 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-100"
                 >
-                    <span>Perlu Perhatian</span>
+                    <span className="flex items-center gap-1.5">
+                        <TahapIcon name="alert" className="h-3.5 w-3.5" />
+                        Perlu Perhatian
+                    </span>
                     <span className="rounded-full bg-amber-200 px-1.5 py-0.5 text-[11px] font-semibold text-amber-900">
                         {stats.perluPerhatian}
                     </span>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { TahapIcon } from '@/Components/TahapIcons';
 import { STATUS_OPTIONS } from '@/types';
 
 const STATUS_ORDER = ['aktif', 'perlu_tindak_lanjut', 'tidak_aktif'];
@@ -40,7 +41,12 @@ export default function StatusStackedBar({
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="mb-3 flex items-baseline justify-between">
-                <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+                <h3 className="flex items-center gap-2.5 text-sm font-semibold text-slate-900">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <TahapIcon name="check" className="h-4 w-4" />
+                    </span>
+                    {title}
+                </h3>
                 <span className="text-xs text-slate-500">{total} PJP</span>
             </div>
 

@@ -101,6 +101,7 @@ export default function ChecklistSmkp({
                     <PageHeader
                         title="Persyaratan PJP"
                         description={pjp.nama_perusahaan}
+                        icon="persyaratan"
                     />
                     <Link
                         href={`/pjp/${pjp.id}`}
@@ -112,6 +113,9 @@ export default function ChecklistSmkp({
 
                 <div className="mb-8 grid gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:grid-cols-3">
                     <div>
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="persyaratan" className="h-4 w-4" />
+                        </span>
                         <p className="text-sm text-slate-500">Total Skor</p>
                         <p className="mt-1 text-2xl font-bold text-slate-900">
                             <AnimatedNumber
@@ -122,6 +126,9 @@ export default function ChecklistSmkp({
                         </p>
                     </div>
                     <div>
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="check" className="h-4 w-4" />
+                        </span>
                         <p className="text-sm text-slate-500">Persentase Kepatuhan</p>
                         <p
                             className={`mt-1 text-2xl font-bold ${scoreColor(score.persentase)}`}
@@ -134,6 +141,9 @@ export default function ChecklistSmkp({
                         </p>
                     </div>
                     <div>
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="alert" className="h-4 w-4" />
+                        </span>
                         <p className="text-sm text-slate-500">
                             Layak untuk Pekerjaan Risiko
                         </p>
