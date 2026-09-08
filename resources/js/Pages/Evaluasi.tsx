@@ -29,7 +29,7 @@ export default function Evaluasi({
             <Head title="Evaluasi" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <PageHeader
-                    title="3. Evaluasi"
+                    title="Evaluasi"
                     description="Evaluasi kinerja PJP setiap semester, mencakup aspek Teknis, Keselamatan &amp; Kesehatan, dan Lingkungan, sebagai dasar tindak lanjut pengelolaan berikutnya."
                 />
 

@@ -42,7 +42,7 @@ export default function TanggungJawabPemantauanPelaporan({
             <Head title="Tanggung Jawab, Pemantauan, dan Pelaporan" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <PageHeader
-                    title="2. Tanggung Jawab, Pemantauan, dan Pelaporan"
+                    title="Tanggung Jawab, Pemantauan, dan Pelaporan"
                     description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
                 />
 

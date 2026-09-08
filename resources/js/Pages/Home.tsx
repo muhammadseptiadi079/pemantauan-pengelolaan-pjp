@@ -3,25 +3,26 @@ import AppLayout from '@/Layouts/AppLayout';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import LogoMark from '@/Components/Logo';
+import { TahapIcon } from '@/Components/TahapIcons';
 
 const tahapan = [
     {
         href: '/persyaratan-seleksi-penetapan',
-        nomor: '1',
+        icon: 'persyaratan',
         title: 'Persyaratan, Seleksi, dan Penetapan',
         description:
             'Proses awal penilaian persyaratan, seleksi, hingga penetapan Perusahaan Jasa Pertambangan (PJP).',
     },
     {
         href: '/tanggung-jawab-pemantauan-pelaporan',
-        nomor: '2',
+        icon: 'tanggungjawab',
         title: 'Tanggung Jawab, Pemantauan, dan Pelaporan',
         description:
             'Pengelolaan tanggung jawab, pemantauan berkala, dan pelaporan kinerja PJP yang telah ditetapkan.',
     },
     {
         href: '/evaluasi',
-        nomor: '3',
+        icon: 'evaluasi',
         title: 'Evaluasi',
         description:
             'Evaluasi menyeluruh terhadap kinerja dan kepatuhan PJP sebagai dasar tindak lanjut.',
@@ -125,8 +126,8 @@ export default function Home({
                             href={tahap.href}
                             className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
                         >
-                            <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white">
-                                {tahap.nomor}
+                            <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-sm">
+                                <TahapIcon name={tahap.icon} className="h-5 w-5" />
                             </span>
                             <h2 className="text-lg font-semibold text-slate-900 group-hover:text-blue-700">
                                 {tahap.title}

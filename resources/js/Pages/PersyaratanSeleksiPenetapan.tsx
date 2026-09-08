@@ -44,7 +44,7 @@ export default function PersyaratanSeleksiPenetapan({
             <Head title="Persyaratan, Seleksi, dan Penetapan" />
             <div className="mx-auto max-w-5xl px-6 py-16">
                 <PageHeader
-                    title="1. Persyaratan, Seleksi, dan Penetapan"
+                    title="Persyaratan, Seleksi, dan Penetapan"
                     description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
                 />
 
