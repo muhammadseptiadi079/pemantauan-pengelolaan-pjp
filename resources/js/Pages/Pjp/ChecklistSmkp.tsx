@@ -37,15 +37,56 @@ function barColor(persentase: number): string {
     return '#d03b3b';
 }
 
-function barColorFrom(persentase: number): string {
-    if (persentase >= 80) return '#4ade80';
-    if (persentase >= 60) return '#fde047';
-    if (persentase >= 40) return '#fdba74';
-    return '#f87171';
-}
-
 function decimalsFor(value: number): number {
     return Number.isInteger(value) ? 0 : 1;
+}
+
+const DONUT_R = 28;
+const DONUT_STROKE = 9;
+const DONUT_CIRCUMFERENCE = 2 * Math.PI * DONUT_R;
+
+function CategoryDonut({
+    category,
+    grown,
+    onClick,
+}: {
+    category: SmkpCategoryBreakdown;
+    grown: boolean;
+    onClick: () => void;
+}) {
+    const filled = grown ? Math.max((category.persentase / 100) * DONUT_CIRCUMFERENCE, 2) : 0;
+
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            title={`${category.kode}. ${category.nama}: ${category.persentase}%`}
+            className="row-in flex flex-col items-center gap-1.5 rounded-lg p-2 text-center transition-colors hover:bg-slate-50"
+        >
+            <svg viewBox="0 0 72 72" className="h-16 w-16">
+                <circle cx="36" cy="36" r={DONUT_R} fill="none" stroke="#e2e8f0" strokeWidth={DONUT_STROKE} />
+                <circle
+                    cx="36"
+                    cy="36"
+                    r={DONUT_R}
+                    fill="none"
+                    stroke={barColor(category.persentase)}
+                    strokeWidth={DONUT_STROKE}
+                    strokeLinecap="round"
+                    strokeDasharray={`${filled} ${DONUT_CIRCUMFERENCE}`}
+                    transform="rotate(-90 36 36)"
+                    style={{ transition: 'stroke-dasharray 0.7s ease-out' }}
+                />
+                <text x="36" y="40" textAnchor="middle" className="fill-slate-900 font-semibold" style={{ fontSize: '13px' }}>
+                    {decimalsFor(category.persentase) === 0
+                        ? Math.round(category.persentase)
+                        : category.persentase}
+                    %
+                </text>
+            </svg>
+            <span className="text-xs font-semibold text-slate-500">{category.kode}</span>
+        </button>
+    );
 }
 
 export default function ChecklistSmkp({
@@ -113,13 +154,16 @@ export default function ChecklistSmkp({
             ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
-    const scrollToWeakestCategory = () => {
-        if (!weakestCategory) return;
-        const el = document.getElementById(`kategori-${weakestCategory.kode}`);
+    const openCategory = (kode: string) => {
+        const el = document.getElementById(`kategori-${kode}`);
         if (el instanceof HTMLDetailsElement) {
             el.open = true;
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    };
+
+    const scrollToWeakestCategory = () => {
+        if (weakestCategory) openCategory(weakestCategory.kode);
     };
 
     return (
@@ -234,52 +278,23 @@ export default function ChecklistSmkp({
                             Rincian Skor per Kategori
                         </h3>
                     </div>
-                    <div className="space-y-2">
-                        {categoryBreakdown.map((category, index) => {
-                            const valueDisplay = (
-                                <>
-                                    <AnimatedNumber
-                                        value={category.persentase}
-                                        decimals={decimalsFor(category.persentase)}
-                                    />
-                                    %
-                                </>
-                            );
-                            return (
-                                <div
-                                    key={category.kode}
-                                    className="row-in flex flex-col gap-1.5 rounded-lg px-1 py-1 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3"
-                                    style={{ animationDelay: `${Math.min(index, 16) * 30}ms` }}
-                                >
-                                    <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:items-start sm:justify-start">
-                                        <span className="flex min-w-0 items-baseline gap-2">
-                                            <span className="shrink-0 text-xs font-semibold text-slate-500">
-                                                {category.kode}
-                                            </span>
-                                            <span className="text-sm text-slate-700">
-                                                {category.nama}
-                                            </span>
-                                        </span>
-                                        <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
-                                            {valueDisplay}
-                                        </span>
-                                    </div>
-                                    <span className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200/50 shadow-inner sm:flex-1">
-                                        <span
-                                            className="block h-full rounded-full transition-[width] duration-700 ease-out"
-                                            style={{
-                                                width: grown ? `${Math.max(category.persentase, 2)}%` : '0%',
-                                                backgroundImage: `linear-gradient(90deg, ${barColorFrom(category.persentase)}, ${barColor(category.persentase)})`,
-                                                boxShadow: `0 0 8px 0 ${barColor(category.persentase)}55`,
-                                            }}
-                                        />
-                                    </span>
-                                    <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-16">
-                                        {valueDisplay}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                    <p className="mb-3 text-xs text-slate-500">
+                        Klik salah satu donat untuk langsung membuka kategori itu di
+                        formulir checklist di bawah.
+                    </p>
+                    <div className="grid grid-cols-3 gap-1 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                        {categoryBreakdown.map((category, index) => (
+                            <div
+                                key={category.kode}
+                                style={{ animationDelay: `${Math.min(index, 16) * 30}ms` }}
+                            >
+                                <CategoryDonut
+                                    category={category}
+                                    grown={grown}
+                                    onClick={() => openCategory(category.kode)}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
 
