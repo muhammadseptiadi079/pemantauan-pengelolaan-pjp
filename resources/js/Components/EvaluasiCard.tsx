@@ -10,6 +10,73 @@ function scoreColor(skor: number): string {
     return 'text-red-700';
 }
 
+function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
+    if (evaluasis.length < 2) return null;
+
+    const kronologis = [...evaluasis].reverse();
+    const width = 280;
+    const height = 56;
+    const padX = 10;
+    const padY = 8;
+    const step = (width - padX * 2) / (kronologis.length - 1);
+
+    const points = kronologis.map((e, i) => ({
+        x: padX + i * step,
+        y: padY + (1 - e.skor_rata_rata / 100) * (height - padY * 2),
+        e,
+    }));
+
+    const path = points.map((p) => `${p.x},${p.y}`).join(' ');
+
+    return (
+        <div className="mb-4 rounded-lg border border-slate-100 p-3">
+            <p className="mb-2 text-xs font-semibold text-slate-500">
+                Tren Skor Rata-rata Antar Semester
+            </p>
+            <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxWidth: 320 }}>
+                <polyline
+                    points={path}
+                    fill="none"
+                    stroke="#2a78d6"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+                {points.map((p, i) => (
+                    <circle
+                        key={i}
+                        cx={p.x}
+                        cy={p.y}
+                        r={i === points.length - 1 ? 4 : 3}
+                        fill="#2a78d6"
+                        stroke="#fcfcfb"
+                        strokeWidth={2}
+                    />
+                ))}
+                <text
+                    x={points[points.length - 1].x}
+                    y={Math.max(points[points.length - 1].y - 8, 9)}
+                    textAnchor="end"
+                    fontSize={10}
+                    fontWeight={600}
+                    fill="#0b0b0b"
+                >
+                    {kronologis[kronologis.length - 1].skor_rata_rata}
+                </text>
+            </svg>
+            <div className="mt-1 flex justify-between text-[10px] text-slate-400">
+                <span>
+                    {SEMESTER_OPTIONS[kronologis[0].semester]} {kronologis[0].tahun}
+                </span>
+                <span>
+                    {SEMESTER_OPTIONS[kronologis[kronologis.length - 1].semester]}{' '}
+                    {kronologis[kronologis.length - 1].tahun}
+                </span>
+            </div>
+        </div>
+    );
+}
+
 export default function EvaluasiCard({
     pjpId,
     evaluasis,
@@ -62,7 +129,11 @@ export default function EvaluasiCard({
             {evaluasis.length === 0 ? (
                 <p className="mt-3 text-sm text-slate-500">Belum ada data evaluasi.</p>
             ) : (
-                <ul className="mt-3 divide-y divide-slate-100">
+                <>
+                <div className="mt-3">
+                    <TrenEvaluasi evaluasis={evaluasis} />
+                </div>
+                <ul className="divide-y divide-slate-100">
                     {evaluasis.map((e) => (
                         <li key={e.id} className="space-y-1.5 py-3 text-sm">
                             <div className="flex items-center justify-between gap-3">
@@ -91,6 +162,7 @@ export default function EvaluasiCard({
                         </li>
                     ))}
                 </ul>
+                </>
             )}
 
             <form onSubmit={submit} className="mt-4 space-y-2 border-t border-slate-100 pt-4">

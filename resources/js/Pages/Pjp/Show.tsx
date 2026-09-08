@@ -10,6 +10,7 @@ import {
     Pjp,
     PjpEvaluasi,
     PjpLaporan,
+    SmkpLegalitasStatus,
     SmkpScore,
     TAHAPAN_OPTIONS,
     JENIS_LAPORAN_OPTIONS,
@@ -20,6 +21,8 @@ export default function Show({
     laporans,
     evaluasis,
     smkpScore,
+    legalitasStatus,
+    pelaporanScore,
     nextTahapan,
     triwulanTerbuka,
     bulanTriwulanDibuka,
@@ -28,6 +31,8 @@ export default function Show({
     laporans: PjpLaporan[];
     evaluasis: PjpEvaluasi[];
     smkpScore: SmkpScore;
+    legalitasStatus: SmkpLegalitasStatus;
+    pelaporanScore: number | null;
     nextTahapan: string | null;
     triwulanTerbuka: boolean;
     bulanTriwulanDibuka: string;
@@ -90,6 +95,19 @@ export default function Show({
                     <span className="text-slate-600">
                         Persyaratan PJP: {smkpScore.persentase}%
                     </span>
+                    <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                            legalitasStatus.lengkap === legalitasStatus.total
+                                ? 'bg-green-50 text-green-700'
+                                : 'bg-amber-50 text-amber-700'
+                        }`}
+                    >
+                        Dokumen Legalitas: {legalitasStatus.lengkap}/{legalitasStatus.total}
+                    </span>
+                    <span className="text-slate-600">
+                        Kepatuhan Pelaporan:{' '}
+                        {pelaporanScore !== null ? `${pelaporanScore}%` : 'Belum ada laporan'}
+                    </span>
                     {pjp.nib && (
                         <span className="text-slate-600">NIB: {pjp.nib}</span>
                     )}
@@ -108,6 +126,15 @@ export default function Show({
                         </button>
                     )}
                 </div>
+
+                {pjp.catatan && (
+                    <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-5">
+                        <h2 className="text-sm font-semibold text-amber-900">Catatan</h2>
+                        <p className="mt-1 whitespace-pre-line text-sm text-amber-800">
+                            {pjp.catatan}
+                        </p>
+                    </div>
+                )}
 
                 <h2 className="mb-4 text-lg font-semibold text-slate-900">
                     Dokumen &amp; Laporan

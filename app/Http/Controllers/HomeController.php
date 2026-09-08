@@ -12,6 +12,19 @@ class HomeController extends Controller
     {
         $statusCounts = Pjp::statusCountsFor();
 
+        $perluPerhatian = Pjp::query()
+            ->get(['id', 'nama_perusahaan', 'tahapan'])
+            ->map(fn (Pjp $pjp) => [
+                'id' => $pjp->id,
+                'nama_perusahaan' => $pjp->nama_perusahaan,
+                'tahapan' => $pjp->tahapan,
+                'achievement' => $pjp->achievement(),
+            ])
+            ->filter(fn (array $row) => $row['achievement'] !== null && $row['achievement'] < 80)
+            ->sortBy('achievement')
+            ->take(5)
+            ->values();
+
         return Inertia::render('Home', [
             'stats' => [
                 'total' => array_sum($statusCounts),
@@ -20,6 +33,7 @@ class HomeController extends Controller
             ],
             'statusCounts' => $statusCounts,
             'pjpBelumLaporanBulanan' => Pjp::belumLaporanBulananBulanIni(),
+            'perluPerhatian' => $perluPerhatian,
         ]);
     }
 }

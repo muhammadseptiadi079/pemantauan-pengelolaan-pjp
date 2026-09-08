@@ -4,6 +4,7 @@ import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import LogoMark from '@/Components/Logo';
 import { TahapIcon } from '@/Components/TahapIcons';
+import { TAHAPAN_OPTIONS } from '@/types';
 
 const tahapan = [
     {
@@ -31,6 +32,13 @@ const tahapan = [
 
 type MiniPjp = { id: number; nama_perusahaan: string };
 
+type PerluPerhatian = {
+    id: number;
+    nama_perusahaan: string;
+    tahapan: string;
+    achievement: number;
+};
+
 type HomeProps = {
     stats: {
         total: number;
@@ -39,12 +47,20 @@ type HomeProps = {
     };
     statusCounts: StatusCounts;
     pjpBelumLaporanBulanan: MiniPjp[];
+    perluPerhatian: PerluPerhatian[];
 };
+
+function achievementColor(value: number): string {
+    if (value >= 60) return 'text-amber-700 bg-amber-50';
+    if (value >= 40) return 'text-orange-700 bg-orange-50';
+    return 'text-red-700 bg-red-50';
+}
 
 export default function Home({
     stats,
     statusCounts,
     pjpBelumLaporanBulanan,
+    perluPerhatian,
 }: HomeProps) {
     return (
         <AppLayout>
@@ -77,6 +93,38 @@ export default function Home({
                                         className="rounded-full bg-white px-3 py-1 text-sm font-medium text-amber-800 hover:bg-amber-100"
                                     >
                                         {pjp.nama_perusahaan}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {perluPerhatian.length > 0 && (
+                    <div className="mb-8 rounded-xl border border-slate-200 bg-white p-5">
+                        <p className="mb-3 text-sm font-semibold text-slate-900">
+                            PJP Paling Perlu Perhatian
+                        </p>
+                        <ul className="divide-y divide-slate-100">
+                            {perluPerhatian.map((pjp) => (
+                                <li key={pjp.id}>
+                                    <Link
+                                        href={`/pjp/${pjp.id}`}
+                                        className="flex items-center justify-between gap-3 py-2.5 text-sm hover:bg-slate-50"
+                                    >
+                                        <span>
+                                            <span className="font-medium text-slate-800">
+                                                {pjp.nama_perusahaan}
+                                            </span>
+                                            <span className="ml-2 text-xs text-slate-400">
+                                                {TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
+                                            </span>
+                                        </span>
+                                        <span
+                                            className={`rounded-full px-2 py-0.5 text-xs font-semibold ${achievementColor(pjp.achievement)}`}
+                                        >
+                                            {pjp.achievement}%
+                                        </span>
                                     </Link>
                                 </li>
                             ))}

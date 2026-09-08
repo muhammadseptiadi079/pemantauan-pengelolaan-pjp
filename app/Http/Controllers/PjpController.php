@@ -91,6 +91,8 @@ class PjpController extends Controller
             'laporans' => $pjp->laporans()->get(),
             'evaluasis' => $pjp->evaluasis()->get(),
             'smkpScore' => $pjp->smkpScore(),
+            'legalitasStatus' => $pjp->smkpLegalitasStatus(),
+            'pelaporanScore' => $pjp->pelaporanScore(),
             'nextTahapan' => Pjp::NEXT_TAHAPAN[$pjp->tahapan] ?? null,
             'triwulanTerbuka' => PjpLaporan::triwulanSedangDibuka(),
             'bulanTriwulanDibuka' => implode(', ', PjpLaporan::BULAN_TRIWULAN_DIBUKA),

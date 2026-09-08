@@ -33,6 +33,9 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
             'Alamat',
             'Tahapan',
             'Status',
+            'Skor Persyaratan PJP (%)',
+            'Skor Kepatuhan Pelaporan (%)',
+            'Skor Evaluasi Terakhir',
             'Catatan',
             'Terdaftar Sejak',
         ];
@@ -40,6 +43,9 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
 
     public function map(mixed $row): array
     {
+        $pelaporanScore = $row->pelaporanScore();
+        $latestEvaluasi = $row->evaluasis()->first();
+
         return [
             $row->nama_perusahaan,
             $row->nib,
@@ -47,6 +53,11 @@ class PjpExport implements FromCollection, WithHeadings, WithMapping
             $row->alamat,
             Pjp::TAHAPAN[$row->tahapan] ?? $row->tahapan,
             Pjp::STATUS[$row->status] ?? $row->status,
+            // String, bukan angka mentah — PhpSpreadsheet menulis float 0
+            // sebagai sel numerik kosong, jadi 0% bisa salah terbaca "belum ada data".
+            $row->smkpScore()['persentase'].'%',
+            $pelaporanScore !== null ? $pelaporanScore.'%' : 'Belum ada laporan',
+            $latestEvaluasi !== null ? $latestEvaluasi->skor_rata_rata.'' : 'Belum dievaluasi',
             $row->catatan,
             $row->created_at->format('d-m-Y'),
         ];

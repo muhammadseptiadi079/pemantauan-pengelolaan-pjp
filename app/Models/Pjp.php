@@ -65,29 +65,10 @@ class Pjp extends Model
      */
     public function smkpScore(): array
     {
-        $answers = $this->smkpChecklistAnswers()
-            ->with('item.category')
-            ->get()
-            ->keyBy('smkp_checklist_item_id');
+        $breakdown = $this->smkpCategoryBreakdown();
 
-        $items = SmkpChecklistItem::query()
-            ->with('category')
-            ->whereHas('category', fn (Builder $q) => $q->where('kode', '!=', 'LEGALITAS'))
-            ->get();
-
-        $totalBobot = 0;
-        $totalSkor = 0.0;
-
-        foreach ($items as $item) {
-            $nilai = $answers->get($item->id)?->nilai;
-
-            if ($nilai === 'na') {
-                continue;
-            }
-
-            $totalBobot += $item->bobot;
-            $totalSkor += $item->bobot * ((int) ($nilai ?? 0) / 3);
-        }
+        $totalBobot = array_sum(array_column($breakdown, 'bobot_dinilai'));
+        $totalSkor = array_sum(array_column($breakdown, 'skor'));
 
         $persentase = $totalBobot > 0 ? round($totalSkor / $totalBobot * 100, 1) : 0.0;
 
@@ -96,6 +77,64 @@ class Pjp extends Model
             'total_skor' => round($totalSkor, 1),
             'persentase' => $persentase,
             'kategori_risiko' => self::kategoriRisikoFor($persentase),
+        ];
+    }
+
+    /**
+     * Rincian skor checklist SMKP per kategori (A-P, tidak termasuk
+     * LEGALITAS), supaya kelihatan kategori mana yang paling lemah —
+     * bukan cuma satu angka persentase total.
+     */
+    public function smkpCategoryBreakdown(): array
+    {
+        $answers = $this->smkpChecklistAnswers()->get()->keyBy('smkp_checklist_item_id');
+
+        $categories = SmkpChecklistCategory::query()
+            ->where('kode', '!=', 'LEGALITAS')
+            ->orderBy('urutan')
+            ->with('items')
+            ->get();
+
+        return $categories->map(function (SmkpChecklistCategory $category) use ($answers) {
+            $bobotDinilai = 0;
+            $skor = 0.0;
+
+            foreach ($category->items as $item) {
+                $nilai = $answers->get($item->id)?->nilai;
+
+                if ($nilai === 'na') {
+                    continue;
+                }
+
+                $bobotDinilai += $item->bobot;
+                $skor += $item->bobot * ((int) ($nilai ?? 0) / 3);
+            }
+
+            return [
+                'kode' => $category->kode,
+                'nama' => $category->nama,
+                'bobot' => $category->bobot,
+                'bobot_dinilai' => $bobotDinilai,
+                'skor' => round($skor, 1),
+                'persentase' => $bobotDinilai > 0 ? round($skor / $bobotDinilai * 100, 1) : 0.0,
+            ];
+        })->values()->toArray();
+    }
+
+    /**
+     * Status kelengkapan syarat wajib Dokumen Legalitas — terpisah dari
+     * skor 180 checklist SMKP, jadi cuma dihitung "berapa dari total item
+     * yang sudah dijawab Y", bukan skor 0-3.
+     */
+    public function smkpLegalitasStatus(): array
+    {
+        $answers = $this->smkpChecklistAnswers()->get()->keyBy('smkp_checklist_item_id');
+
+        $items = SmkpChecklistCategory::where('kode', 'LEGALITAS')->first()?->items ?? collect();
+
+        return [
+            'total' => $items->count(),
+            'lengkap' => $items->filter(fn (SmkpChecklistItem $item) => $answers->get($item->id)?->jawaban === 'ya')->count(),
         ];
     }
 
@@ -122,6 +161,21 @@ class Pjp extends Model
             : null;
 
         return round($rateSesuai !== null ? ($rateTepatWaktu + $rateSesuai) / 2 : $rateTepatWaktu, 1);
+    }
+
+    /**
+     * Skor achievement PJP sesuai tahap tempatnya berada sekarang — dipakai
+     * seragam oleh grafik achievement per tahap maupun ringkasan lintas-tahap
+     * di Beranda, supaya logikanya cuma didefinisikan sekali.
+     */
+    public function achievement(): ?float
+    {
+        return match ($this->tahapan) {
+            'persyaratan-seleksi-penetapan' => $this->smkpScore()['persentase'],
+            'tanggung-jawab-pemantauan-pelaporan' => $this->pelaporanScore(),
+            'evaluasi' => $this->evaluasis()->first()?->skor_rata_rata,
+            default => null,
+        };
     }
 
     private static function kategoriRisikoFor(float $persentase): string

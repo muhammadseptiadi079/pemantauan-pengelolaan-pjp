@@ -101,6 +101,20 @@ export interface SmkpScore {
     kategori_risiko: string;
 }
 
+export interface SmkpCategoryBreakdown {
+    kode: string;
+    nama: string;
+    bobot: number;
+    bobot_dinilai: number;
+    skor: number;
+    persentase: number;
+}
+
+export interface SmkpLegalitasStatus {
+    total: number;
+    lengkap: number;
+}
+
 export interface PjpEvaluasi {
     id: number;
     pjp_id: number;

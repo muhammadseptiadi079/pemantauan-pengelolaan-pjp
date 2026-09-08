@@ -3,8 +3,10 @@ import { FormEventHandler } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import {
+    SmkpCategoryBreakdown,
     SmkpChecklistAnswer,
     SmkpChecklistCategory,
+    SmkpLegalitasStatus,
     SmkpScore,
     SMKP_JAWABAN_OPTIONS,
     SMKP_NILAI_OPTIONS,
@@ -24,16 +26,27 @@ function scoreColor(persentase: number): string {
     return 'text-red-700';
 }
 
+function barColor(persentase: number): string {
+    if (persentase >= 80) return '#0ca30c';
+    if (persentase >= 60) return '#fab219';
+    if (persentase >= 40) return '#ec835a';
+    return '#d03b3b';
+}
+
 export default function ChecklistSmkp({
     pjp,
     categories,
     answers,
     score,
+    categoryBreakdown,
+    legalitasStatus,
 }: {
     pjp: { id: number; nama_perusahaan: string };
     categories: SmkpChecklistCategory[];
     answers: Record<number, SmkpChecklistAnswer>;
     score: SmkpScore;
+    categoryBreakdown: SmkpCategoryBreakdown[];
+    legalitasStatus: SmkpLegalitasStatus;
 }) {
     const initial: Record<number, JawabanForm> = {};
     categories.forEach((category) =>
@@ -109,6 +122,56 @@ export default function ChecklistSmkp({
                         >
                             {score.kategori_risiko}
                         </p>
+                    </div>
+                </div>
+
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4">
+                    <div>
+                        <p className="text-sm font-semibold text-slate-900">
+                            Dokumen Legalitas (syarat wajib)
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            Terpisah dari skor 178 di atas — harus lengkap semua.
+                        </p>
+                    </div>
+                    <span
+                        className={`rounded-full px-3 py-1 text-sm font-semibold ${
+                            legalitasStatus.lengkap === legalitasStatus.total
+                                ? 'bg-green-50 text-green-700'
+                                : 'bg-amber-50 text-amber-700'
+                        }`}
+                    >
+                        {legalitasStatus.lengkap} / {legalitasStatus.total} Lengkap
+                    </span>
+                </div>
+
+                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
+                    <h3 className="mb-3 text-sm font-semibold text-slate-900">
+                        Rincian Skor per Kategori
+                    </h3>
+                    <div className="space-y-2">
+                        {categoryBreakdown.map((category) => (
+                            <div key={category.kode} className="flex items-center gap-3">
+                                <span className="w-8 shrink-0 text-xs font-semibold text-slate-500">
+                                    {category.kode}
+                                </span>
+                                <span className="w-64 shrink-0 truncate text-sm text-slate-700">
+                                    {category.nama}
+                                </span>
+                                <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                                    <span
+                                        className="block h-full rounded-r-full"
+                                        style={{
+                                            width: `${Math.max(category.persentase, 2)}%`,
+                                            backgroundColor: barColor(category.persentase),
+                                        }}
+                                    />
+                                </span>
+                                <span className="w-16 shrink-0 text-right text-xs font-medium text-slate-600">
+                                    {category.persentase}%
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

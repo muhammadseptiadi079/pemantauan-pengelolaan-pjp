@@ -30,22 +30,14 @@ class TahapanController extends Controller
         $pjps = $this->pjpsForTahapan($tahapan, $request);
 
         if ($tahapan === 'persyaratan-seleksi-penetapan') {
-            $pjps->each(function (Pjp $pjp) {
-                $pjp->smkpScore = $pjp->smkpScore();
-                $pjp->achievement = $pjp->smkpScore['persentase'];
-            });
-        }
-
-        if ($tahapan === 'tanggung-jawab-pemantauan-pelaporan') {
-            $pjps->each(fn (Pjp $pjp) => $pjp->achievement = $pjp->pelaporanScore());
+            $pjps->each(fn (Pjp $pjp) => $pjp->smkpScore = $pjp->smkpScore());
         }
 
         if ($tahapan === 'evaluasi') {
-            $pjps->each(function (Pjp $pjp) {
-                $pjp->latestEvaluasi = $pjp->evaluasis()->first();
-                $pjp->achievement = $pjp->latestEvaluasi?->skor_rata_rata;
-            });
+            $pjps->each(fn (Pjp $pjp) => $pjp->latestEvaluasi = $pjp->evaluasis()->first());
         }
+
+        $pjps->each(fn (Pjp $pjp) => $pjp->achievement = $pjp->achievement());
 
         return Inertia::render($component, [
             'pjps' => $pjps,

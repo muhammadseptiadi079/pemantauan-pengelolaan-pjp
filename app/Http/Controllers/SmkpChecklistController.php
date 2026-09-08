@@ -22,6 +22,8 @@ class SmkpChecklistController extends Controller
             'categories' => $categories,
             'answers' => $answers,
             'score' => $pjp->smkpScore(),
+            'categoryBreakdown' => $pjp->smkpCategoryBreakdown(),
+            'legalitasStatus' => $pjp->smkpLegalitasStatus(),
         ]);
     }
 
