@@ -12,6 +12,10 @@ A Laravel + Inertia.js + React (TypeScript) app for monitoring and managing Peru
 
 There is no authentication yet — every route is publicly accessible. This is a known, deliberate gap (see git history), and is explicitly the **last** feature to be built, not the next one — deferred on purpose because the intended design is per-kontraktor login registered by email (each PJP/kontraktor gets its own account tied to their email, scoping their access to just their own checklist/laporan uploads instead of today's guess-the-ID links), and that email-registration piece isn't ready to design yet. Don't jump ahead and build a generic login system before that's revisited — check with the user first if auth ever seems like the natural next step.
 
+## Working with this project's maintainer
+
+The maintainer runs terminal commands manually on their own Windows laptop (VS Code's integrated terminal), not through an automated tool — so when giving them shell/terminal commands to run, send them **one command at a time**, not as a combined multi-line block. Explain what the command does, wait for them to run it and report back (or share the output), then give the next one. This applies whenever commands are meant for *them* to type, not to commands you run yourself in your own sandboxed session.
+
 ## Commands
 
 ```bash
