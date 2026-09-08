@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
+import BackButton from '@/Components/BackButton';
 
 const faq: { pertanyaan: string; jawaban: string }[] = [
     {
@@ -69,11 +70,14 @@ export default function Bantuan() {
         <AppLayout>
             <Head title="Bantuan" />
             <div className="mx-auto max-w-3xl px-6 py-16">
-                <PageHeader
-                    title="Pertanyaan yang Sering Diajukan"
-                    description="Seputar penggunaan aplikasi Pemantauan & Pengelolaan PJP — alur tahapan, checklist, pelaporan, dan evaluasi."
-                    icon="help"
-                />
+                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
+                    <PageHeader
+                        title="Pertanyaan yang Sering Diajukan"
+                        description="Seputar penggunaan aplikasi Pemantauan & Pengelolaan PJP — alur tahapan, checklist, pelaporan, dan evaluasi."
+                        icon="help"
+                    />
+                    <BackButton className="w-full sm:w-auto" />
+                </div>
 
                 <div className="space-y-3">
                     {faq.map((item, index) => (

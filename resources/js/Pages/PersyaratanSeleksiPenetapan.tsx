@@ -1,12 +1,11 @@
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
+import BackButton from '@/Components/BackButton';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
-import AchievementDonutModal, { DonutTarget } from '@/Components/AchievementDonutModal';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { SmkpScore } from '@/types';
 
@@ -45,17 +44,18 @@ export default function PersyaratanSeleksiPenetapan({
     filters: { search: string; status: string };
     statusCounts: StatusCounts;
 }) {
-    const [selected, setSelected] = useState<DonutTarget | null>(null);
-
     return (
         <AppLayout>
             <Head title="Persyaratan, Seleksi, dan Penetapan" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <PageHeader
-                    title="Persyaratan, Seleksi, dan Penetapan"
-                    description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
-                    icon="persyaratan"
-                />
+                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
+                    <PageHeader
+                        title="Persyaratan, Seleksi, dan Penetapan"
+                        description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
+                        icon="persyaratan"
+                    />
+                    <BackButton className="w-full sm:w-auto" />
+                </div>
 
                 <div className="mb-6">
                     <StatusStackedBar
@@ -74,10 +74,7 @@ export default function PersyaratanSeleksiPenetapan({
                             label: pjp.nama_perusahaan,
                             value: pjp.achievement,
                         }))}
-                        onItemClick={(item) =>
-                            item.value !== null &&
-                            setSelected({ id: item.id, label: item.label, value: item.value })
-                        }
+                        hrefFor={(item) => `/pjp/${item.id}/checklist-smkp`}
                     />
                 </div>
 
@@ -103,11 +100,11 @@ export default function PersyaratanSeleksiPenetapan({
                         Setiap PJP wajib mengisi checklist prakualifikasi SMKP (17 kategori,
                         126 pertanyaan berbobot) untuk menunjukkan tingkat kepatuhannya.
                         Klik salah satu baris pada grafik &quot;Capaian Persyaratan PJP&quot;
-                        di atas untuk melihat rincian tercapai/kekurangannya, atau klik salah
-                        satu PJP pada daftar di bawah, lalu buka tombol{' '}
-                        <strong>&quot;Persyaratan PJP&quot;</strong> di halaman detailnya untuk
-                        mengisi atau melihat skornya. Persentase skor tiap PJP juga
-                        ditampilkan langsung pada daftar di bawah ini.
+                        di atas (atau salah satu PJP pada daftar di bawah) untuk langsung
+                        masuk ke halaman <strong>&quot;Persyaratan PJP&quot;</strong>-nya dan
+                        mengisi atau melihat skornya, lengkap dengan grafik donat tercapai/
+                        kekurangan yang bisa langsung diklik untuk follow-up. Persentase
+                        skor tiap PJP juga ditampilkan langsung pada daftar di bawah ini.
                     </p>
                 </div>
 
@@ -117,8 +114,6 @@ export default function PersyaratanSeleksiPenetapan({
                     filters={filters}
                 />
             </div>
-
-            <AchievementDonutModal pjp={selected} onClose={() => setSelected(null)} />
         </AppLayout>
     );
 }

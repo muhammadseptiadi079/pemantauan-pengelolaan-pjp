@@ -6,6 +6,7 @@ import StatusBadge from '@/Components/StatusBadge';
 import PjpFilters from '@/Components/PjpFilters';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import BackButton from '@/Components/BackButton';
 import Pagination from '@/Components/Pagination';
 import { Paginated, Pjp } from '@/types';
 
@@ -44,6 +45,7 @@ export default function Index({
                         icon="building"
                     />
                     <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0">
+                        <BackButton />
                         <a
                             href={`/pjp/export${exportQuery ? `?${exportQuery}` : ''}`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"

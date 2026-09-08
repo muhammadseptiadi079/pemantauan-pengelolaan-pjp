@@ -29,20 +29,19 @@ export default function AchievementBarChart({
     emptyMessage,
     noDataLabel,
     items,
-    onItemClick,
+    hrefFor,
 }: {
     title: string;
     emptyMessage: string;
     noDataLabel: string;
     items: AchievementItem[];
     /**
-     * Kalau diisi, baris dengan `value` terisi memicu ini alih-alih langsung
-     * pindah ke `/pjp/{id}` — dipakai halaman Persyaratan untuk membuka
-     * popup donut ketimbang lompat ke detail. Baris tanpa skor (`value`
-     * null) tetap jadi link biasa karena tidak ada apa-apa untuk ditampilkan
-     * di donut.
+     * Tujuan link tiap baris, default ke `/pjp/{id}`. Halaman Persyaratan
+     * memakai ini untuk lompat langsung ke `/pjp/{id}/checklist-smkp`
+     * (bukan halaman detail umum), karena grafik itu memang tentang
+     * checklist SMKP-nya.
      */
-    onItemClick?: (item: AchievementItem) => void;
+    hrefFor?: (item: AchievementItem) => string;
 }) {
     const scored = items
         .filter((item) => item.value !== null)
@@ -87,7 +86,7 @@ export default function AchievementBarChart({
                                 noDataLabel
                             );
                         const rowClassName =
-                            'row-in flex w-full flex-col gap-1.5 rounded-lg px-2 py-2 text-left transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5';
+                            'row-in flex flex-col gap-1.5 rounded-lg px-2 py-2 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5';
                         const rowTitle =
                             item.value !== null
                                 ? `${item.label}: ${item.value}%`
@@ -120,25 +119,10 @@ export default function AchievementBarChart({
                             </>
                         );
 
-                        if (onItemClick && item.value !== null) {
-                            return (
-                                <button
-                                    key={item.id}
-                                    type="button"
-                                    onClick={() => onItemClick(item)}
-                                    className={rowClassName}
-                                    style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
-                                    title={rowTitle}
-                                >
-                                    {rowContent}
-                                </button>
-                            );
-                        }
-
                         return (
                             <Link
                                 key={item.id}
-                                href={`/pjp/${item.id}`}
+                                href={hrefFor ? hrefFor(item) : `/pjp/${item.id}`}
                                 className={rowClassName}
                                 style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
                                 title={rowTitle}

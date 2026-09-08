@@ -4,6 +4,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import Spinner from '@/Components/Spinner';
+import SmkpDonutChart from '@/Components/SmkpDonutChart';
 import { TahapIcon } from '@/Components/TahapIcons';
 import {
     SmkpCategoryBreakdown,
@@ -101,6 +102,26 @@ export default function ChecklistSmkp({
         post(`/pjp/${pjp.id}/checklist-smkp`, { preserveScroll: true });
     };
 
+    const weakestCategory =
+        categoryBreakdown.length > 0
+            ? [...categoryBreakdown].sort((a, b) => a.persentase - b.persentase)[0]
+            : null;
+
+    const scrollToBreakdown = () => {
+        document
+            .getElementById('rincian-skor-kategori')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const scrollToWeakestCategory = () => {
+        if (!weakestCategory) return;
+        const el = document.getElementById(`kategori-${weakestCategory.kode}`);
+        if (el instanceof HTMLDetailsElement) {
+            el.open = true;
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <AppLayout>
             <Head title={`Persyaratan PJP - ${pjp.nama_perusahaan}`} />
@@ -163,6 +184,22 @@ export default function ChecklistSmkp({
                     </div>
                 </div>
 
+                <div className="glass-card mb-6 p-5">
+                    <div className="mb-3 flex items-center gap-2.5">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="check" className="h-4 w-4" />
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-900">
+                            Kelengkapan Checklist
+                        </h3>
+                    </div>
+                    <SmkpDonutChart
+                        persentase={score.persentase}
+                        onAchievedClick={scrollToBreakdown}
+                        onGapClick={weakestCategory ? scrollToWeakestCategory : undefined}
+                    />
+                </div>
+
                 <div className="glass-card mb-6 flex flex-wrap items-center justify-between gap-3 p-4">
                     <div className="flex items-center gap-2.5">
                         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
@@ -188,7 +225,7 @@ export default function ChecklistSmkp({
                     </span>
                 </div>
 
-                <div className="glass-card mb-6 p-5">
+                <div id="rincian-skor-kategori" className="glass-card mb-6 p-5">
                     <div className="mb-3 flex items-center gap-2.5">
                         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                             <TahapIcon name="persyaratan" className="h-4 w-4" />
@@ -258,6 +295,7 @@ export default function ChecklistSmkp({
                     {categories.map((category) => (
                         <details
                             key={category.id}
+                            id={`kategori-${category.kode}`}
                             className="glass-card group"
                             open={category.kode === 'LEGALITAS'}
                         >

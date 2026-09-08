@@ -6,6 +6,7 @@ import StatusBadge from '@/Components/StatusBadge';
 import LaporanUploadCard from '@/Components/LaporanUploadCard';
 import EvaluasiCard from '@/Components/EvaluasiCard';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import BackButton from '@/Components/BackButton';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import { TahapIcon } from '@/Components/TahapIcons';
 import {
@@ -100,6 +101,7 @@ export default function Show({
                         icon="building"
                     />
                     <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
+                        <BackButton />
                         <Link
                             href={`/pjp/${pjp.id}/checklist-smkp`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
