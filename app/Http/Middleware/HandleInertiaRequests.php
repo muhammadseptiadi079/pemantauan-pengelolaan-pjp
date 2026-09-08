@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Pjp;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -39,6 +40,10 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
+            ],
+            'sidebarStats' => [
+                'total' => fn () => Pjp::count(),
+                'perluPerhatian' => fn () => Pjp::perluPerhatianCount(),
             ],
         ];
     }

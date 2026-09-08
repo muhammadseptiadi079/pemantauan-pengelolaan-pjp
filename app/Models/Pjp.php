@@ -178,6 +178,18 @@ class Pjp extends Model
         };
     }
 
+    /**
+     * Jumlah PJP dengan achievement() di bawah 80 — dipakai oleh badge
+     * ringkas di sidebar (lihat HandleInertiaRequests) dan sejalan dengan
+     * daftar "PJP Paling Perlu Perhatian" di Beranda.
+     */
+    public static function perluPerhatianCount(): int
+    {
+        return static::all(['id', 'tahapan'])
+            ->filter(fn (Pjp $pjp) => ($achievement = $pjp->achievement()) !== null && $achievement < 80)
+            ->count();
+    }
+
     private static function kategoriRisikoFor(float $persentase): string
     {
         return match (true) {

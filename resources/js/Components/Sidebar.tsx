@@ -18,6 +18,32 @@ const navItems = [
     { href: '/evaluasi', label: 'Evaluasi', icon: 'evaluasi' },
 ];
 
+type SidebarStats = { total: number; perluPerhatian: number };
+
+function SidebarSummary({ stats }: { stats?: SidebarStats }) {
+    if (!stats) return null;
+
+    return (
+        <div className="mx-3 mb-3 rounded-lg border border-slate-100 bg-slate-50 p-3">
+            <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-500">Total PJP</span>
+                <span className="font-semibold text-slate-800">{stats.total}</span>
+            </div>
+            {stats.perluPerhatian > 0 && (
+                <Link
+                    href="/"
+                    className="mt-2 flex items-center justify-between rounded-md bg-amber-50 px-2 py-1.5 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-100"
+                >
+                    <span>Perlu Perhatian</span>
+                    <span className="rounded-full bg-amber-200 px-1.5 py-0.5 text-[11px] font-semibold text-amber-900">
+                        {stats.perluPerhatian}
+                    </span>
+                </Link>
+            )}
+        </div>
+    );
+}
+
 function NavLinks({
     pathname,
     onNavigate,
@@ -58,9 +84,10 @@ function NavLinks({
 }
 
 export default function Sidebar() {
-    const { url } = usePage();
+    const { url, props } = usePage();
     const pathname = url.split('?')[0];
     const [open, setOpen] = useState(false);
+    const sidebarStats = (props as { sidebarStats?: SidebarStats }).sidebarStats;
 
     return (
         <>
@@ -94,11 +121,12 @@ export default function Sidebar() {
                 </button>
             </header>
 
-            <aside className="hidden w-72 shrink-0 border-r border-slate-200 bg-white md:flex md:flex-col">
+            <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-white md:flex">
                 <div className="border-b border-slate-200 px-6 py-5">
                     <LogoWithText />
                 </div>
                 <NavLinks pathname={pathname} />
+                <SidebarSummary stats={sidebarStats} />
                 <div className="border-t border-slate-100 px-6 py-4">
                     <p className="text-[11px] leading-relaxed text-slate-400">
                         &copy; {new Date().getFullYear()} Pemantauan &amp; Pengelolaan PJP
@@ -139,6 +167,7 @@ export default function Sidebar() {
                             </button>
                         </div>
                         <NavLinks pathname={pathname} onNavigate={() => setOpen(false)} />
+                        <SidebarSummary stats={sidebarStats} />
                     </div>
                 </div>
             )}
