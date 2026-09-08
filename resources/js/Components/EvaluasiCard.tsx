@@ -1,5 +1,5 @@
 import { router, useForm } from '@inertiajs/react';
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useId, useRef, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import Spinner from '@/Components/Spinner';
@@ -18,6 +18,7 @@ function decimalsFor(value: number): number {
 }
 
 function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
+    const gradientId = useId();
     const polylineRef = useRef<SVGPolylineElement>(null);
     const [lineLength, setLineLength] = useState(0);
     const [grown, setGrown] = useState(false);
@@ -34,9 +35,9 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
 
     const kronologis = [...evaluasis].reverse();
     const width = 280;
-    const height = 56;
+    const height = 64;
     const padX = 10;
-    const padY = 8;
+    const padY = 10;
     const step = (width - padX * 2) / (kronologis.length - 1);
 
     const points = kronologis.map((e, i) => ({
@@ -46,14 +47,26 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
     }));
 
     const path = points.map((p) => `${p.x},${p.y}`).join(' ');
+    const areaPath = `${padX},${height} ${path} ${width - padX},${height}`;
     const lastValue = kronologis[kronologis.length - 1].skor_rata_rata;
 
     return (
-        <div className="mb-4 rounded-lg border border-slate-100 p-3">
+        <div className="mb-4 rounded-xl bg-gradient-to-b from-blue-50/60 to-transparent p-3">
             <p className="mb-2 text-xs font-semibold text-slate-500">
                 Tren Skor Rata-rata Antar Semester
             </p>
             <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxWidth: 320 }}>
+                <defs>
+                    <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#2a78d6" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#2a78d6" stopOpacity="0" />
+                    </linearGradient>
+                </defs>
+                <polygon
+                    points={areaPath}
+                    fill={`url(#${gradientId})`}
+                    style={{ opacity: grown ? 1 : 0, transition: 'opacity 0.9s ease-out' }}
+                />
                 <polyline
                     ref={polylineRef}
                     points={path}
@@ -66,6 +79,7 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                         strokeDasharray: lineLength,
                         strokeDashoffset: grown ? 0 : lineLength,
                         transition: 'stroke-dashoffset 0.9s ease-out',
+                        filter: 'drop-shadow(0 2px 4px rgba(42,120,214,0.35))',
                     }}
                 />
                 {points.map((p, i) => (

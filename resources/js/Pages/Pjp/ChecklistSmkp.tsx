@@ -36,6 +36,13 @@ function barColor(persentase: number): string {
     return '#d03b3b';
 }
 
+function barColorFrom(persentase: number): string {
+    if (persentase >= 80) return '#4ade80';
+    if (persentase >= 60) return '#fde047';
+    if (persentase >= 40) return '#fdba74';
+    return '#f87171';
+}
+
 function decimalsFor(value: number): number {
     return Number.isInteger(value) ? 0 : 1;
 }
@@ -220,12 +227,13 @@ export default function ChecklistSmkp({
                                             {valueDisplay}
                                         </span>
                                     </div>
-                                    <span className="h-2 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
+                                    <span className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200/50 shadow-inner sm:flex-1">
                                         <span
-                                            className="block h-full rounded-r-full transition-[width] duration-700 ease-out"
+                                            className="block h-full rounded-full transition-[width] duration-700 ease-out"
                                             style={{
                                                 width: grown ? `${Math.max(category.persentase, 2)}%` : '0%',
-                                                backgroundColor: barColor(category.persentase),
+                                                backgroundImage: `linear-gradient(90deg, ${barColorFrom(category.persentase)}, ${barColor(category.persentase)})`,
+                                                boxShadow: `0 0 8px 0 ${barColor(category.persentase)}55`,
                                             }}
                                         />
                                     </span>

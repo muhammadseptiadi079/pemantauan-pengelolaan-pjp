@@ -73,6 +73,14 @@ export default function EvaluasiTrendComparison({ series }: { series: Series[] }
             </div>
 
             <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxHeight: 260 }}>
+                <rect
+                    x={padLeft}
+                    y={padTop}
+                    width={plotW}
+                    height={plotH}
+                    rx={12}
+                    fill="rgba(148, 163, 184, 0.06)"
+                />
                 {[0, 50, 100].map((value) => (
                     <g key={value}>
                         <line
@@ -125,12 +133,13 @@ export default function EvaluasiTrendComparison({ series }: { series: Series[] }
                                     points={path}
                                     fill="none"
                                     stroke={color}
-                                    strokeWidth={2}
+                                    strokeWidth={2.5}
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                     style={{
                                         opacity: grown ? 1 : 0,
                                         transition: 'opacity 0.6s ease-out',
+                                        filter: `drop-shadow(0 2px 5px ${color}66)`,
                                     }}
                                 />
                             )}
@@ -139,13 +148,14 @@ export default function EvaluasiTrendComparison({ series }: { series: Series[] }
                                     key={i}
                                     cx={p.x}
                                     cy={p.y}
-                                    r={4}
+                                    r={4.5}
                                     fill={color}
                                     stroke="#fcfcfb"
                                     strokeWidth={2}
                                     style={{
                                         opacity: grown ? 1 : 0,
                                         transition: `opacity 0.3s ease-out ${0.2 + i * 0.08}s`,
+                                        filter: `drop-shadow(0 1px 3px ${color}80)`,
                                     }}
                                 >
                                     <title>{p.label}</title>

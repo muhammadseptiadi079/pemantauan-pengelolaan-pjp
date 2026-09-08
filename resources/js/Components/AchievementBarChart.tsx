@@ -14,10 +14,10 @@ type AchievementItem = {
 };
 
 const BANDS = [
-    { min: 80, fill: '#0ca30c', label: 'Baik (>=80)' },
-    { min: 60, fill: '#fab219', label: 'Perlu Perhatian (60-79)' },
-    { min: 40, fill: '#ec835a', label: 'Perlu Tindak Lanjut (40-59)' },
-    { min: 0, fill: '#d03b3b', label: 'Kritis (<40)' },
+    { min: 80, fill: '#0ca30c', from: '#4ade80', label: 'Baik (>=80)' },
+    { min: 60, fill: '#fab219', from: '#fde047', label: 'Perlu Perhatian (60-79)' },
+    { min: 40, fill: '#ec835a', from: '#fdba74', label: 'Perlu Tindak Lanjut (40-59)' },
+    { min: 0, fill: '#d03b3b', from: '#f87171', label: 'Kritis (<40)' },
 ];
 
 function bandFor(value: number) {
@@ -97,13 +97,14 @@ export default function AchievementBarChart({
                                         {valueDisplay}
                                     </span>
                                 </div>
-                                <span className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
-                                    {item.value !== null && (
+                                <span className="h-3 w-full overflow-hidden rounded-full bg-slate-200/50 shadow-inner sm:flex-1">
+                                    {item.value !== null && band && (
                                         <span
-                                            className="block h-full rounded-r-full transition-[width] duration-700 ease-out"
+                                            className="block h-full rounded-full transition-[width] duration-700 ease-out"
                                             style={{
                                                 width: grown ? `${Math.max(item.value, 2)}%` : '0%',
-                                                backgroundColor: band?.fill,
+                                                backgroundImage: `linear-gradient(90deg, ${band.from}, ${band.fill})`,
+                                                boxShadow: `0 0 10px 0 ${band.fill}66`,
                                             }}
                                         />
                                     )}

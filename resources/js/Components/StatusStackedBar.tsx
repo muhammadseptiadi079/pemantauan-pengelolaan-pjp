@@ -10,6 +10,12 @@ const STATUS_FILL: Record<string, string> = {
     tidak_aktif: '#94a3b8',
 };
 
+const STATUS_FROM: Record<string, string> = {
+    aktif: '#4ade80',
+    perlu_tindak_lanjut: '#fde047',
+    tidak_aktif: '#cbd5e1',
+};
+
 const STATUS_TEXT_ON_FILL: Record<string, string> = {
     aktif: '#ffffff',
     perlu_tindak_lanjut: '#1e293b',
@@ -53,7 +59,7 @@ export default function StatusStackedBar({
             {total === 0 ? (
                 <div className="h-5 rounded-full bg-slate-100" />
             ) : (
-                <div className="flex h-5 w-full gap-[2px] overflow-hidden rounded-full bg-slate-100">
+                <div className="flex h-6 w-full gap-[3px] overflow-hidden rounded-full bg-slate-200/50 shadow-inner">
                     {segments.map((segment) => (
                         <div
                             key={segment.key}
@@ -61,7 +67,8 @@ export default function StatusStackedBar({
                             style={{
                                 flexGrow: grown ? segment.count : 0,
                                 flexBasis: 0,
-                                backgroundColor: STATUS_FILL[segment.key],
+                                backgroundImage: `linear-gradient(90deg, ${STATUS_FROM[segment.key]}, ${STATUS_FILL[segment.key]})`,
+                                boxShadow: `0 0 10px 0 ${STATUS_FILL[segment.key]}66`,
                             }}
                         >
                             {segment.percent >= 15 && (
