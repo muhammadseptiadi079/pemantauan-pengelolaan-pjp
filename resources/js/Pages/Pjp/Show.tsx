@@ -107,7 +107,7 @@ export default function Show({
                         title={pjp.nama_perusahaan}
                         description={TAHAPAN_OPTIONS[pjp.tahapan] ?? pjp.tahapan}
                     />
-                    <div className="flex shrink-0 flex-wrap justify-end gap-2">
+                    <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
                         <Link
                             href={`/pjp/${pjp.id}/checklist-smkp`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"

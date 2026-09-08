@@ -31,10 +31,10 @@ export default function PjpMiniList({
                 <Link
                     key={pjp.id}
                     href={`/pjp/${pjp.id}`}
-                    className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-slate-50"
+                    className="flex flex-col gap-2 px-4 py-3 text-sm hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                 >
                     <span className="font-medium text-slate-800">{pjp.nama_perusahaan}</span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2">
                         {pjp.smkpScore && (
                             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
                                 Persyaratan PJP: {pjp.smkpScore.persentase}%

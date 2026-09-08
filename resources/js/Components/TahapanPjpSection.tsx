@@ -18,7 +18,7 @@ export default function TahapanPjpSection({
 }) {
     return (
         <section className="mt-14">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-xl font-semibold text-slate-900">
                     Daftar PJP pada Tahap Ini
                 </h2>

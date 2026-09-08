@@ -37,10 +37,12 @@ export default function Create({
                     description="Tambahkan data Perusahaan Jasa Pertambangan baru ke dalam sistem."
                 />
 
-                <form onSubmit={submit} className="space-y-5">
-                    <PjpFormFields data={data} setData={setData} errors={errors} />
+                <form onSubmit={submit} className="space-y-6">
+                    <div className="space-y-5 rounded-xl border border-slate-200 bg-white p-6">
+                        <PjpFormFields data={data} setData={setData} errors={errors} />
+                    </div>
 
-                    <div className="flex gap-3 pt-2">
+                    <div className="flex gap-3">
                         <button
                             type="submit"
                             disabled={processing}

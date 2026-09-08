@@ -185,12 +185,12 @@ export default function ChecklistSmkp({
                                     className="row-in flex flex-col gap-1.5 rounded-lg px-1 py-1 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3"
                                     style={{ animationDelay: `${Math.min(index, 16) * 30}ms` }}
                                 >
-                                    <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:justify-start">
-                                        <span className="flex min-w-0 items-center gap-2">
+                                    <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:items-start sm:justify-start">
+                                        <span className="flex min-w-0 items-baseline gap-2">
                                             <span className="shrink-0 text-xs font-semibold text-slate-500">
                                                 {category.kode}
                                             </span>
-                                            <span className="truncate text-sm text-slate-700">
+                                            <span className="text-sm text-slate-700">
                                                 {category.nama}
                                             </span>
                                         </span>

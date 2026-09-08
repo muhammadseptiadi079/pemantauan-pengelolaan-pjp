@@ -50,7 +50,7 @@ export default function AchievementBarChart({
 
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
-            <div className="mb-3 flex items-baseline justify-between">
+            <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
                 <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
                 <span className="text-xs text-slate-500">
                     Urut dari yang paling perlu ditindaklanjuti
@@ -83,8 +83,8 @@ export default function AchievementBarChart({
                                         : `${item.label}: ${noDataLabel}`
                                 }
                             >
-                                <div className="flex items-center justify-between gap-2 sm:w-48 sm:shrink-0 sm:justify-start">
-                                    <span className="truncate text-sm text-slate-700">
+                                <div className="flex items-center justify-between gap-2 sm:w-64 sm:shrink-0 sm:justify-start">
+                                    <span className="text-sm text-slate-700">
                                         {item.label}
                                     </span>
                                     <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">

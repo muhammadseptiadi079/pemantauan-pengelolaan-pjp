@@ -51,9 +51,9 @@ type HomeProps = {
 };
 
 function achievementColor(value: number): string {
-    if (value >= 60) return 'text-amber-700 bg-amber-50';
-    if (value >= 40) return 'text-orange-700 bg-orange-50';
-    return 'text-red-700 bg-red-50';
+    if (value >= 60) return 'text-amber-800 bg-amber-100';
+    if (value >= 40) return 'text-orange-800 bg-orange-100';
+    return 'text-red-800 bg-red-100';
 }
 
 export default function Home({

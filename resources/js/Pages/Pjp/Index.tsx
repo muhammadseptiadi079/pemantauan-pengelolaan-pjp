@@ -37,12 +37,12 @@ export default function Index({
         <AppLayout>
             <Head title="Data PJP" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <div className="mb-10 flex items-start justify-between gap-4">
+                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
                     <PageHeader
                         title="Data PJP"
                         description="Daftar seluruh Perusahaan Jasa Pertambangan (PJP) yang terdaftar dalam sistem."
                     />
-                    <div className="flex shrink-0 gap-2">
+                    <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0">
                         <a
                             href={`/pjp/export${exportQuery ? `?${exportQuery}` : ''}`}
                             className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
