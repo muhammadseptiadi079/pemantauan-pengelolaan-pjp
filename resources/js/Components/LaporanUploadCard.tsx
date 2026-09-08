@@ -1,6 +1,7 @@
 import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import Spinner from '@/Components/Spinner';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { KESESUAIAN_OPTIONS, PjpLaporan } from '@/types';
 
@@ -177,8 +178,9 @@ export default function LaporanUploadCard({
                     <button
                         type="submit"
                         disabled={processing || !data.file}
-                        className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                        className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
                     >
+                        {processing && <Spinner />}
                         Unggah
                     </button>
                 </form>

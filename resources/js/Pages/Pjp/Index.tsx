@@ -88,8 +88,12 @@ export default function Index({
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
-                                    {pjps.data.map((pjp) => (
-                                        <tr key={pjp.id}>
+                                    {pjps.data.map((pjp, index) => (
+                                        <tr
+                                            key={pjp.id}
+                                            className="row-in transition-colors hover:bg-slate-50"
+                                            style={{ animationDelay: `${Math.min(index, 12) * 30}ms` }}
+                                        >
                                             <td className="px-4 py-3 font-medium text-slate-800">
                                                 {pjp.nama_perusahaan}
                                             </td>
@@ -130,10 +134,11 @@ export default function Index({
 
                         {/* Mobile: stacked cards */}
                         <div className="space-y-3 md:hidden">
-                            {pjps.data.map((pjp) => (
+                            {pjps.data.map((pjp, index) => (
                                 <div
                                     key={pjp.id}
-                                    className="rounded-xl border border-slate-200 bg-white p-4"
+                                    className="row-in rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50"
+                                    style={{ animationDelay: `${Math.min(index, 12) * 30}ms` }}
                                 >
                                     <div className="flex items-start justify-between gap-3">
                                         <p className="font-medium text-slate-800">
