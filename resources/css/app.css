@@ -88,6 +88,17 @@ button {
     }
 }
 
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @keyframes slide-in-left {
     from {
         transform: translateX(-16px);
@@ -100,7 +111,7 @@ button {
 }
 
 .page-enter {
-    animation: fade-in-up 0.35s ease-out both;
+    animation: page-in 0.4s ease-out both;
 }
 
 .row-in {
@@ -120,4 +131,45 @@ button {
 
 .pop-in {
     animation: pop-in 0.35s ease-out both;
+}
+
+/*
+ * Cincin pulsa untuk ikon yang menandakan sesuatu perlu perhatian sekarang
+ * (bukan dekorasi biasa) — dipakai sengaja hanya di badge "Perlu Perhatian"
+ * di sidebar dan kotak pengingat laporan belum masuk, supaya matanya
+ * benar-benar tertarik ke situ, bukan disebar ke semua ikon amber.
+ */
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.45);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(217, 119, 6, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
+    }
+}
+
+.pulse-ring {
+    animation: pulse-ring 2.4s ease-out infinite;
+}
+
+/* Napas lembut untuk ikon watermark besar di GradientStatCard — gerakan
+   halus supaya kartu terasa "hidup", tanpa mengganggu keterbacaan angka.
+   Sengaja tidak menyentuh opacity: ikon ini sudah transparan lewat
+   text-white/15, jadi animasi opacity di sini akan menumpuk kali dua
+   dan bikin nyaris tak terlihat. */
+@keyframes breathe {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.08) rotate(3deg);
+    }
+}
+
+.breathe {
+    animation: breathe 6s ease-in-out infinite;
 }

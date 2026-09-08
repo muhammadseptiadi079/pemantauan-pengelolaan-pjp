@@ -23,7 +23,7 @@ function CardContent({
         <>
             <TahapIcon
                 name={icon}
-                className="pointer-events-none absolute -bottom-4 -right-4 h-28 w-28 text-white/15"
+                className="breathe pointer-events-none absolute -bottom-4 -right-4 h-28 w-28 text-white/15"
             />
 
             <div className="relative">
@@ -41,7 +41,7 @@ function CardContent({
                 ) : (
                     <span />
                 )}
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                     <TahapIcon name={icon} className="h-5 w-5" />
                 </span>
             </div>

@@ -37,8 +37,10 @@ function SidebarSummary({ stats }: { stats?: SidebarStats }) {
                     href="/"
                     className="mt-2 flex items-center justify-between rounded-md bg-amber-50 px-2 py-1.5 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-100"
                 >
-                    <span className="flex items-center gap-1.5">
-                        <TahapIcon name="alert" className="h-3.5 w-3.5" />
+                    <span className="flex items-center gap-2">
+                        <span className="pulse-ring flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+                            <TahapIcon name="alert" className="h-3 w-3" />
+                        </span>
                         Perlu Perhatian
                     </span>
                     <span className="rounded-full bg-amber-200 px-1.5 py-0.5 text-[11px] font-semibold text-amber-900">
@@ -77,7 +79,7 @@ function NavLinks({
                     >
                         <TahapIcon
                             name={item.icon}
-                            className={`h-5 w-5 shrink-0 transition-transform duration-150 ${
+                            className={`h-5 w-5 shrink-0 transition-transform duration-150 group-hover:scale-110 ${
                                 isActive ? '' : 'text-slate-400 group-hover:text-slate-600'
                             }`}
                         />

@@ -82,15 +82,19 @@ export default function Home({
                 {pjpBelumLaporanBulanan.length > 0 && (
                     <div className="mb-8 rounded-2xl border border-amber-200/70 bg-amber-50/60 p-5 shadow-lg shadow-amber-100/40 backdrop-blur-xl">
                         <p className="flex items-center gap-2.5 text-sm font-semibold text-amber-900">
-                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-amber-100 text-amber-700">
+                            <span className="pulse-ring flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                                 <TahapIcon name="alert" className="h-4 w-4" />
                             </span>
                             {pjpBelumLaporanBulanan.length} PJP belum/terlambat
                             mengirim Laporan Bulanan bulan ini
                         </p>
                         <ul className="mt-2 flex flex-wrap gap-2">
-                            {pjpBelumLaporanBulanan.map((pjp) => (
-                                <li key={pjp.id}>
+                            {pjpBelumLaporanBulanan.map((pjp, index) => (
+                                <li
+                                    key={pjp.id}
+                                    className="row-in"
+                                    style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
+                                >
                                     <Link
                                         href={`/pjp/${pjp.id}`}
                                         className="rounded-full bg-white px-3 py-1 text-sm font-medium text-amber-800 hover:bg-amber-100"
@@ -183,7 +187,7 @@ export default function Home({
                             href={tahap.href}
                             className="glass-card group flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-2xl"
                         >
-                            <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-sm">
+                            <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                                 <TahapIcon name={tahap.icon} className="h-5 w-5" />
                             </span>
                             <h2 className="text-lg font-semibold text-slate-900 group-hover:text-blue-700">

@@ -273,11 +273,23 @@ export default function ChecklistSmkp({
                                         {category.nama}
                                     </span>
                                 </span>
-                                {category.kode !== 'LEGALITAS' && (
-                                    <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
-                                        Bobot {category.bobot}
-                                    </span>
-                                )}
+                                <span className="flex shrink-0 items-center gap-2">
+                                    {category.kode !== 'LEGALITAS' && (
+                                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                            Bobot {category.bobot}
+                                        </span>
+                                    )}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={2}
+                                        stroke="currentColor"
+                                        className="h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 group-open:rotate-180"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </span>
                             </summary>
                             <div className="space-y-5 border-t border-slate-100 p-4">
                                 {category.items.map((item, index) => {
