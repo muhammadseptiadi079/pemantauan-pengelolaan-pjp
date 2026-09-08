@@ -99,6 +99,31 @@ class Pjp extends Model
         ];
     }
 
+    /**
+     * Skor kepatuhan pelaporan Tahap 2, dari rata-rata dua hal yang sudah
+     * ada: persentase laporan yang tepat waktu, dan (kalau ada yang sudah
+     * dievaluasi) persentase yang dinilai sesuai isinya. `null` artinya PJP
+     * ini belum pernah mengunggah laporan sama sekali — beda dari skor 0,
+     * supaya tidak salah ditandai "kritis" padahal cuma belum ada datanya.
+     */
+    public function pelaporanScore(): ?float
+    {
+        $laporans = $this->laporans()->get();
+
+        if ($laporans->isEmpty()) {
+            return null;
+        }
+
+        $rateTepatWaktu = $laporans->filter(fn (PjpLaporan $l) => $l->tepat_waktu)->count() / $laporans->count() * 100;
+
+        $dievaluasi = $laporans->whereNotNull('kesesuaian_isi');
+        $rateSesuai = $dievaluasi->isNotEmpty()
+            ? $dievaluasi->filter(fn (PjpLaporan $l) => $l->kesesuaian_isi === 'sesuai')->count() / $dievaluasi->count() * 100
+            : null;
+
+        return round($rateSesuai !== null ? ($rateTepatWaktu + $rateSesuai) / 2 : $rateTepatWaktu, 1);
+    }
+
     private static function kategoriRisikoFor(float $persentase): string
     {
         return match (true) {

@@ -5,13 +5,13 @@ const navItems = [
     { href: '/', label: 'Beranda' },
     {
         href: '/persyaratan-seleksi-penetapan',
-        label: '1. Persyaratan, Seleksi, Penetapan',
+        label: 'Persyaratan, Seleksi, Penetapan',
     },
     {
         href: '/tanggung-jawab-pemantauan-pelaporan',
-        label: '2. Tanggung Jawab, Pemantauan, Pelaporan',
+        label: 'Tanggung Jawab, Pemantauan, Pelaporan',
     },
-    { href: '/evaluasi', label: '3. Evaluasi' },
+    { href: '/evaluasi', label: 'Evaluasi' },
 ];
 
 function NavLinks({

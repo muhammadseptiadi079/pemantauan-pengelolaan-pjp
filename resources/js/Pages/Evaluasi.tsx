@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
+import AchievementBarChart from '@/Components/AchievementBarChart';
 import { PjpEvaluasi, SmkpScore } from '@/types';
 
 type MiniPjp = {
@@ -11,6 +12,7 @@ type MiniPjp = {
     status: string;
     smkpScore?: SmkpScore;
     latestEvaluasi?: PjpEvaluasi | null;
+    achievement: number | null;
 };
 
 export default function Evaluasi({
@@ -31,10 +33,23 @@ export default function Evaluasi({
                     description="Evaluasi kinerja PJP setiap semester, mencakup aspek Teknis, Keselamatan &amp; Kesehatan, dan Lingkungan, sebagai dasar tindak lanjut pengelolaan berikutnya."
                 />
 
-                <div className="mb-10">
+                <div className="mb-6">
                     <StatusStackedBar
                         title="Capaian Status pada Tahap Ini"
                         counts={statusCounts}
+                    />
+                </div>
+
+                <div className="mb-10">
+                    <AchievementBarChart
+                        title="Skor Evaluasi Kinerja per Perusahaan"
+                        emptyMessage="Belum ada PJP pada tahap ini."
+                        noDataLabel="Belum dievaluasi"
+                        items={pjps.map((pjp) => ({
+                            id: pjp.id,
+                            label: pjp.nama_perusahaan,
+                            value: pjp.achievement,
+                        }))}
                     />
                 </div>
 

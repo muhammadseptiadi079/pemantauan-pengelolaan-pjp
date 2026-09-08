@@ -4,6 +4,7 @@ import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
+import AchievementBarChart from '@/Components/AchievementBarChart';
 import { SmkpScore } from '@/types';
 
 type MiniPjp = {
@@ -11,6 +12,7 @@ type MiniPjp = {
     nama_perusahaan: string;
     status: string;
     smkpScore?: SmkpScore;
+    achievement: number | null;
 };
 
 const subTahapan = [
@@ -46,10 +48,23 @@ export default function PersyaratanSeleksiPenetapan({
                     description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
                 />
 
-                <div className="mb-10">
+                <div className="mb-6">
                     <StatusStackedBar
                         title="Capaian Status pada Tahap Ini"
                         counts={statusCounts}
+                    />
+                </div>
+
+                <div className="mb-14">
+                    <AchievementBarChart
+                        title="Capaian Persyaratan PJP per Perusahaan"
+                        emptyMessage="Belum ada PJP pada tahap ini."
+                        noDataLabel="Belum diisi"
+                        items={pjps.map((pjp) => ({
+                            id: pjp.id,
+                            label: pjp.nama_perusahaan,
+                            value: pjp.achievement,
+                        }))}
                     />
                 </div>
 

@@ -4,8 +4,14 @@ import PageHeader from '@/Components/PageHeader';
 import PlaceholderCard from '@/Components/PlaceholderCard';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
+import AchievementBarChart from '@/Components/AchievementBarChart';
 
-type MiniPjp = { id: number; nama_perusahaan: string; status: string };
+type MiniPjp = {
+    id: number;
+    nama_perusahaan: string;
+    status: string;
+    achievement: number | null;
+};
 
 const subTahapan = [
     {
@@ -40,10 +46,23 @@ export default function TanggungJawabPemantauanPelaporan({
                     description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
                 />
 
-                <div className="mb-10">
+                <div className="mb-6">
                     <StatusStackedBar
                         title="Capaian Status pada Tahap Ini"
                         counts={statusCounts}
+                    />
+                </div>
+
+                <div className="mb-10">
+                    <AchievementBarChart
+                        title="Kepatuhan Pelaporan per Perusahaan"
+                        emptyMessage="Belum ada PJP pada tahap ini."
+                        noDataLabel="Belum ada laporan"
+                        items={pjps.map((pjp) => ({
+                            id: pjp.id,
+                            label: pjp.nama_perusahaan,
+                            value: pjp.achievement,
+                        }))}
                     />
                 </div>
 
