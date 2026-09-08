@@ -10,7 +10,7 @@ A Laravel + Inertia.js + React (TypeScript) app for monitoring and managing Peru
 2. Tanggung Jawab, Pemantauan, dan Pelaporan (`tanggung-jawab-pemantauan-pelaporan`)
 3. Evaluasi (`evaluasi`)
 
-There is no authentication yet — every route is publicly accessible. This is a known, deliberate gap (see git history) planned to be closed with a login system before the app is used by more than a trusted few.
+There is no authentication yet — every route is publicly accessible. This is a known, deliberate gap (see git history), and is explicitly the **last** feature to be built, not the next one — deferred on purpose because the intended design is per-kontraktor login registered by email (each PJP/kontraktor gets its own account tied to their email, scoping their access to just their own checklist/laporan uploads instead of today's guess-the-ID links), and that email-registration piece isn't ready to design yet. Don't jump ahead and build a generic login system before that's revisited — check with the user first if auth ever seems like the natural next step.
 
 ## Commands
 
