@@ -6,6 +6,8 @@ import StatusBadge from '@/Components/StatusBadge';
 import LaporanUploadCard from '@/Components/LaporanUploadCard';
 import EvaluasiCard from '@/Components/EvaluasiCard';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import AnimatedNumber from '@/Components/AnimatedNumber';
+import { TahapIcon } from '@/Components/TahapIcons';
 import {
     Pjp,
     PjpEvaluasi,
@@ -21,6 +23,43 @@ function scoreColor(value: number): string {
     if (value >= 60) return 'text-blue-700';
     if (value >= 40) return 'text-amber-700';
     return 'text-red-700';
+}
+
+function decimalsFor(value: number): number {
+    return Number.isInteger(value) ? 0 : 1;
+}
+
+function StatTile({
+    icon,
+    label,
+    value,
+    suffix = '',
+    valueColorClass,
+}: {
+    icon: string;
+    label: string;
+    value: number | null;
+    suffix?: string;
+    valueColorClass: string;
+}) {
+    return (
+        <div className="rounded-lg p-2 transition-colors hover:bg-slate-50">
+            <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <TahapIcon name={icon} className="h-4 w-4" />
+            </div>
+            <p className="text-xs text-slate-500">{label}</p>
+            <p className={`mt-0.5 text-xl font-bold ${valueColorClass}`}>
+                {value !== null ? (
+                    <>
+                        <AnimatedNumber value={value} decimals={decimalsFor(value)} />
+                        {suffix}
+                    </>
+                ) : (
+                    '—'
+                )}
+            </p>
+        </div>
+    );
 }
 
 export default function Show({
@@ -110,45 +149,40 @@ export default function Show({
                         )}
                     </div>
 
-                    <div className="mt-5 grid grid-cols-2 gap-4 border-t border-slate-100 pt-5 sm:grid-cols-4">
-                        <div>
-                            <p className="text-xs text-slate-500">Persyaratan PJP</p>
-                            <p className={`mt-1 text-xl font-bold ${scoreColor(smkpScore.persentase)}`}>
-                                {smkpScore.persentase}%
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-slate-500">Dokumen Legalitas</p>
-                            <p
-                                className={`mt-1 text-xl font-bold ${
-                                    legalitasStatus.lengkap === legalitasStatus.total
-                                        ? 'text-green-700'
-                                        : 'text-amber-700'
-                                }`}
-                            >
-                                {legalitasStatus.lengkap}/{legalitasStatus.total}
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-slate-500">Kepatuhan Pelaporan</p>
-                            <p
-                                className={`mt-1 text-xl font-bold ${
-                                    pelaporanScore !== null ? scoreColor(pelaporanScore) : 'text-slate-300'
-                                }`}
-                            >
-                                {pelaporanScore !== null ? `${pelaporanScore}%` : '—'}
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-slate-500">Evaluasi Terakhir</p>
-                            <p
-                                className={`mt-1 text-xl font-bold ${
-                                    latestEvaluasi ? scoreColor(latestEvaluasi.skor_rata_rata) : 'text-slate-300'
-                                }`}
-                            >
-                                {latestEvaluasi ? latestEvaluasi.skor_rata_rata : '—'}
-                            </p>
-                        </div>
+                    <div className="mt-5 grid grid-cols-2 gap-2 border-t border-slate-100 pt-5 sm:grid-cols-4">
+                        <StatTile
+                            icon="persyaratan"
+                            label="Persyaratan PJP"
+                            value={smkpScore.persentase}
+                            suffix="%"
+                            valueColorClass={scoreColor(smkpScore.persentase)}
+                        />
+                        <StatTile
+                            icon="legalitas"
+                            label="Dokumen Legalitas"
+                            value={legalitasStatus.lengkap}
+                            suffix={`/${legalitasStatus.total}`}
+                            valueColorClass={
+                                legalitasStatus.lengkap === legalitasStatus.total
+                                    ? 'text-green-700'
+                                    : 'text-amber-700'
+                            }
+                        />
+                        <StatTile
+                            icon="tanggungjawab"
+                            label="Kepatuhan Pelaporan"
+                            value={pelaporanScore}
+                            suffix="%"
+                            valueColorClass={pelaporanScore !== null ? scoreColor(pelaporanScore) : 'text-slate-300'}
+                        />
+                        <StatTile
+                            icon="evaluasi"
+                            label="Evaluasi Terakhir"
+                            value={latestEvaluasi?.skor_rata_rata ?? null}
+                            valueColorClass={
+                                latestEvaluasi ? scoreColor(latestEvaluasi.skor_rata_rata) : 'text-slate-300'
+                            }
+                        />
                     </div>
                 </div>
 

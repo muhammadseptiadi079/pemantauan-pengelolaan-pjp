@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 export default function AnimatedNumber({
     value,
     duration = 700,
+    decimals = 0,
 }: {
     value: number;
     duration?: number;
+    decimals?: number;
 }) {
-    const [display, setDisplay] = useState(0);
+    const [display, setDisplay] = useState((0).toFixed(decimals));
     const frame = useRef<number | null>(null);
 
     useEffect(() => {
@@ -17,7 +19,7 @@ export default function AnimatedNumber({
         const tick = (now: number) => {
             const progress = Math.min((now - start) / duration, 1);
             const eased = 1 - Math.pow(1 - progress, 3);
-            setDisplay(Math.round(from + (value - from) * eased));
+            setDisplay((from + (value - from) * eased).toFixed(decimals));
 
             if (progress < 1) {
                 frame.current = requestAnimationFrame(tick);
@@ -29,7 +31,7 @@ export default function AnimatedNumber({
         return () => {
             if (frame.current) cancelAnimationFrame(frame.current);
         };
-    }, [value, duration]);
+    }, [value, duration, decimals]);
 
     return <>{display}</>;
 }

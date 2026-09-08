@@ -56,3 +56,22 @@ button {
 .page-enter {
     animation: fade-in-up 0.35s ease-out both;
 }
+
+.row-in {
+    animation: fade-in-up 0.4s ease-out both;
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pop-in {
+    animation: pop-in 0.35s ease-out both;
+}

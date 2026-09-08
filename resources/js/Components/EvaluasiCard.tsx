@@ -1,6 +1,7 @@
 import { router, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import AnimatedNumber from '@/Components/AnimatedNumber';
 import { PjpEvaluasi, SEMESTER_OPTIONS } from '@/types';
 
 function scoreColor(skor: number): string {
@@ -10,7 +11,23 @@ function scoreColor(skor: number): string {
     return 'text-red-700';
 }
 
+function decimalsFor(value: number): number {
+    return Number.isInteger(value) ? 0 : 1;
+}
+
 function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
+    const polylineRef = useRef<SVGPolylineElement>(null);
+    const [lineLength, setLineLength] = useState(0);
+    const [grown, setGrown] = useState(false);
+
+    useEffect(() => {
+        if (polylineRef.current) {
+            setLineLength(polylineRef.current.getTotalLength());
+        }
+        const frame = requestAnimationFrame(() => setGrown(true));
+        return () => cancelAnimationFrame(frame);
+    }, [evaluasis]);
+
     if (evaluasis.length < 2) return null;
 
     const kronologis = [...evaluasis].reverse();
@@ -27,6 +44,7 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
     }));
 
     const path = points.map((p) => `${p.x},${p.y}`).join(' ');
+    const lastValue = kronologis[kronologis.length - 1].skor_rata_rata;
 
     return (
         <div className="mb-4 rounded-lg border border-slate-100 p-3">
@@ -35,12 +53,18 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
             </p>
             <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxWidth: 320 }}>
                 <polyline
+                    ref={polylineRef}
                     points={path}
                     fill="none"
                     stroke="#2a78d6"
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    style={{
+                        strokeDasharray: lineLength,
+                        strokeDashoffset: grown ? 0 : lineLength,
+                        transition: 'stroke-dashoffset 0.9s ease-out',
+                    }}
                 />
                 {points.map((p, i) => (
                     <circle
@@ -51,6 +75,10 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                         fill="#2a78d6"
                         stroke="#fcfcfb"
                         strokeWidth={2}
+                        style={{
+                            opacity: grown ? 1 : 0,
+                            transition: `opacity 0.3s ease-out ${0.3 + i * 0.15}s`,
+                        }}
                     />
                 ))}
                 <text
@@ -60,8 +88,12 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                     fontSize={10}
                     fontWeight={600}
                     fill="#0b0b0b"
+                    style={{
+                        opacity: grown ? 1 : 0,
+                        transition: `opacity 0.3s ease-out ${0.3 + (points.length - 1) * 0.15}s`,
+                    }}
                 >
-                    {kronologis[kronologis.length - 1].skor_rata_rata}
+                    <AnimatedNumber value={lastValue} decimals={decimalsFor(lastValue)} />
                 </text>
             </svg>
             <div className="mt-1 flex justify-between text-[10px] text-slate-400">

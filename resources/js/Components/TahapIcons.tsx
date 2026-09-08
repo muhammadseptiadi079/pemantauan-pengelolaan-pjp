@@ -29,6 +29,13 @@ export const tahapIconPaths: Record<string, ReactElement> = {
             d="M3.75 19.5h16.5M6.75 19.5v-6M11.25 19.5V9M15.75 19.5v-9M20.25 19.5V5.25"
         />
     ),
+    legalitas: (
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 3.25 5.25 6v6.25c0 4.4 2.9 7.4 6.75 8.5 3.85-1.1 6.75-4.1 6.75-8.5V6L12 3.25Z"
+        />
+    ),
 };
 
 export function TahapIcon({

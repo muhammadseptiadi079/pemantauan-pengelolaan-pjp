@@ -1,7 +1,8 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
+import AnimatedNumber from '@/Components/AnimatedNumber';
 import {
     SmkpCategoryBreakdown,
     SmkpChecklistAnswer,
@@ -31,6 +32,10 @@ function barColor(persentase: number): string {
     if (persentase >= 60) return '#fab219';
     if (persentase >= 40) return '#ec835a';
     return '#d03b3b';
+}
+
+function decimalsFor(value: number): number {
+    return Number.isInteger(value) ? 0 : 1;
 }
 
 export default function ChecklistSmkp({
@@ -64,6 +69,12 @@ export default function ChecklistSmkp({
     const { data, setData, post, processing } = useForm<{
         jawaban: Record<number, JawabanForm>;
     }>({ jawaban: initial });
+
+    const [grown, setGrown] = useState(false);
+    useEffect(() => {
+        const frame = requestAnimationFrame(() => setGrown(true));
+        return () => cancelAnimationFrame(frame);
+    }, []);
 
     const setField = (
         itemId: number,
@@ -102,7 +113,11 @@ export default function ChecklistSmkp({
                     <div>
                         <p className="text-sm text-slate-500">Total Skor</p>
                         <p className="mt-1 text-2xl font-bold text-slate-900">
-                            {score.total_skor} / {score.total_bobot}
+                            <AnimatedNumber
+                                value={score.total_skor}
+                                decimals={decimalsFor(score.total_skor)}
+                            />{' '}
+                            / {score.total_bobot}
                         </p>
                     </div>
                     <div>
@@ -110,7 +125,11 @@ export default function ChecklistSmkp({
                         <p
                             className={`mt-1 text-2xl font-bold ${scoreColor(score.persentase)}`}
                         >
-                            {score.persentase}%
+                            <AnimatedNumber
+                                value={score.persentase}
+                                decimals={decimalsFor(score.persentase)}
+                            />
+                            %
                         </p>
                     </div>
                     <div>
@@ -150,38 +169,50 @@ export default function ChecklistSmkp({
                         Rincian Skor per Kategori
                     </h3>
                     <div className="space-y-2">
-                        {categoryBreakdown.map((category) => (
-                            <div
-                                key={category.kode}
-                                className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3"
-                            >
-                                <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:justify-start">
-                                    <span className="flex min-w-0 items-center gap-2">
-                                        <span className="shrink-0 text-xs font-semibold text-slate-500">
-                                            {category.kode}
+                        {categoryBreakdown.map((category, index) => {
+                            const valueDisplay = (
+                                <>
+                                    <AnimatedNumber
+                                        value={category.persentase}
+                                        decimals={decimalsFor(category.persentase)}
+                                    />
+                                    %
+                                </>
+                            );
+                            return (
+                                <div
+                                    key={category.kode}
+                                    className="row-in flex flex-col gap-1.5 rounded-lg px-1 py-1 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3"
+                                    style={{ animationDelay: `${Math.min(index, 16) * 30}ms` }}
+                                >
+                                    <div className="flex items-center justify-between gap-2 sm:w-72 sm:shrink-0 sm:justify-start">
+                                        <span className="flex min-w-0 items-center gap-2">
+                                            <span className="shrink-0 text-xs font-semibold text-slate-500">
+                                                {category.kode}
+                                            </span>
+                                            <span className="truncate text-sm text-slate-700">
+                                                {category.nama}
+                                            </span>
                                         </span>
-                                        <span className="truncate text-sm text-slate-700">
-                                            {category.nama}
+                                        <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
+                                            {valueDisplay}
                                         </span>
+                                    </div>
+                                    <span className="h-2 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
+                                        <span
+                                            className="block h-full rounded-r-full transition-[width] duration-700 ease-out"
+                                            style={{
+                                                width: grown ? `${Math.max(category.persentase, 2)}%` : '0%',
+                                                backgroundColor: barColor(category.persentase),
+                                            }}
+                                        />
                                     </span>
-                                    <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
-                                        {category.persentase}%
+                                    <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-16">
+                                        {valueDisplay}
                                     </span>
                                 </div>
-                                <span className="h-2 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
-                                    <span
-                                        className="block h-full rounded-r-full"
-                                        style={{
-                                            width: `${Math.max(category.persentase, 2)}%`,
-                                            backgroundColor: barColor(category.persentase),
-                                        }}
-                                    />
-                                </span>
-                                <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-16">
-                                    {category.persentase}%
-                                </span>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 

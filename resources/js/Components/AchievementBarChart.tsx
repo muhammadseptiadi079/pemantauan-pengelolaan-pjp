@@ -1,5 +1,10 @@
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import AnimatedNumber from '@/Components/AnimatedNumber';
+
+function decimalsFor(value: number): number {
+    return Number.isInteger(value) ? 0 : 1;
+}
 
 type AchievementItem = {
     id: number;
@@ -56,13 +61,22 @@ export default function AchievementBarChart({
                 <p className="py-4 text-center text-sm text-slate-500">{emptyMessage}</p>
             ) : (
                 <div className="space-y-2">
-                    {rows.map((item) => {
+                    {rows.map((item, index) => {
                         const band = item.value !== null ? bandFor(item.value) : null;
+                        const valueDisplay =
+                            item.value !== null ? (
+                                <>
+                                    <AnimatedNumber value={item.value} decimals={decimalsFor(item.value)} />%
+                                </>
+                            ) : (
+                                noDataLabel
+                            );
                         return (
                             <Link
                                 key={item.id}
                                 href={`/pjp/${item.id}`}
-                                className="flex flex-col gap-1.5 rounded-lg px-2 py-2 hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5"
+                                className="row-in flex flex-col gap-1.5 rounded-lg px-2 py-2 transition-colors hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-3 sm:py-1.5"
+                                style={{ animationDelay: `${Math.min(index, 10) * 40}ms` }}
                                 title={
                                     item.value !== null
                                         ? `${item.label}: ${item.value}%`
@@ -74,7 +88,7 @@ export default function AchievementBarChart({
                                         {item.label}
                                     </span>
                                     <span className="shrink-0 text-xs font-medium text-slate-600 sm:hidden">
-                                        {item.value !== null ? `${item.value}%` : noDataLabel}
+                                        {valueDisplay}
                                     </span>
                                 </div>
                                 <span className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100 sm:flex-1">
@@ -89,7 +103,7 @@ export default function AchievementBarChart({
                                     )}
                                 </span>
                                 <span className="hidden shrink-0 text-right text-xs font-medium text-slate-600 sm:block sm:w-28">
-                                    {item.value !== null ? `${item.value}%` : noDataLabel}
+                                    {valueDisplay}
                                 </span>
                             </Link>
                         );
