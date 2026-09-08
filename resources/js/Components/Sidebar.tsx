@@ -127,6 +127,19 @@ export default function Sidebar() {
                 </div>
                 <NavLinks pathname={pathname} />
                 <SidebarSummary stats={sidebarStats} />
+                <div className="border-t border-slate-100 px-3 py-3">
+                    <Link
+                        href="/bantuan"
+                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                            pathname === '/bantuan'
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                        }`}
+                    >
+                        <TahapIcon name="help" className="h-5 w-5 shrink-0" />
+                        Bantuan
+                    </Link>
+                </div>
                 <div className="border-t border-slate-100 px-6 py-4">
                     <p className="text-[11px] leading-relaxed text-slate-400">
                         &copy; {new Date().getFullYear()} Pemantauan &amp; Pengelolaan PJP
@@ -168,6 +181,20 @@ export default function Sidebar() {
                         </div>
                         <NavLinks pathname={pathname} onNavigate={() => setOpen(false)} />
                         <SidebarSummary stats={sidebarStats} />
+                        <div className="border-t border-slate-100 px-3 py-3">
+                            <Link
+                                href="/bantuan"
+                                onClick={() => setOpen(false)}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                                    pathname === '/bantuan'
+                                        ? 'bg-blue-50 text-blue-700'
+                                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                                }`}
+                            >
+                                <TahapIcon name="help" className="h-5 w-5 shrink-0" />
+                                Bantuan
+                            </Link>
+                        </div>
                     </div>
                 </div>
             )}

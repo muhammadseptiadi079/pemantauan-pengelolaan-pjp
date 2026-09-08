@@ -7,8 +7,11 @@ use App\Http\Controllers\PjpLaporanController;
 use App\Http\Controllers\SmkpChecklistController;
 use App\Http\Controllers\TahapanController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
+
+Route::get('/bantuan', fn () => Inertia::render('Bantuan'))->name('bantuan');
 
 Route::get(
     '/persyaratan-seleksi-penetapan',
