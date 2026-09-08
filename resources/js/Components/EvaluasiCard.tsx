@@ -2,6 +2,7 @@ import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import AnimatedNumber from '@/Components/AnimatedNumber';
+import { TahapIcon } from '@/Components/TahapIcons';
 import { PjpEvaluasi, SEMESTER_OPTIONS } from '@/types';
 
 function scoreColor(skor: number): string {
@@ -153,7 +154,12 @@ export default function EvaluasiCard({
 
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="font-semibold text-slate-900">Evaluasi Kinerja per Semester</h3>
+            <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                    <TahapIcon name="evaluasi" className="h-4 w-4" />
+                </span>
+                <h3 className="font-semibold text-slate-900">Evaluasi Kinerja per Semester</h3>
+            </div>
             <p className="mt-1 text-xs text-slate-500">
                 Skor 3 aspek (0-100): Teknis, Keselamatan &amp; Kesehatan, Lingkungan.
             </p>

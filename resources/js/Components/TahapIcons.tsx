@@ -64,6 +64,27 @@ export const tahapIconPaths: Record<string, ReactElement> = {
             d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.177-.43.326-.67.446-.833.416-1.451 1.223-1.451 2.185v.44M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
         />
     ),
+    target: (
+        <>
+            <circle cx="12" cy="12" r="8.25" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="12" r="4.5" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="12" r="0.75" fill="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+        </>
+    ),
+    calendar: (
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6.75 3v2.25M17.25 3v2.25M3.75 8.25h16.5M4.5 6h15a.75.75 0 0 1 .75.75V19.5a.75.75 0 0 1-.75.75h-15a.75.75 0 0 1-.75-.75V6.75A.75.75 0 0 1 4.5 6Z"
+        />
+    ),
+    document: (
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12h6m-6 3.75h6M13.5 3H6.75a1.5 1.5 0 0 0-1.5 1.5v15a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V8.25L13.5 3Z"
+        />
+    ),
 };
 
 export function TahapIcon({

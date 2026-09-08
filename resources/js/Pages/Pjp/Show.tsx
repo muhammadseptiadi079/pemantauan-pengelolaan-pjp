@@ -206,7 +206,10 @@ export default function Show({
                     </div>
                 )}
 
-                <h2 className="mb-4 text-lg font-semibold text-slate-900">
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-semibold text-slate-900">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <TahapIcon name="document" className="h-4 w-4" />
+                    </span>
                     Dokumen &amp; Laporan
                 </h2>
                 <div className="space-y-4">
@@ -226,7 +229,10 @@ export default function Show({
                     ))}
                 </div>
 
-                <h2 className="mb-4 mt-10 text-lg font-semibold text-slate-900">
+                <h2 className="mb-4 mt-10 flex items-center gap-2.5 text-lg font-semibold text-slate-900">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <TahapIcon name="evaluasi" className="h-4 w-4" />
+                    </span>
                     Evaluasi Kinerja
                 </h2>
                 <EvaluasiCard pjpId={pjp.id} evaluasis={evaluasis} />

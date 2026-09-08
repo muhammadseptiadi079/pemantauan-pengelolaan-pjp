@@ -1,7 +1,15 @@
 import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import { TahapIcon } from '@/Components/TahapIcons';
 import { KESESUAIAN_OPTIONS, PjpLaporan } from '@/types';
+
+const JENIS_ICON: Record<string, string> = {
+    spip: 'building',
+    tsp: 'target',
+    laporan_bulanan: 'calendar',
+    laporan_triwulan: 'document',
+};
 
 function formatFileSize(bytes: number): string {
     if (bytes < 1024) return `${bytes} B`;
@@ -64,7 +72,12 @@ export default function LaporanUploadCard({
 
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="font-semibold text-slate-900">{label}</h3>
+            <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                    <TahapIcon name={JENIS_ICON[jenis] ?? 'document'} className="h-4 w-4" />
+                </span>
+                <h3 className="font-semibold text-slate-900">{label}</h3>
+            </div>
 
             {laporans.length === 0 ? (
                 <p className="mt-2 text-sm text-slate-500">

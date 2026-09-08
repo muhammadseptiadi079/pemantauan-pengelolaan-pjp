@@ -3,6 +3,7 @@ import { FormEventHandler, useEffect, useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/Components/PageHeader';
 import AnimatedNumber from '@/Components/AnimatedNumber';
+import { TahapIcon } from '@/Components/TahapIcons';
 import {
     SmkpCategoryBreakdown,
     SmkpChecklistAnswer,
@@ -145,13 +146,18 @@ export default function ChecklistSmkp({
                 </div>
 
                 <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                    <div>
-                        <p className="text-sm font-semibold text-slate-900">
-                            Dokumen Legalitas (syarat wajib)
-                        </p>
-                        <p className="text-xs text-slate-500">
-                            Terpisah dari skor 178 di atas — harus lengkap semua.
-                        </p>
+                    <div className="flex items-center gap-2.5">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="legalitas" className="h-4 w-4" />
+                        </span>
+                        <div>
+                            <p className="text-sm font-semibold text-slate-900">
+                                Dokumen Legalitas (syarat wajib)
+                            </p>
+                            <p className="text-xs text-slate-500">
+                                Terpisah dari skor 178 di atas — harus lengkap semua.
+                            </p>
+                        </div>
                     </div>
                     <span
                         className={`rounded-full px-3 py-1 text-sm font-semibold ${
@@ -165,9 +171,14 @@ export default function ChecklistSmkp({
                 </div>
 
                 <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
-                    <h3 className="mb-3 text-sm font-semibold text-slate-900">
-                        Rincian Skor per Kategori
-                    </h3>
+                    <div className="mb-3 flex items-center gap-2.5">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <TahapIcon name="persyaratan" className="h-4 w-4" />
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-900">
+                            Rincian Skor per Kategori
+                        </h3>
+                    </div>
                     <div className="space-y-2">
                         {categoryBreakdown.map((category, index) => {
                             const valueDisplay = (
@@ -232,9 +243,16 @@ export default function ChecklistSmkp({
                             open={category.kode === 'LEGALITAS'}
                         >
                             <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 text-sm font-semibold text-slate-900">
-                                <span>
-                                    {category.kode !== 'LEGALITAS' && `${category.kode}. `}
-                                    {category.nama}
+                                <span className="flex items-center gap-2.5">
+                                    {category.kode === 'LEGALITAS' && (
+                                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                                            <TahapIcon name="legalitas" className="h-4 w-4" />
+                                        </span>
+                                    )}
+                                    <span>
+                                        {category.kode !== 'LEGALITAS' && `${category.kode}. `}
+                                        {category.nama}
+                                    </span>
                                 </span>
                                 {category.kode !== 'LEGALITAS' && (
                                     <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
