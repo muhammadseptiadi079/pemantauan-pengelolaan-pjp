@@ -30,6 +30,7 @@ class HomeController extends Controller
                 'total' => array_sum($statusCounts),
                 'aktifDipantau' => $statusCounts['aktif'],
                 'perluTindakLanjut' => $statusCounts['perlu_tindak_lanjut'],
+                'tidakAktif' => $statusCounts['tidak_aktif'],
             ],
             'statusCounts' => $statusCounts,
             'pjpBelumLaporanBulanan' => Pjp::belumLaporanBulananBulanIni(),

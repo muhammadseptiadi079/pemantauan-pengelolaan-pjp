@@ -44,6 +44,7 @@ type HomeProps = {
         total: number;
         aktifDipantau: number;
         perluTindakLanjut: number;
+        tidakAktif: number;
     };
     statusCounts: StatusCounts;
     pjpBelumLaporanBulanan: MiniPjp[];
@@ -142,7 +143,7 @@ export default function Home({
                     </div>
                 )}
 
-                <section className="mb-12 grid gap-4 sm:grid-cols-3">
+                <section className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <GradientStatCard
                         value={stats.total}
                         label="Total PJP Terdaftar"
@@ -163,6 +164,13 @@ export default function Home({
                         icon="alert"
                         color="amber"
                         href="/pjp?status=perlu_tindak_lanjut"
+                    />
+                    <GradientStatCard
+                        value={stats.tidakAktif}
+                        label="Tidak Aktif"
+                        icon="inactive"
+                        color="slate"
+                        href="/pjp?status=tidak_aktif"
                     />
                 </section>
 
