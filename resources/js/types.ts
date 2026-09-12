@@ -126,6 +126,20 @@ export const SEMESTER_OPTIONS: Record<number, string> = {
     2: 'Semester 2 (Juli - Desember)',
 };
 
+export interface PjpCatatan {
+    id: number;
+    pjp_id: number;
+    isi: string;
+    created_at: string;
+}
+
+export interface EvaluasiTrendPoint {
+    tahun: number;
+    semester: number;
+    rata_rata: number;
+    jumlah_pjp: number;
+}
+
 export interface Paginated<T> {
     data: T[];
     links: { url: string | null; label: string; active: boolean }[];

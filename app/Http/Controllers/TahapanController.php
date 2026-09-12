@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pjp;
+use App\Models\PjpEvaluasi;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,6 +35,7 @@ class TahapanController extends Controller
     private function renderTahapan(string $component, string $metrik, Request $request): Response
     {
         $pjps = $this->allPjps($request);
+        $extra = [];
 
         if ($metrik === 'smkp') {
             $pjps->each(function (Pjp $pjp) {
@@ -55,12 +57,14 @@ class TahapanController extends Controller
                     ->values();
                 $pjp->achievement = $pjp->latestEvaluasi?->skor_rata_rata;
             });
+            $extra['evaluasiTrendGabungan'] = PjpEvaluasi::averageTrend();
         }
 
         return Inertia::render($component, [
             'pjps' => $pjps,
             'filters' => $this->filtersFromRequest($request),
             'statusCounts' => Pjp::statusCountsFor(),
+            ...$extra,
         ]);
     }
 

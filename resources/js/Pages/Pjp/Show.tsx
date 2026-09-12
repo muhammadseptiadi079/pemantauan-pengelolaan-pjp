@@ -5,12 +5,14 @@ import PageHeader from '@/Components/PageHeader';
 import StatusBadge from '@/Components/StatusBadge';
 import LaporanUploadCard from '@/Components/LaporanUploadCard';
 import EvaluasiCard from '@/Components/EvaluasiCard';
+import CatatanHistoryCard from '@/Components/CatatanHistoryCard';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import BackButton from '@/Components/BackButton';
 import AnimatedNumber from '@/Components/AnimatedNumber';
 import { TahapIcon } from '@/Components/TahapIcons';
 import {
     Pjp,
+    PjpCatatan,
     PjpEvaluasi,
     PjpLaporan,
     SmkpLegalitasStatus,
@@ -66,6 +68,7 @@ export default function Show({
     pjp,
     laporans,
     evaluasis,
+    catatans,
     smkpScore,
     legalitasStatus,
     pelaporanScore,
@@ -75,6 +78,7 @@ export default function Show({
     pjp: Pjp;
     laporans: PjpLaporan[];
     evaluasis: PjpEvaluasi[];
+    catatans: PjpCatatan[];
     smkpScore: SmkpScore;
     legalitasStatus: SmkpLegalitasStatus;
     pelaporanScore: number | null;
@@ -188,6 +192,10 @@ export default function Show({
                         </p>
                     </div>
                 )}
+
+                <div className="mb-10">
+                    <CatatanHistoryCard pjpId={pjp.id} catatans={catatans} />
+                </div>
 
                 <h2 className="mb-4 flex items-center gap-2.5 text-lg font-semibold text-slate-900">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">

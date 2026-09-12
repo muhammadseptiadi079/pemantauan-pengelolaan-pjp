@@ -42,6 +42,22 @@ class Pjp extends Model
     }
 
     /**
+     * Riwayat catatan bertimestamp — beda dari kolom `catatan` di atas
+     * (satu teks ringkas yang bisa ditimpa lewat form Ubah Data), ini log
+     * tambah-saja: setiap entri baru menambah baris, bukan menimpa yang
+     * lama, supaya ada jejak kenapa/kapan sesuatu berubah dari waktu ke
+     * waktu.
+     */
+    public function catatans(): HasMany
+    {
+        // `latest('id')`, bukan `latest()` biasa (yang urut dari `created_at`
+        // saja) — dua catatan yang ditambahkan dalam detik yang sama akan
+        // punya `created_at` identik, jadi butuh `id` sebagai tiebreaker
+        // supaya urutan "terbaru dulu" tetap benar dan deterministik.
+        return $this->hasMany(PjpCatatan::class)->latest('id');
+    }
+
+    /**
      * Skor kepatuhan checklist prakualifikasi SMKP, dihitung dari kategori
      * berbobot A-P (kategori Dokumen Legalitas tidak ikut dihitung karena
      * berupa syarat wajib terpisah, bukan bagian dari sistem bobot 180).

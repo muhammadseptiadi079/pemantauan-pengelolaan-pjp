@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PjpCatatanController;
 use App\Http\Controllers\PjpController;
 use App\Http\Controllers\PjpEvaluasiController;
 use App\Http\Controllers\PjpLaporanController;
@@ -26,6 +27,8 @@ Route::get(
 Route::get('/evaluasi', [TahapanController::class, 'evaluasi'])->name('evaluasi');
 
 Route::get('/pjp/export', [PjpController::class, 'export'])->name('pjp.export');
+Route::get('/pjp/import-template', [PjpController::class, 'importTemplate'])->name('pjp.import-template');
+Route::post('/pjp/import', [PjpController::class, 'import'])->name('pjp.import');
 Route::get('/pjp/{pjp}/export-pdf', [PjpController::class, 'exportPdf'])->name('pjp.export-pdf');
 
 Route::resource('pjp', PjpController::class);
@@ -33,6 +36,9 @@ Route::resource('pjp', PjpController::class);
 Route::post('/pjp/{pjp}/laporan', [PjpLaporanController::class, 'store'])->name('pjp.laporan.store');
 Route::patch('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'update'])->name('pjp.laporan.update');
 Route::delete('/pjp/{pjp}/laporan/{laporan}', [PjpLaporanController::class, 'destroy'])->name('pjp.laporan.destroy');
+
+Route::post('/pjp/{pjp}/catatan', [PjpCatatanController::class, 'store'])->name('pjp.catatan.store');
+Route::delete('/pjp/{pjp}/catatan/{catatan}', [PjpCatatanController::class, 'destroy'])->name('pjp.catatan.destroy');
 
 Route::get('/pjp/{pjp}/checklist-smkp', [SmkpChecklistController::class, 'show'])->name('pjp.checklist-smkp.show');
 Route::post('/pjp/{pjp}/checklist-smkp', [SmkpChecklistController::class, 'update'])->name('pjp.checklist-smkp.update');

@@ -39,4 +39,31 @@ class PjpEvaluasi extends Model
             get: fn () => round(($this->skor_teknis + $this->skor_keselamatan_kesehatan + $this->skor_lingkungan) / 3, 1),
         );
     }
+
+    /**
+     * Rata-rata skor evaluasi SELURUH PJP per (tahun, semester) — dipakai
+     * untuk grafik tren gabungan di halaman Evaluasi, beda dari
+     * EvaluasiTrendComparison yang membandingkan PJP satu per satu.
+     * Dihitung dari semua data yang ada tanpa ikut filter pencarian/status
+     * halaman, karena ini dimaksudkan sebagai ringkasan portofolio
+     * keseluruhan, bukan tampilan yang berubah-ubah mengikuti filter.
+     * `skor_rata_rata` adalah accessor PHP (bukan kolom DB), jadi
+     * pengelompokan dan rata-ratanya dilakukan di memori, bukan lewat SQL
+     * AVG().
+     *
+     * @return \Illuminate\Support\Collection<int, array{tahun: int, semester: int, rata_rata: float, jumlah_pjp: int}>
+     */
+    public static function averageTrend(): \Illuminate\Support\Collection
+    {
+        return static::all()
+            ->groupBy(fn (self $evaluasi) => "{$evaluasi->tahun}-{$evaluasi->semester}")
+            ->map(fn ($group) => [
+                'tahun' => $group->first()->tahun,
+                'semester' => $group->first()->semester,
+                'rata_rata' => round($group->avg('skor_rata_rata'), 1),
+                'jumlah_pjp' => $group->count(),
+            ])
+            ->sortBy([['tahun', 'asc'], ['semester', 'asc']])
+            ->values();
+    }
 }

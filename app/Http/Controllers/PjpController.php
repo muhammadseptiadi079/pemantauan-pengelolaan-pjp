@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PjpExport;
+use App\Exports\PjpImportTemplateExport;
+use App\Imports\PjpImport;
 use App\Models\Pjp;
 use App\Models\PjpLaporan;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -48,6 +50,32 @@ class PjpController extends Controller
         return Excel::download($export, 'data-pjp.xlsx');
     }
 
+    public function importTemplate(): BinaryFileResponse
+    {
+        return Excel::download(new PjpImportTemplateExport(), 'template-import-pjp.xlsx');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $import = new PjpImport();
+        Excel::import($import, $request->file('file'));
+
+        $pesan = "{$import->berhasil} PJP berhasil diimpor.";
+
+        if ($import->gagal !== []) {
+            $jumlahGagal = count($import->gagal);
+            $pesan .= " {$jumlahGagal} baris dilewati (baris ".
+                collect($import->gagal)->pluck('baris')->implode(', ').
+                ' — cek kembali data pada baris tersebut).';
+        }
+
+        return to_route('pjp.index')->with('success', $pesan);
+    }
+
     public function exportPdf(Pjp $pjp): HttpResponse
     {
         $laporans = $pjp->laporans()->get();
@@ -84,6 +112,7 @@ class PjpController extends Controller
             'pjp' => $pjp,
             'laporans' => $pjp->laporans()->get(),
             'evaluasis' => $pjp->evaluasis()->get(),
+            'catatans' => $pjp->catatans()->get(),
             'smkpScore' => $pjp->smkpScore(),
             'legalitasStatus' => $pjp->smkpLegalitasStatus(),
             'pelaporanScore' => $pjp->pelaporanScore(),

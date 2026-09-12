@@ -5,9 +5,10 @@ import BackButton from '@/Components/BackButton';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
+import EvaluasiTrendGabungan from '@/Components/EvaluasiTrendGabungan';
 import EvaluasiTrendComparison from '@/Components/EvaluasiTrendComparison';
 import { TahapIcon } from '@/Components/TahapIcons';
-import { PjpEvaluasi, SmkpScore } from '@/types';
+import { EvaluasiTrendPoint, PjpEvaluasi, SmkpScore } from '@/types';
 
 type MiniPjp = {
     id: number;
@@ -23,10 +24,12 @@ export default function Evaluasi({
     pjps,
     filters,
     statusCounts,
+    evaluasiTrendGabungan,
 }: {
     pjps: MiniPjp[];
     filters: { search: string; status: string };
     statusCounts: StatusCounts;
+    evaluasiTrendGabungan: EvaluasiTrendPoint[];
 }) {
     return (
         <AppLayout>
@@ -60,6 +63,8 @@ export default function Evaluasi({
                         }))}
                     />
                 </div>
+
+                <EvaluasiTrendGabungan points={evaluasiTrendGabungan} />
 
                 <EvaluasiTrendComparison
                     series={pjps.map((pjp) => ({

@@ -1,6 +1,7 @@
 import { router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import FilePreviewModal, { PreviewTarget } from '@/Components/FilePreviewModal';
 import Spinner from '@/Components/Spinner';
 import { TahapIcon } from '@/Components/TahapIcons';
 import { KESESUAIAN_OPTIONS, PjpLaporan } from '@/types';
@@ -35,6 +36,7 @@ export default function LaporanUploadCard({
     const [laporanToDelete, setLaporanToDelete] = useState<PjpLaporan | null>(
         null,
     );
+    const [preview, setPreview] = useState<PreviewTarget | null>(null);
     const { data, setData, post, processing, errors, reset } = useForm<{
         jenis: string;
         periode: string;
@@ -89,14 +91,18 @@ export default function LaporanUploadCard({
                     {laporans.map((laporan) => (
                         <li key={laporan.id} className="space-y-1.5 py-3 text-sm">
                             <div className="flex items-center justify-between gap-3">
-                                <a
-                                    href={`/storage/${laporan.file_path}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="truncate font-medium text-blue-600 hover:text-blue-800"
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setPreview({
+                                            url: `/storage/${laporan.file_path}`,
+                                            fileName: laporan.file_name,
+                                        })
+                                    }
+                                    className="truncate text-left font-medium text-blue-600 hover:text-blue-800"
                                 >
                                     {laporan.file_name}
-                                </a>
+                                </button>
                                 <button
                                     type="button"
                                     onClick={() => setLaporanToDelete(laporan)}
@@ -193,6 +199,8 @@ export default function LaporanUploadCard({
                 onConfirm={confirmDelete}
                 onCancel={() => setLaporanToDelete(null)}
             />
+
+            <FilePreviewModal file={preview} onClose={() => setPreview(null)} />
         </div>
     );
 }
