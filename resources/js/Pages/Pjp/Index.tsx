@@ -13,6 +13,14 @@ import { Paginated, Pjp } from '@/types';
 
 type Filters = { search: string; status: string };
 
+function formatTanggal(iso: string): string {
+    return new Date(iso).toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+}
+
 export default function Index({
     pjps,
     filters,
@@ -93,6 +101,7 @@ export default function Index({
                                     <tr>
                                         <th className="px-4 py-3">Nama Perusahaan</th>
                                         <th className="px-4 py-3">Status</th>
+                                        <th className="px-4 py-3">Terakhir Diperbarui</th>
                                         <th className="px-4 py-3 text-right">Aksi</th>
                                     </tr>
                                 </thead>
@@ -108,6 +117,9 @@ export default function Index({
                                             </td>
                                             <td className="px-4 py-3">
                                                 <StatusBadge status={pjp.status} />
+                                            </td>
+                                            <td className="px-4 py-3 text-slate-500">
+                                                {formatTanggal(pjp.updated_at)}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <div className="flex justify-end gap-3">
@@ -152,6 +164,9 @@ export default function Index({
                                         </p>
                                         <StatusBadge status={pjp.status} />
                                     </div>
+                                    <p className="mt-1 text-xs text-slate-400">
+                                        Diperbarui {formatTanggal(pjp.updated_at)}
+                                    </p>
                                     <div className="mt-3 flex gap-4 text-sm">
                                         <Link
                                             href={`/pjp/${pjp.id}`}

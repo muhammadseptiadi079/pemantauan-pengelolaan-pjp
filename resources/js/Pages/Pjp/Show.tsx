@@ -202,6 +202,9 @@ export default function Show({
                         <TahapIcon name="document" className="h-4 w-4" />
                     </span>
                     Dokumen &amp; Laporan
+                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
+                        {laporans.length} dokumen
+                    </span>
                 </h2>
                 <div className="space-y-4">
                     {Object.entries(JENIS_LAPORAN_OPTIONS).map(([jenis, label]) => (

@@ -45,13 +45,13 @@ export default function PjpFilters({
         >
             <div className="min-w-[180px] flex-1">
                 <label className="block text-xs font-medium text-slate-500">
-                    Cari Nama
+                    Cari
                 </label>
                 <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Nama perusahaan..."
+                    placeholder="Nama, NIB, penanggung jawab, atau alamat..."
                     className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
             </div>

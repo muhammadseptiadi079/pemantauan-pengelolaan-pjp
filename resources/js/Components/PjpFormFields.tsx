@@ -49,12 +49,19 @@ export default function PjpFormFields({
                 <FieldLabel icon="document">NIB</FieldLabel>
                 <input
                     type="text"
+                    inputMode="numeric"
+                    maxLength={13}
                     value={data.nib}
                     onChange={(e) => setData('nib', e.target.value)}
+                    placeholder="13 digit angka"
                     className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
-                {errors.nib && (
+                {errors.nib ? (
                     <p className="mt-1 text-sm text-red-600">{errors.nib}</p>
+                ) : (
+                    <p className="mt-1 text-xs text-slate-400">
+                        Opsional — kalau diisi, harus 13 digit angka.
+                    </p>
                 )}
             </div>
 

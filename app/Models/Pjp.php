@@ -215,7 +215,12 @@ class Pjp extends Model
         ?string $status,
     ): Builder {
         return $query
-            ->when($search, fn ($q, $search) => $q->where('nama_perusahaan', 'like', "%{$search}%"))
+            ->when($search, fn ($q, $search) => $q->where(function (Builder $q) use ($search) {
+                $q->where('nama_perusahaan', 'like', "%{$search}%")
+                    ->orWhere('nib', 'like', "%{$search}%")
+                    ->orWhere('penanggung_jawab', 'like', "%{$search}%")
+                    ->orWhere('alamat', 'like', "%{$search}%");
+            }))
             ->when($status, fn ($q, $status) => $q->where('status', $status));
     }
 

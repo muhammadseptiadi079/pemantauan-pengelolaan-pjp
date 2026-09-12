@@ -149,11 +149,13 @@ class PjpController extends Controller
     {
         return $request->validate([
             'nama_perusahaan' => ['required', 'string', 'max:255'],
-            'nib' => ['nullable', 'string', 'max:255'],
+            'nib' => ['nullable', 'digits:13'],
             'penanggung_jawab' => ['nullable', 'string', 'max:255'],
             'alamat' => ['nullable', 'string'],
             'status' => ['required', 'string', 'in:'.implode(',', array_keys(Pjp::STATUS))],
             'catatan' => ['nullable', 'string'],
+        ], [
+            'nib.digits' => 'NIB harus terdiri dari 13 digit angka.',
         ]);
     }
 }

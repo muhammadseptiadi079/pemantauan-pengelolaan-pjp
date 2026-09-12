@@ -36,11 +36,13 @@ class PjpImport implements ToCollection, WithHeadingRow
 
             $validator = Validator::make($data, [
                 'nama_perusahaan' => ['required', 'string', 'max:255'],
-                'nib' => ['nullable', 'string', 'max:255'],
+                'nib' => ['nullable', 'digits:13'],
                 'penanggung_jawab' => ['nullable', 'string', 'max:255'],
                 'alamat' => ['nullable', 'string'],
                 'status' => ['required', 'string', 'in:'.implode(',', array_keys(Pjp::STATUS))],
                 'catatan' => ['nullable', 'string'],
+            ], [
+                'nib.digits' => 'NIB harus terdiri dari 13 digit angka.',
             ]);
 
             // +1 karena $index 0-based, +1 lagi karena baris pertama file adalah heading.

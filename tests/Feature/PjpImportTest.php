@@ -41,9 +41,9 @@ class PjpImportTest extends TestCase
     {
         $file = $this->xlsxUploadFrom([
             ['Nama Perusahaan', 'NIB', 'Penanggung Jawab', 'Alamat', 'Status', 'Catatan'],
-            ['PT Contoh Satu', '111', 'Budi', 'Jl. A', 'Aktif Dipantau', 'Catatan A'],
-            ['', '222', 'Siti', 'Jl. B', 'aktif', ''],
-            ['PT Contoh Dua', '333', 'Rudi', 'Jl. C', 'Status Ngasal Tidak Ada', ''],
+            ['PT Contoh Satu', '1111111111111', 'Budi', 'Jl. A', 'Aktif Dipantau', 'Catatan A'],
+            ['', '2222222222222', 'Siti', 'Jl. B', 'aktif', ''],
+            ['PT Contoh Dua', '3333333333333', 'Rudi', 'Jl. C', 'Status Ngasal Tidak Ada', ''],
         ]);
 
         $response = $this->post('/pjp/import', ['file' => $file]);
@@ -57,6 +57,18 @@ class PjpImportTest extends TestCase
             'status' => 'aktif',
             'catatan' => 'Catatan A',
         ]);
+    }
+
+    public function test_baris_dengan_nib_tidak_13_digit_dilewati(): void
+    {
+        $file = $this->xlsxUploadFrom([
+            ['Nama Perusahaan', 'NIB', 'Penanggung Jawab', 'Alamat', 'Status', 'Catatan'],
+            ['PT NIB Salah', '12345', '', '', 'aktif', ''],
+        ]);
+
+        $this->post('/pjp/import', ['file' => $file]);
+
+        $this->assertDatabaseMissing('pjps', ['nama_perusahaan' => 'PT NIB Salah']);
     }
 
     public function test_status_kosong_default_ke_aktif(): void

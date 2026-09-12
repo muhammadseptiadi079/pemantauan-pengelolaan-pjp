@@ -1,5 +1,5 @@
 import { router, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useMemo, useState } from 'react';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import Spinner from '@/Components/Spinner';
 import { TahapIcon } from '@/Components/TahapIcons';
@@ -15,6 +15,13 @@ function formatTanggal(iso: string): string {
     });
 }
 
+// "YYYY-MM-DD" di zona waktu lokal (sama seperti yang dilihat pengguna di
+// `formatTanggal` di atas) — bukan `iso.slice(0, 10)` yang masih UTC, supaya
+// filter tanggal tidak meleset satu hari dekat tengah malam.
+function tanggalOf(iso: string): string {
+    return new Date(iso).toLocaleDateString('en-CA');
+}
+
 export default function CatatanHistoryCard({
     pjpId,
     catatans,
@@ -23,9 +30,22 @@ export default function CatatanHistoryCard({
     catatans: PjpCatatan[];
 }) {
     const [toDelete, setToDelete] = useState<PjpCatatan | null>(null);
+    const [dari, setDari] = useState('');
+    const [sampai, setSampai] = useState('');
     const { data, setData, post, processing, errors, reset } = useForm<{ isi: string }>({
         isi: '',
     });
+
+    const catatansTersaring = useMemo(() => {
+        if (!dari && !sampai) return catatans;
+
+        return catatans.filter((catatan) => {
+            const tanggal = tanggalOf(catatan.created_at);
+            if (dari && tanggal < dari) return false;
+            if (sampai && tanggal > sampai) return false;
+            return true;
+        });
+    }, [catatans, dari, sampai]);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -55,11 +75,54 @@ export default function CatatanHistoryCard({
                 jejak kapan dan kenapa sesuatu berubah.
             </p>
 
+            {catatans.length > 1 && (
+                <div className="mt-3 flex flex-wrap items-end gap-2 rounded-lg bg-slate-50 p-2.5">
+                    <div>
+                        <label className="block text-[11px] font-medium text-slate-500">
+                            Dari tanggal
+                        </label>
+                        <input
+                            type="date"
+                            value={dari}
+                            onChange={(e) => setDari(e.target.value)}
+                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-[11px] font-medium text-slate-500">
+                            Sampai tanggal
+                        </label>
+                        <input
+                            type="date"
+                            value={sampai}
+                            onChange={(e) => setSampai(e.target.value)}
+                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
+                        />
+                    </div>
+                    {(dari || sampai) && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setDari('');
+                                setSampai('');
+                            }}
+                            className="rounded-md px-2 py-1 text-xs font-medium text-slate-500 hover:bg-slate-100"
+                        >
+                            Reset
+                        </button>
+                    )}
+                </div>
+            )}
+
             {catatans.length === 0 ? (
                 <p className="mt-3 text-sm text-slate-500">Belum ada catatan.</p>
+            ) : catatansTersaring.length === 0 ? (
+                <p className="mt-3 text-sm text-slate-500">
+                    Tidak ada catatan pada rentang tanggal itu.
+                </p>
             ) : (
                 <ul className="mt-3 divide-y divide-slate-100">
-                    {catatans.map((catatan) => (
+                    {catatansTersaring.map((catatan) => (
                         <li
                             key={catatan.id}
                             className="flex items-start justify-between gap-3 py-3 text-sm"
