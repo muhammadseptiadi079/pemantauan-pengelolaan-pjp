@@ -89,9 +89,9 @@ export default function PersyaratanSeleksiPenetapan({
                     ))}
                 </section>
 
-                <div className="mb-14 rounded-xl border border-blue-200 bg-blue-50 p-5 text-sm text-blue-900">
+                <div className="mb-14 rounded-xl border border-orange-200 bg-orange-50 p-5 text-sm text-orange-900">
                     <p className="flex items-center gap-2.5 font-semibold">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-700">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-orange-100 text-orange-700">
                             <TahapIcon name="persyaratan" className="h-3.5 w-3.5" />
                         </span>
                         Persyaratan PJP

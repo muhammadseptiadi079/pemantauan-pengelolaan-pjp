@@ -83,7 +83,7 @@ export default function Bantuan() {
                     {faq.map((item, index) => (
                         <details
                             key={item.pertanyaan}
-                            className="glass-card group row-in open:border-blue-200 open:bg-blue-50/40"
+                            className="glass-card group row-in open:border-orange-200 open:bg-orange-50/40"
                             style={{ animationDelay: `${Math.min(index, 12) * 30}ms` }}
                             open={index === 0}
                         >

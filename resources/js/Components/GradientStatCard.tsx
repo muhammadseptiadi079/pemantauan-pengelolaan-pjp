@@ -3,7 +3,7 @@ import AnimatedNumber from '@/Components/AnimatedNumber';
 import { TahapIcon } from '@/Components/TahapIcons';
 
 const GRADIENTS: Record<string, string> = {
-    blue: 'from-blue-600 to-blue-800',
+    orange: 'from-orange-500 to-slate-900',
     green: 'from-green-600 to-green-800',
     amber: 'from-amber-500 to-orange-600',
     slate: 'from-slate-500 to-slate-700',
@@ -60,7 +60,7 @@ export default function GradientStatCard({
     value: number;
     label: string;
     icon: string;
-    color: 'blue' | 'green' | 'amber' | 'slate';
+    color: 'orange' | 'green' | 'amber' | 'slate';
     href?: string;
 }) {
     const className = `group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-6 text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl ${GRADIENTS[color]}`;

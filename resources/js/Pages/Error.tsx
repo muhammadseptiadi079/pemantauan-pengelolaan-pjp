@@ -54,7 +54,7 @@ export default function Error({ status }: { status: number }) {
                 <p className="mt-3 max-w-md text-slate-600">{description}</p>
                 <Link
                     href="/"
-                    className="mt-8 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-shadow hover:shadow-md"
+                    className="mt-8 rounded-lg bg-gradient-to-r from-orange-600 to-orange-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-shadow hover:shadow-md"
                 >
                     &larr; Kembali ke Beranda
                 </Link>

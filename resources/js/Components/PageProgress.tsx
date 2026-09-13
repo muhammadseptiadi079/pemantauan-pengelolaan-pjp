@@ -51,7 +51,7 @@ export default function PageProgress() {
             aria-hidden="true"
         >
             <div
-                className="h-full bg-gradient-to-r from-blue-500 to-blue-700 shadow-[0_0_8px_rgba(37,99,235,0.6)] transition-[width] duration-200 ease-out"
+                className="h-full bg-gradient-to-r from-orange-500 to-orange-700 shadow-[0_0_8px_rgba(234,88,12,0.6)] transition-[width] duration-200 ease-out"
                 style={{ width: `${progress}%` }}
             />
         </div>

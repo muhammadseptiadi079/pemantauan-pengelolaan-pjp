@@ -70,7 +70,7 @@ export default function Index({
                         </a>
                         <Link
                             href="/pjp/create"
-                            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                            className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700"
                         >
                             + Tambah PJP
                         </Link>
@@ -125,13 +125,13 @@ export default function Index({
                                                 <div className="flex justify-end gap-3">
                                                     <Link
                                                         href={`/pjp/${pjp.id}`}
-                                                        className="font-medium text-blue-600 hover:text-blue-800"
+                                                        className="font-medium text-orange-600 hover:text-orange-800"
                                                     >
                                                         Detail
                                                     </Link>
                                                     <Link
                                                         href={`/pjp/${pjp.id}/edit`}
-                                                        className="font-medium text-blue-600 hover:text-blue-800"
+                                                        className="font-medium text-orange-600 hover:text-orange-800"
                                                     >
                                                         Ubah
                                                     </Link>
@@ -170,13 +170,13 @@ export default function Index({
                                     <div className="mt-3 flex gap-4 text-sm">
                                         <Link
                                             href={`/pjp/${pjp.id}`}
-                                            className="font-medium text-blue-600 hover:text-blue-800"
+                                            className="font-medium text-orange-600 hover:text-orange-800"
                                         >
                                             Detail
                                         </Link>
                                         <Link
                                             href={`/pjp/${pjp.id}/edit`}
-                                            className="font-medium text-blue-600 hover:text-blue-800"
+                                            className="font-medium text-orange-600 hover:text-orange-800"
                                         >
                                             Ubah
                                         </Link>

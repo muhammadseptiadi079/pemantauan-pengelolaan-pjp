@@ -35,7 +35,7 @@ export default function FilePreviewModal({
                             href={file.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs font-medium text-blue-600 hover:text-blue-800"
+                            className="text-xs font-medium text-orange-600 hover:text-orange-800"
                         >
                             Buka di tab baru
                         </a>
@@ -79,7 +79,7 @@ export default function FilePreviewModal({
                                 href={file.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-medium text-blue-600 hover:text-blue-800"
+                                className="font-medium text-orange-600 hover:text-orange-800"
                             >
                                 Buka / unduh filenya
                             </a>

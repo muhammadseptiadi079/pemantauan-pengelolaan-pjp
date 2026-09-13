@@ -186,7 +186,7 @@ export default function ChecklistSmkp({
 
                 <div className="glass-card mb-8 grid gap-4 p-5 sm:grid-cols-3">
                     <div>
-                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="persyaratan" className="h-4 w-4" />
                         </span>
                         <p className="text-sm text-slate-500">Total Skor</p>
@@ -199,7 +199,7 @@ export default function ChecklistSmkp({
                         </p>
                     </div>
                     <div>
-                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="check" className="h-4 w-4" />
                         </span>
                         <p className="text-sm text-slate-500">Persentase Kepatuhan</p>
@@ -214,7 +214,7 @@ export default function ChecklistSmkp({
                         </p>
                     </div>
                     <div>
-                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="alert" className="h-4 w-4" />
                         </span>
                         <p className="text-sm text-slate-500">
@@ -230,7 +230,7 @@ export default function ChecklistSmkp({
 
                 <div className="glass-card mb-6 p-5">
                     <div className="mb-3 flex items-center gap-2.5">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="check" className="h-4 w-4" />
                         </span>
                         <h3 className="text-sm font-semibold text-slate-900">
@@ -246,7 +246,7 @@ export default function ChecklistSmkp({
 
                 <div className="glass-card mb-6 flex flex-wrap items-center justify-between gap-3 p-4">
                     <div className="flex items-center gap-2.5">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="legalitas" className="h-4 w-4" />
                         </span>
                         <div>
@@ -271,7 +271,7 @@ export default function ChecklistSmkp({
 
                 <div id="rincian-skor-kategori" className="glass-card mb-6 p-5">
                     <div className="mb-3 flex items-center gap-2.5">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                             <TahapIcon name="persyaratan" className="h-4 w-4" />
                         </span>
                         <h3 className="text-sm font-semibold text-slate-900">
@@ -317,7 +317,7 @@ export default function ChecklistSmkp({
                             <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 text-sm font-semibold text-slate-900">
                                 <span className="flex items-center gap-2.5">
                                     {category.kode === 'LEGALITAS' && (
-                                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                                             <TahapIcon name="legalitas" className="h-4 w-4" />
                                         </span>
                                     )}
@@ -374,7 +374,7 @@ export default function ChecklistSmkp({
                                                         onChange={(e) =>
                                                             setField(item.id, 'jawaban', e.target.value)
                                                         }
-                                                        className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                                                        className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                                                     >
                                                         <option value="">Jawaban</option>
                                                         {Object.entries(SMKP_JAWABAN_OPTIONS).map(
@@ -391,7 +391,7 @@ export default function ChecklistSmkp({
                                                             onChange={(e) =>
                                                                 setField(item.id, 'nilai', e.target.value)
                                                             }
-                                                            className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                                                            className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                                                         >
                                                             <option value="">Nilai</option>
                                                             {Object.entries(SMKP_NILAI_OPTIONS).map(
@@ -414,7 +414,7 @@ export default function ChecklistSmkp({
                                                                 e.target.value,
                                                             )
                                                         }
-                                                        className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                                                        className="rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                                                     />
                                                 </div>
                                             </div>
@@ -429,7 +429,7 @@ export default function ChecklistSmkp({
                         <button
                             type="submit"
                             disabled={processing}
-                            className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white shadow-lg hover:bg-blue-700 disabled:opacity-50"
+                            className="flex items-center gap-2 rounded-lg bg-orange-600 px-6 py-2.5 text-sm font-medium text-white shadow-lg hover:bg-orange-700 disabled:opacity-50"
                         >
                             {processing && <Spinner />}
                             Simpan Checklist

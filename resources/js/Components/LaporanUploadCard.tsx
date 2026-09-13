@@ -76,7 +76,7 @@ export default function LaporanUploadCard({
     return (
         <div className="glass-card p-5">
             <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                     <TahapIcon name={JENIS_ICON[jenis] ?? 'document'} className="h-4 w-4" />
                 </span>
                 <h3 className="font-semibold text-slate-900">{label}</h3>
@@ -99,7 +99,7 @@ export default function LaporanUploadCard({
                                             fileName: laporan.file_name,
                                         })
                                     }
-                                    className="truncate text-left font-medium text-blue-600 hover:text-blue-800"
+                                    className="truncate text-left font-medium text-orange-600 hover:text-orange-800"
                                 >
                                     {laporan.file_name}
                                 </button>
@@ -135,7 +135,7 @@ export default function LaporanUploadCard({
                                             e.target.value,
                                         )
                                     }
-                                    className="rounded-md border border-slate-300 px-2 py-1 text-[11px] text-slate-600 focus:border-blue-500 focus:outline-none"
+                                    className="rounded-md border border-slate-300 px-2 py-1 text-[11px] text-slate-600 focus:border-orange-500 focus:outline-none"
                                 >
                                     <option value="">Belum dievaluasi</option>
                                     {Object.entries(KESESUAIAN_OPTIONS).map(
@@ -167,7 +167,7 @@ export default function LaporanUploadCard({
                             placeholder="Periode (mis. September 2026)"
                             value={data.periode}
                             onChange={(e) => setData('periode', e.target.value)}
-                            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                         />
                         <input
                             key={fileInputKey}
@@ -184,7 +184,7 @@ export default function LaporanUploadCard({
                     <button
                         type="submit"
                         disabled={processing || !data.file}
-                        className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                        className="flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-orange-700 disabled:opacity-50"
                     >
                         {processing && <Spinner />}
                         Unggah

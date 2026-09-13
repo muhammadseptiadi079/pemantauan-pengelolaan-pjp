@@ -46,7 +46,7 @@ function StatTile({
 }) {
     return (
         <div className="rounded-lg p-2 transition-colors hover:bg-slate-50">
-            <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+            <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                 <TahapIcon name={icon} className="h-4 w-4" />
             </div>
             <p className="text-xs text-slate-500">{label}</p>
@@ -198,7 +198,7 @@ export default function Show({
                 </div>
 
                 <h2 className="mb-4 flex items-center gap-2.5 text-lg font-semibold text-slate-900">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                         <TahapIcon name="document" className="h-4 w-4" />
                     </span>
                     Dokumen &amp; Laporan
@@ -224,7 +224,7 @@ export default function Show({
                 </div>
 
                 <h2 className="mb-4 mt-10 flex items-center gap-2.5 text-lg font-semibold text-slate-900">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                         <TahapIcon name="evaluasi" className="h-4 w-4" />
                     </span>
                     Evaluasi Kinerja

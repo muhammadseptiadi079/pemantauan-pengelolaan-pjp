@@ -51,15 +51,15 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
     const lastValue = kronologis[kronologis.length - 1].skor_rata_rata;
 
     return (
-        <div className="mb-4 rounded-xl bg-gradient-to-b from-blue-50/60 to-transparent p-3">
+        <div className="mb-4 rounded-xl bg-gradient-to-b from-orange-50/60 to-transparent p-3">
             <p className="mb-2 text-xs font-semibold text-slate-500">
                 Tren Skor Rata-rata Antar Semester
             </p>
             <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ maxWidth: 320 }}>
                 <defs>
                     <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#2a78d6" stopOpacity="0.35" />
-                        <stop offset="100%" stopColor="#2a78d6" stopOpacity="0" />
+                        <stop offset="0%" stopColor="#ea580c" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
                     </linearGradient>
                 </defs>
                 <polygon
@@ -71,7 +71,7 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                     ref={polylineRef}
                     points={path}
                     fill="none"
-                    stroke="#2a78d6"
+                    stroke="#ea580c"
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -79,7 +79,7 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                         strokeDasharray: lineLength,
                         strokeDashoffset: grown ? 0 : lineLength,
                         transition: 'stroke-dashoffset 0.9s ease-out',
-                        filter: 'drop-shadow(0 2px 4px rgba(42,120,214,0.35))',
+                        filter: 'drop-shadow(0 2px 4px rgba(234,88,12,0.35))',
                     }}
                 />
                 {points.map((p, i) => (
@@ -88,7 +88,7 @@ function TrenEvaluasi({ evaluasis }: { evaluasis: PjpEvaluasi[] }) {
                         cx={p.x}
                         cy={p.y}
                         r={i === points.length - 1 ? 4 : 3}
-                        fill="#2a78d6"
+                        fill="#ea580c"
                         stroke="#fcfcfb"
                         strokeWidth={2}
                         style={{
@@ -170,7 +170,7 @@ export default function EvaluasiCard({
     return (
         <div className="glass-card p-5">
             <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                     <TahapIcon name="evaluasi" className="h-4 w-4" />
                 </span>
                 <h3 className="font-semibold text-slate-900">Evaluasi Kinerja per Semester</h3>
@@ -223,7 +223,7 @@ export default function EvaluasiCard({
                     <select
                         value={data.semester}
                         onChange={(e) => setData('semester', Number(e.target.value))}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                     >
                         {Object.entries(SEMESTER_OPTIONS).map(([value, label]) => (
                             <option key={value} value={value}>
@@ -235,7 +235,7 @@ export default function EvaluasiCard({
                         type="number"
                         value={data.tahun}
                         onChange={(e) => setData('tahun', Number(e.target.value))}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                     />
                 </div>
                 <div className="grid gap-2 sm:grid-cols-3">
@@ -246,7 +246,7 @@ export default function EvaluasiCard({
                         placeholder="Skor Teknis"
                         value={data.skor_teknis}
                         onChange={(e) => setData('skor_teknis', e.target.value)}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                     />
                     <input
                         type="number"
@@ -255,7 +255,7 @@ export default function EvaluasiCard({
                         placeholder="Skor K3"
                         value={data.skor_keselamatan_kesehatan}
                         onChange={(e) => setData('skor_keselamatan_kesehatan', e.target.value)}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                     />
                     <input
                         type="number"
@@ -264,7 +264,7 @@ export default function EvaluasiCard({
                         placeholder="Skor Lingkungan"
                         value={data.skor_lingkungan}
                         onChange={(e) => setData('skor_lingkungan', e.target.value)}
-                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                     />
                 </div>
                 {(errors.skor_teknis || errors.skor_keselamatan_kesehatan || errors.skor_lingkungan) && (
@@ -275,12 +275,12 @@ export default function EvaluasiCard({
                     value={data.catatan}
                     onChange={(e) => setData('catatan', e.target.value)}
                     rows={2}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                 />
                 <button
                     type="submit"
                     disabled={processing}
-                    className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-orange-700 disabled:opacity-50"
                 >
                     {processing && <Spinner />}
                     Simpan Evaluasi

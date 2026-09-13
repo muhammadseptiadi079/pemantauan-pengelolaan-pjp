@@ -65,7 +65,7 @@ export default function CatatanHistoryCard({
     return (
         <div className="glass-card p-5">
             <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                     <TahapIcon name="note" className="h-4 w-4" />
                 </span>
                 <h3 className="font-semibold text-slate-900">Riwayat Catatan</h3>
@@ -85,7 +85,7 @@ export default function CatatanHistoryCard({
                             type="date"
                             value={dari}
                             onChange={(e) => setDari(e.target.value)}
-                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
+                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-orange-500 focus:outline-none"
                         />
                     </div>
                     <div>
@@ -96,7 +96,7 @@ export default function CatatanHistoryCard({
                             type="date"
                             value={sampai}
                             onChange={(e) => setSampai(e.target.value)}
-                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
+                            className="mt-0.5 rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-orange-500 focus:outline-none"
                         />
                     </div>
                     {(dari || sampai) && (
@@ -151,13 +151,13 @@ export default function CatatanHistoryCard({
                     value={data.isi}
                     onChange={(e) => setData('isi', e.target.value)}
                     rows={2}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-orange-500 focus:outline-none"
                 />
                 {errors.isi && <p className="text-sm text-red-600">{errors.isi}</p>}
                 <button
                     type="submit"
                     disabled={processing || !data.isi.trim()}
-                    className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-orange-700 disabled:opacity-50"
                 >
                     {processing && <Spinner />}
                     Tambah Catatan

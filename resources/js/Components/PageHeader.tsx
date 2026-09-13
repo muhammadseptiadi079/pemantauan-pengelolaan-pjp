@@ -13,7 +13,7 @@ export default function PageHeader({
         <div className="mb-10">
             <div className="flex items-center gap-3">
                 {icon && (
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
                         <TahapIcon name={icon} className="h-5 w-5" />
                     </span>
                 )}

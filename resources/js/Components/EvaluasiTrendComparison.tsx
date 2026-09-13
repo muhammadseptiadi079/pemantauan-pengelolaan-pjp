@@ -64,7 +64,7 @@ export default function EvaluasiTrendComparison({ series }: { series: Series[] }
     return (
         <div className="glass-card mb-14 p-5">
             <div className="mb-3 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                     <TahapIcon name="evaluasi" className="h-4 w-4" />
                 </span>
                 <h3 className="text-sm font-semibold text-slate-900">

@@ -108,7 +108,7 @@ export default function Home({
                 {perluPerhatian.length > 0 && (
                     <div className="glass-card mb-8 p-5">
                         <p className="mb-3 flex items-center gap-2.5 text-sm font-semibold text-slate-900">
-                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                                 <TahapIcon name="alert" className="h-4 w-4" />
                             </span>
                             PJP Paling Perlu Perhatian
@@ -140,7 +140,7 @@ export default function Home({
                         value={stats.total}
                         label="Total PJP Terdaftar"
                         icon="building"
-                        color="blue"
+                        color="orange"
                         href="/pjp"
                     />
                     <GradientStatCard
@@ -187,16 +187,16 @@ export default function Home({
                             href={tahap.href}
                             className="glass-card group flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-2xl"
                         >
-                            <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-600 to-orange-800 text-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                                 <TahapIcon name={tahap.icon} className="h-5 w-5" />
                             </span>
-                            <h2 className="text-lg font-semibold text-slate-900 group-hover:text-blue-700">
+                            <h2 className="text-lg font-semibold text-slate-900 group-hover:text-orange-700">
                                 {tahap.title}
                             </h2>
                             <p className="mt-2 flex-1 text-sm text-slate-600">
                                 {tahap.description}
                             </p>
-                            <span className="mt-4 text-sm font-medium text-blue-600 group-hover:text-blue-800">
+                            <span className="mt-4 text-sm font-medium text-orange-600 group-hover:text-orange-800">
                                 Lihat detail &rarr;
                             </span>
                         </Link>

@@ -13,7 +13,7 @@ export default function PlaceholderCard({
         <div className="glass-empty p-5 transition-colors duration-150 hover:border-slate-400 hover:bg-white/60">
             <div className="flex items-center gap-2.5">
                 {icon && (
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                         <TahapIcon name={icon} className="h-4 w-4" />
                     </span>
                 )}

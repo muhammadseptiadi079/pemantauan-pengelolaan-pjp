@@ -22,7 +22,7 @@ export default function TahapanPjpSection({
                 </h2>
                 <Link
                     href="/pjp/create"
-                    className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                    className="text-sm font-medium text-orange-600 hover:text-orange-800"
                 >
                     + Tambah PJP
                 </Link>

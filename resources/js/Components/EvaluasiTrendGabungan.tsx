@@ -40,7 +40,7 @@ export default function EvaluasiTrendGabungan({ points }: { points: EvaluasiTren
     return (
         <div className="glass-card mb-10 p-5">
             <div className="mb-3 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-orange-600">
                     <TahapIcon name="evaluasi" className="h-4 w-4" />
                 </span>
                 <div>
@@ -57,8 +57,8 @@ export default function EvaluasiTrendGabungan({ points }: { points: EvaluasiTren
             <svg viewBox={`0 0 ${width} ${height}`} className="w-full">
                 <defs>
                     <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#2a78d6" stopOpacity="0.35" />
-                        <stop offset="100%" stopColor="#2a78d6" stopOpacity="0" />
+                        <stop offset="0%" stopColor="#ea580c" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
                     </linearGradient>
                 </defs>
                 <rect
@@ -78,7 +78,7 @@ export default function EvaluasiTrendGabungan({ points }: { points: EvaluasiTren
                     ref={polylineRef}
                     points={path}
                     fill="none"
-                    stroke="#2a78d6"
+                    stroke="#ea580c"
                     strokeWidth={2.5}
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -86,7 +86,7 @@ export default function EvaluasiTrendGabungan({ points }: { points: EvaluasiTren
                         strokeDasharray: lineLength,
                         strokeDashoffset: grown ? 0 : lineLength,
                         transition: 'stroke-dashoffset 0.9s ease-out',
-                        filter: 'drop-shadow(0 2px 5px rgba(42,120,214,0.35))',
+                        filter: 'drop-shadow(0 2px 5px rgba(234,88,12,0.35))',
                     }}
                 />
                 {coords.map((c, index) => (
@@ -95,7 +95,7 @@ export default function EvaluasiTrendGabungan({ points }: { points: EvaluasiTren
                         cx={c.x}
                         cy={c.y}
                         r={index === coords.length - 1 ? 5 : 4}
-                        fill="#2a78d6"
+                        fill="#ea580c"
                         stroke="#fcfcfb"
                         strokeWidth={2}
                         style={{

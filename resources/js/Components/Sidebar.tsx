@@ -73,7 +73,7 @@ function NavLinks({
                         onClick={onNavigate}
                         className={`group flex items-center gap-3 rounded-lg border-l-[3px] px-3 py-2 text-sm font-medium transition-all duration-150 ${
                             isActive
-                                ? 'border-blue-600 bg-blue-50 text-blue-700'
+                                ? 'border-orange-600 bg-orange-50 text-orange-700'
                                 : 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                     >
@@ -140,7 +140,7 @@ export default function Sidebar() {
                         href="/bantuan"
                         className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                             pathname === '/bantuan'
-                                ? 'bg-blue-50 text-blue-700'
+                                ? 'bg-orange-50 text-orange-700'
                                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                         }`}
                     >
@@ -195,7 +195,7 @@ export default function Sidebar() {
                                 onClick={() => setOpen(false)}
                                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                                     pathname === '/bantuan'
-                                        ? 'bg-blue-50 text-blue-700'
+                                        ? 'bg-orange-50 text-orange-700'
                                         : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                                 }`}
                             >

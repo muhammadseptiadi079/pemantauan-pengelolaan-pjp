@@ -20,7 +20,7 @@ export default function Pagination({ links }: { links: PaginationLink[] }) {
                         href={link.url}
                         className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
                             link.active
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-orange-600 text-white'
                                 : 'text-slate-600 hover:bg-slate-100'
                         }`}
                     >

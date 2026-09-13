@@ -52,7 +52,7 @@ export default function PjpFilters({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Nama, NIB, penanggung jawab, atau alamat..."
-                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                 />
             </div>
 
@@ -63,7 +63,7 @@ export default function PjpFilters({
                 <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                 >
                     <option value="">Semua Status</option>
                     {Object.entries(STATUS_OPTIONS).map(([value, label]) => (
@@ -77,7 +77,7 @@ export default function PjpFilters({
             <div className="flex gap-2">
                 <button
                     type="submit"
-                    className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                    className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700"
                 >
                     Terapkan
                 </button>

@@ -7,7 +7,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     return (
         <div className="relative flex min-h-screen flex-col overflow-x-hidden md:flex-row">
             <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-slate-50">
-                <div className="bg-blob absolute -left-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-blue-400/60 blur-3xl" />
+                <div className="bg-blob absolute -left-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-orange-400/60 blur-3xl" />
                 <div
                     className="bg-blob absolute right-[-6rem] top-1/4 h-[26rem] w-[26rem] rounded-full bg-violet-400/50 blur-3xl"
                     style={{ animationDelay: '-6s' }}
