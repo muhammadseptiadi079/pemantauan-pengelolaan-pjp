@@ -10,19 +10,19 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-slate-50">
                 <div className="bg-blob absolute -left-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-orange-400/60 blur-3xl" />
                 <div
-                    className="bg-blob absolute right-[-6rem] top-1/4 h-[26rem] w-[26rem] rounded-full bg-violet-400/50 blur-3xl"
+                    className="bg-blob absolute right-[-6rem] top-1/4 h-[26rem] w-[26rem] rounded-full bg-amber-300/45 blur-3xl"
                     style={{ animationDelay: '-6s' }}
                 />
                 <div
-                    className="bg-blob absolute bottom-[-6rem] left-1/4 h-[30rem] w-[30rem] rounded-full bg-emerald-300/50 blur-3xl"
+                    className="bg-blob absolute bottom-[-6rem] left-1/4 h-[30rem] w-[30rem] rounded-full bg-orange-300/45 blur-3xl"
                     style={{ animationDelay: '-11s' }}
                 />
                 <div
-                    className="bg-blob absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-amber-300/40 blur-3xl"
+                    className="bg-blob absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-slate-300/40 blur-3xl"
                     style={{ animationDelay: '-3s' }}
                 />
                 <div
-                    className="bg-blob absolute left-1/2 top-1/2 h-72 w-72 rounded-full bg-pink-300/35 blur-3xl"
+                    className="bg-blob absolute left-1/2 top-1/2 h-72 w-72 rounded-full bg-stone-300/30 blur-3xl"
                     style={{ animationDelay: '-8s' }}
                 />
             </div>
