@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
-import PageHeader from '@/Components/PageHeader';
+import PageHero from '@/Components/PageHero';
+import QuickNavTabs from '@/Components/QuickNavTabs';
 import PlaceholderCard from '@/Components/PlaceholderCard';
-import BackButton from '@/Components/BackButton';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
@@ -45,14 +45,15 @@ export default function TanggungJawabPemantauanPelaporan({
         <AppLayout>
             <Head title="Tanggung Jawab, Pemantauan, dan Pelaporan" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
-                    <PageHeader
-                        title="Tanggung Jawab, Pemantauan, dan Pelaporan"
-                        description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
-                        icon="tanggungjawab"
-                    />
-                    <BackButton className="w-full sm:w-auto" />
-                </div>
+                <PageHero
+                    breadcrumbLabel="Tanggung Jawab, Pemantauan, Pelaporan"
+                    title="Tanggung Jawab, Pemantauan, dan Pelaporan"
+                    description="Tahapan pengelolaan berkelanjutan PJP, mencakup tanggung jawab operasional, pemantauan rutin, dan pelaporan hasil pemantauan."
+                    ctaLabel="Lihat Daftar PJP"
+                    ctaHref="#daftar-pjp"
+                />
+
+                <QuickNavTabs />
 
                 <div className="mb-6">
                     <StatusStackedBar

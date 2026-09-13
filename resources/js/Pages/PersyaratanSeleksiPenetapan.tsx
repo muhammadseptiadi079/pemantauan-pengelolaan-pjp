@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
-import PageHeader from '@/Components/PageHeader';
+import PageHero from '@/Components/PageHero';
+import QuickNavTabs from '@/Components/QuickNavTabs';
 import PlaceholderCard from '@/Components/PlaceholderCard';
-import BackButton from '@/Components/BackButton';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
@@ -48,14 +48,15 @@ export default function PersyaratanSeleksiPenetapan({
         <AppLayout>
             <Head title="Persyaratan, Seleksi, dan Penetapan" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
-                    <PageHeader
-                        title="Persyaratan, Seleksi, dan Penetapan"
-                        description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
-                        icon="persyaratan"
-                    />
-                    <BackButton className="w-full sm:w-auto" />
-                </div>
+                <PageHero
+                    breadcrumbLabel="Persyaratan, Seleksi, Penetapan"
+                    title="Persyaratan, Seleksi, dan Penetapan"
+                    description="Tahapan awal pengelolaan Perusahaan Jasa Pertambangan (PJP), mencakup pemeriksaan persyaratan, proses seleksi, hingga penetapan resmi."
+                    ctaLabel="Lihat Daftar PJP"
+                    ctaHref="#daftar-pjp"
+                />
+
+                <QuickNavTabs />
 
                 <div className="mb-6">
                     <StatusStackedBar

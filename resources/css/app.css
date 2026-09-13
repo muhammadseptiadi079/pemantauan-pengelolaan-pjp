@@ -183,3 +183,16 @@ button {
 .breathe {
     animation: breathe 6s ease-in-out infinite;
 }
+
+/*
+ * Hero gelap di atas Beranda dan ketiga halaman tahap — kontras sengaja
+ * dengan sisa halaman yang tetap terang/glass di bawahnya, meniru gaya
+ * dashboard bermerek (logo watermark pudar di pojok via LogoMark, radial
+ * oranye redup di kiri atas menyorot area breadcrumb/judul).
+ */
+.hero-dark {
+    background:
+        radial-gradient(ellipse 60% 80% at 15% 0%, rgba(234, 88, 12, 0.28), transparent 60%),
+        linear-gradient(135deg, #16171a 0%, #0a0a0b 55%, #000000 100%);
+    box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.5);
+}

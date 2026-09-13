@@ -2,7 +2,8 @@ import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import GradientStatCard from '@/Components/GradientStatCard';
-import LogoMark from '@/Components/Logo';
+import PageHero from '@/Components/PageHero';
+import QuickNavTabs from '@/Components/QuickNavTabs';
 import { TahapIcon } from '@/Components/TahapIcons';
 const tahapan = [
     {
@@ -64,18 +65,16 @@ export default function Home({
         <AppLayout>
             <Head title="Beranda" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <header className="mb-12 text-center">
-                    <div className="mb-4 flex justify-center">
-                        <LogoMark className="h-14 w-14" />
-                    </div>
-                    <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-                        Pemantauan &amp; Pengelolaan PJP
-                    </h1>
-                    <p className="mx-auto mt-3 max-w-2xl text-slate-600">
-                        Aplikasi untuk memantau dan mengelola Perusahaan Jasa Pertambangan
-                        (PJP) di seluruh tahapan pengelolaannya.
-                    </p>
-                </header>
+                <PageHero
+                    breadcrumbLabel="Beranda"
+                    title="Beranda"
+                    description="Aplikasi untuk memantau dan mengelola Perusahaan Jasa Pertambangan (PJP) di seluruh tahapan pengelolaannya."
+                    ctaLabel="Lihat Data PJP"
+                    ctaHref="/pjp"
+                    showBackButton={false}
+                />
+
+                <QuickNavTabs />
 
                 {pjpBelumLaporanBulanan.length > 0 && (
                     <div className="mb-8 rounded-2xl border border-amber-200/70 bg-amber-50/60 p-5 shadow-lg shadow-amber-100/40 backdrop-blur-xl">

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import Sidebar from '@/Components/Sidebar';
+import TopBar from '@/Components/TopBar';
 import FlashMessage from '@/Components/FlashMessage';
 import PageProgress from '@/Components/PageProgress';
 
@@ -29,6 +30,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <PageProgress />
             <Sidebar />
             <main className="relative min-w-0 flex-1">
+                <TopBar />
                 <FlashMessage />
                 <div className="page-enter">{children}</div>
             </main>

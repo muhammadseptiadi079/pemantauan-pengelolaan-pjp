@@ -15,7 +15,7 @@ export default function TahapanPjpSection({
     filters: Filters;
 }) {
     return (
-        <section className="mt-14">
+        <section id="daftar-pjp" className="mt-14 scroll-mt-6">
             <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-xl font-semibold text-slate-900">
                     Daftar Seluruh PJP

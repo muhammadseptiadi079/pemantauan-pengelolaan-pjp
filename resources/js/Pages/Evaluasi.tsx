@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
-import PageHeader from '@/Components/PageHeader';
-import BackButton from '@/Components/BackButton';
+import PageHero from '@/Components/PageHero';
+import QuickNavTabs from '@/Components/QuickNavTabs';
 import TahapanPjpSection from '@/Components/TahapanPjpSection';
 import StatusStackedBar, { StatusCounts } from '@/Components/StatusStackedBar';
 import AchievementBarChart from '@/Components/AchievementBarChart';
@@ -35,14 +35,15 @@ export default function Evaluasi({
         <AppLayout>
             <Head title="Evaluasi" />
             <div className="mx-auto max-w-5xl px-6 py-16">
-                <div className="mb-10 flex flex-wrap items-start justify-between gap-4">
-                    <PageHeader
-                        title="Evaluasi"
-                        description="Evaluasi kinerja PJP setiap semester, mencakup aspek Teknis, Keselamatan &amp; Kesehatan, dan Lingkungan, sebagai dasar tindak lanjut pengelolaan berikutnya."
-                        icon="evaluasi"
-                    />
-                    <BackButton className="w-full sm:w-auto" />
-                </div>
+                <PageHero
+                    breadcrumbLabel="Evaluasi"
+                    title="Evaluasi"
+                    description="Evaluasi kinerja PJP setiap semester, mencakup aspek Teknis, Keselamatan &amp; Kesehatan, dan Lingkungan, sebagai dasar tindak lanjut pengelolaan berikutnya."
+                    ctaLabel="Lihat Daftar PJP"
+                    ctaHref="#daftar-pjp"
+                />
+
+                <QuickNavTabs />
 
                 <div className="mb-6">
                     <StatusStackedBar
